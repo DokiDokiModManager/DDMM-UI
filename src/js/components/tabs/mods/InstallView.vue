@@ -53,9 +53,9 @@
         <br>
 
         <div class="screenshots" v-if="install.screenshots.length > 0">
-            <!--suppress RequiredAttributes, HtmlRequiredAltAttribute -->
-            <img v-for="img in install.screenshots" :alt="img" :src="getURLToScreenshot(install.folderName, img)"
-                 @click="openScreenshot(install.folderName, img)" width="150">
+            <LazyLoadedImage v-for="img in install.screenshots" :alt="img"
+                             :src="getPathToScreenshot(install.folderName, img)"
+                             @click.native="openScreenshot(install.folderName, img)" width="150"></LazyLoadedImage>
         </div>
 
         <template v-if="install.achievements">
@@ -82,9 +82,11 @@
 
 <script>
     import Launcher from "../../../utils/Launcher";
+    import LazyLoadedImage from "../../elements/LazyLoadedImage";
 
     export default {
         name: "InstallView",
+        components: {LazyLoadedImage},
         props: ["install"],
         methods: {
             _: ddmm.translate,
@@ -92,8 +94,11 @@
             getPathToInstall(folderName) {
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName);
             },
-            getURLToScreenshot(folderName, filename) {
-                return ddmm.pathToFile(ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName, "install", filename)) + "?" + Math.random();
+            getPathToScreenshot(folderName, filename) {
+                return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName, "install", filename);
+            },
+            openScreenshot(folderName, filename) {
+                ddmm.app.showFile(ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName, "install", filename));
             },
             launchInstall(install) {
                 Launcher.launch(install);

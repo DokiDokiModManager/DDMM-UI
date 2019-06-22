@@ -121,7 +121,7 @@ const ModsTab = Vue.component("ddmm-mods-tab", {
         "getPathToMod": function (mod) {
             return ddmm.isAbsolute(mod) ? mod : ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", mod);
         },
-        "getURLToScreenshot": function (installFolder, filename) {
+        "getPathToScreenshot": function (installFolder, filename) {
             return ddmm.pathToFile(ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", installFolder, "install", filename)) + "?" + Math.random();
         },
         "openScreenshot": function (installFolder, filename) {

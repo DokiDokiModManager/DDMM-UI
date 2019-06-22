@@ -4,7 +4,9 @@
             <div class="mod-viewer-mod-list">
                 <template v-for="section in menu">
                     <div class="mod-view-mod-list-title">{{section.header}}</div>
-                    <div v-for="item in section.contents" :class="{'mod-view-mod-list-entry': true, 'active': selected_option === item.component}" @click="selectOption(item.component)"><span>{{item.title}}</span></div>
+                    <div v-for="item in section.contents"
+                         :class="{'mod-view-mod-list-entry': true, 'active': selected_option === item.component}"
+                         @click="selectOption(item.component)"><span>{{item.title}}</span></div>
                     <br>
                 </template>
             </div>
@@ -28,24 +30,19 @@
 
     export default {
         name: "OptionsTab",
-        components: {BackgroundOptions, AdvancedAppearanceOptions, UpdateOptions, StorageOptions, LanguageOptions, SDKOptions, DiscordOptions},
+        components: {
+            BackgroundOptions,
+            AdvancedAppearanceOptions,
+            UpdateOptions,
+            StorageOptions,
+            LanguageOptions,
+            SDKOptions,
+            DiscordOptions
+        },
         data() {
             return {
-                selected_option: sessionStorage.getItem("tab_options_last_selection") ? sessionStorage.getItem("tab_options_last_selection") : "BackgroundOptions",
+                selected_option: sessionStorage.getItem("tab_options_last_selection") ? sessionStorage.getItem("tab_options_last_selection") : "UpdateOptions",
                 menu: [
-                    {
-                        header: ddmm.translate("renderer.tab_options.list.header_appearance"),
-                        contents: [
-                            {
-                                title: ddmm.translate("renderer.tab_options.list.link_background"),
-                                component: "BackgroundOptions"
-                            },
-                            {
-                                title: ddmm.translate("renderer.tab_options.list.link_advanced_appearance"),
-                                component: "AdvancedAppearanceOptions"
-                            }
-                        ]
-                    },
                     {
                         header: ddmm.translate("renderer.tab_options.list.header_application"),
                         contents: [
@@ -60,6 +57,19 @@
                             {
                                 title: ddmm.translate("renderer.tab_options.list.link_language"),
                                 component: "LanguageOptions"
+                            }
+                        ]
+                    },
+                    {
+                        header: ddmm.translate("renderer.tab_options.list.header_appearance"),
+                        contents: [
+                            {
+                                title: ddmm.translate("renderer.tab_options.list.link_background"),
+                                component: "BackgroundOptions"
+                            },
+                            {
+                                title: ddmm.translate("renderer.tab_options.list.link_advanced_appearance"),
+                                component: "AdvancedAppearanceOptions"
                             }
                         ]
                     },

@@ -6,9 +6,8 @@
         <br>
 
         <div class="screenshots">
-            <!--suppress RequiredAttributes, HtmlRequiredAltAttribute -->
-            <img v-for="img in backgrounds" :alt="img" :src="'../images/backgrounds/' + img" width="150"
-                 @click="setBackground(img)">
+            <LazyLoadedImage v-for="img in backgrounds" :alt="img" :src="'src/renderer/images/backgrounds/' + img" width="150"
+                             @click.native="setBackground(img)"></LazyLoadedImage>
         </div>
 
         <br>
@@ -34,8 +33,10 @@
 </template>
 
 <script>
+    import LazyLoadedImage from "../../elements/LazyLoadedImage";
     export default {
         name: "BackgroundOptions",
+        components: {LazyLoadedImage},
         computed: {
             user() {
                 return this.$store.state.user;
