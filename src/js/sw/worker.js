@@ -2,6 +2,10 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox
 
 console.log("Service worker is running. Workbox is " + (workbox ? "loaded" : "not loaded"));
 
+workbox.setConfig({
+    debug: true
+});
+
 workbox.routing.registerRoute(
     /\.(?:js|css)$/,
     new workbox.strategies.NetworkFirst({
