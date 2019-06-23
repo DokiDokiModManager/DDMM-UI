@@ -53,11 +53,7 @@ const OptionsTab = Vue.component("ddmm-options-tab", {
                 
             </div>
             <div v-else-if="selected_option === 'testing'">
-                <h1>{{_("renderer.tab_options.section_testing.title")}}</h1>
-                <p>{{_("renderer.tab_options.section_testing.subtitle")}}</p>
-                <br>
-                <button class="danger" v-if="sdkDebuggingEnabled()" @click="setSDKDebugging(false)"><i class="fas fa-times fa-fw"></i> {{_("renderer.tab_options.section_testing.button_disable")}}</button>
-                <button class="success" v-else @click="setSDKDebugging(true)"><i class="fas fa-check fa-fw"></i> {{_("renderer.tab_options.section_testing.button_enable")}}</button>
+                
             </div>
             <div v-else-if="selected_option === 'debug'">
                 <h1>{{_("renderer.tab_options.section_debug.title")}}</h1>

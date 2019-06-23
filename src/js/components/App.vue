@@ -1,8 +1,5 @@
 <template>
-    <div
-            :class="['app', 'os-'+system_platform]"
-            :style="{'background-image': backgroundImageStyle}">
-
+    <div :class="['app', 'os-'+system_platform]" :style="{'background-image': backgroundImageStyle}">
         <Dialogs></Dialogs>
 
         <Titlebar :app_name="app_name" :app_version="app_version" :system_borders="system_borders"></Titlebar>

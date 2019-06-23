@@ -47,11 +47,7 @@
             _: ddmm.translate
         },
         mounted() {
-            fetch("https://raw.githubusercontent.com/DokiDokiModManager/Supporters/master/supporters.txt").then(res => res.text()).then(text => text.trim().split("\n")).then(supporters => {
-                supporters.forEach(supporter => {
-                    this.supporters.push(supporter.trim());
-                });
-            });
+            // TODO: patreon supporters
         }
     }
 </script>

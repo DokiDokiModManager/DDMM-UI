@@ -13,7 +13,7 @@
         <br>
 
         <p>
-            <button class="success" @click="chooseBackground" v-if="user && user.donated"><i class="fas fa-image fa-fw"></i>
+            <button class="success" @click="chooseBackground"><i class="fas fa-image fa-fw"></i>
                 {{_("renderer.tab_options.section_backgrounds.button_custom")}}
             </button>
 
@@ -28,7 +28,7 @@
 
         <br>
 
-        <p v-if="user && user.donated">{{_("renderer.tab_options.section_backgrounds.description_custom")}}</p>
+        <p>{{_("renderer.tab_options.section_backgrounds.description_custom")}}</p>
     </div>
 </template>
 
@@ -37,11 +37,6 @@
     export default {
         name: "BackgroundOptions",
         components: {LazyLoadedImage},
-        computed: {
-            user() {
-                return this.$store.state.user;
-            }
-        },
         methods: {
             _: ddmm.translate,
             setBackground(background) {

@@ -27,6 +27,7 @@
     import LanguageOptions from "./options/LanguageOptions.vue";
     import SDKOptions from "./options/SDKOptions.vue";
     import DiscordOptions from "./options/DiscordOptions.vue";
+    import DebugOptions from "./options/DebugOptions.vue";
 
     export default {
         name: "OptionsTab",
@@ -37,7 +38,8 @@
             StorageOptions,
             LanguageOptions,
             SDKOptions,
-            DiscordOptions
+            DiscordOptions,
+            DebugOptions
         },
         data() {
             return {
@@ -91,11 +93,7 @@
                         contents: [
                             {
                                 title: ddmm.translate("renderer.tab_options.list.link_testing"),
-                                id: "testing"
-                            },
-                            {
-                                title: ddmm.translate("renderer.tab_options.list.link_debug"),
-                                id: "debug"
+                                component: "DebugOptions"
                             }
                         ]
                     }
