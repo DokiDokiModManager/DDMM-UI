@@ -1,8 +1,10 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
+console.log("Service worker is running. Workbox is " + (workbox ? "loaded" : "not loaded"));
+
 workbox.routing.registerRoute(
     /\.(?:js|css)$/,
-    new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.NetworkFirst({
         cacheName: 'static-resources',
     })
 );
