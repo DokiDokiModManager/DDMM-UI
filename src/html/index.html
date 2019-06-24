@@ -7,17 +7,17 @@
 
     <link rel="stylesheet" href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="../css/app.scss">
-
-<!--    <script src="http://localhost:8098"></script>-->
 </head>
 <body>
 
 <div id="app-mount"></div>
 
 <script>
-    // if (!("ddmm" in window)) { // being opened through browser
-    //     window.location.replace("https://doki.space");
-    // }
+    if (!("ddmm" in window)) { // being opened through browser
+        window.location.replace("https://doki.space");
+    }
+
+    ddmm.config.saveConfigValue("lastKnownGoodVersion", ddmm.version);
 
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
