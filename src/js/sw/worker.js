@@ -7,9 +7,16 @@ workbox.setConfig({
 });
 
 workbox.routing.registerRoute(
-    /\.(?:js|css)$/,
+    /\.(?:js|css|html)$/,
     new workbox.strategies.NetworkFirst({
         cacheName: 'static-resources',
+    })
+);
+
+workbox.routing.registerRoute(
+    /\.(?:ttf|svg|woff|woff2|eot)$/,
+    new workbox.strategies.NetworkFirst({
+        cacheName: 'static-fonts',
     })
 );
 
