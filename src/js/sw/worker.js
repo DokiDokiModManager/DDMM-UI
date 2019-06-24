@@ -7,9 +7,23 @@ workbox.setConfig({
 });
 
 workbox.routing.registerRoute(
-    /\.(?:js|css|html)$/,
+    "/",
     new workbox.strategies.NetworkFirst({
-        cacheName: 'static-resources',
+        cacheName: 'static-html',
+    })
+);
+
+workbox.routing.registerRoute(
+    /\.(?:js)$/,
+    new workbox.strategies.NetworkFirst({
+        cacheName: 'static-js',
+    })
+);
+
+workbox.routing.registerRoute(
+    /\.(?:css)$/,
+    new workbox.strategies.NetworkFirst({
+        cacheName: 'static-css',
     })
 );
 
