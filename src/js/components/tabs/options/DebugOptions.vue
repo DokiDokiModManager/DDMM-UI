@@ -8,12 +8,7 @@
         <p>{{_("renderer.tab_options.section_testing.description_mod_debug")}}</p>
         <br>
         <p>
-            <button class="danger" v-if="sdkDebuggingEnabled()" @click="setSDKDebugging(false)"><i
-                    class="fas fa-times fa-fw"></i> {{_("renderer.tab_options.section_testing.button_disable")}}
-            </button>
-            <button class="success" v-else @click="setSDKDebugging(true)"><i class="fas fa-check fa-fw"></i>
-                {{_("renderer.tab_options.section_testing.button_enable")}}
-            </button>
+            <label><input type="checkbox" v-model="sdk_debugging_interim" @change="setSDKDebugging(sdk_debugging_interim)"> {{_("renderer.tab_options.section_testing.checkbox_logging")}}</label>
         </p>
 
         <br>
@@ -22,11 +17,7 @@
         <p>{{_("renderer.tab_options.section_testing.description_ui_url")}}</p>
         <br>
         <p>
-            <select v-model="ui_url_interim" @change="setUIurl">
-                <option value="https://ui.doki.space/">{{_("renderer.tab_options.section_testing.option_production")}}</option>
-                <option value="https://staging.ui.doki.space/">{{_("renderer.tab_options.section_testing.option_staging")}}</option>
-                <option value="http://localhost:1234/">{{_("renderer.tab_options.section_testing.option_local")}}</option>
-            </select>
+            <label><input type="checkbox" v-model="local_ui_interim" @change="setLocalUI(local_ui_interim)"> {{_("renderer.tab_options.section_testing.checkbox_ui_url")}}</label>
         </p>
     </div>
 </template>
@@ -36,20 +27,17 @@
         name: "DebugOptions",
         data() {
             return {
-                ui_url_interim: ddmm.config.readConfigValue("uiURL")
+                sdk_debugging_interim: ddmm.config.readConfigValue("sdkDebuggingEnabled"),
+                local_ui_interim: ddmm.config.readConfigValue("localUI"),
             }
         },
         methods: {
             _: ddmm.translate,
-            sdkDebuggingEnabled() {
-                return ddmm.config.readConfigValue("sdkDebuggingEnabled");
-            },
             setSDKDebugging(enabled) {
                 ddmm.config.saveConfigValue("sdkDebuggingEnabled", !!enabled);
-                this.$forceUpdate();
             },
-            setUIurl() {
-                ddmm.config.saveConfigValue("uiURL", this.ui_url_interim);
+            setLocalUI(enabled) {
+                ddmm.config.saveConfigValue("localUI", !!enabled);
             }
         }
     }
