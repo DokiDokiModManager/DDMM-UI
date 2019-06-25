@@ -406,15 +406,16 @@ input:focus, textarea:focus {
 
 // region running and crash covers
 .cover {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  //position: fixed;
+  //top: 0;
+  //left: 0;
+  //width: 100vw;
+  //height: 100vh;
   z-index: 100;
   background-size: cover;
   color: $ui-text-colour;
-  padding: 3em;
+  background-color: $ui-background-colour;
+  padding: 0 1.5em;
 }
 
 .cover.crash {

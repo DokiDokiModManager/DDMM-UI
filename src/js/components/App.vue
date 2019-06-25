@@ -1,11 +1,16 @@
 <template>
     <div :class="['app', 'os-'+system_platform]" :style="{'background-image': backgroundImageStyle}">
+        <Titlebar :app_name="app_name" :app_version="app_version" :system_borders="system_borders"></Titlebar>
+
         <Dialogs></Dialogs>
 
-        <Titlebar :app_name="app_name" :app_version="app_version" :system_borders="system_borders"></Titlebar>
-        <component :is="tab"></component>
+        <OnboardingOverlay v-if="onboarding" @close="onboarding = false;"></OnboardingOverlay>
 
-        <Navbar :tabs="tabs" @tab="setTab"></Navbar>
+        <template v-else>
+            <component :is="tab"></component>
+
+            <Navbar :tabs="tabs" @tab="setTab"></Navbar>
+        </template>
     </div>
 </template>
 
@@ -17,16 +22,19 @@
     import OptionsTab from "./tabs/OptionsTab.vue";
     import AboutTab from "./tabs/AboutTab.vue";
     import Dialogs from "./Dialogs.vue";
+    import OnboardingOverlay from "./OnboardingOverlay";
 
     export default {
         name: "App",
-        components: {Navbar, Titlebar, ModsTab, OptionsTab, Dialogs, AboutTab},
+        components: {OnboardingOverlay, Navbar, Titlebar, ModsTab, OptionsTab, Dialogs, AboutTab},
         data() {
             return {
                 // app / system meta
                 app_name: "Doki Doki Mod Manager",
                 app_version: ddmm.version,
                 system_platform: ddmm.platform,
+
+                onboarding: false,
 
                 // config
                 system_borders: ddmm.config.readConfigValue("systemBorders"),
@@ -79,6 +87,15 @@
             setTab(tab) {
                 this.tab = tab.component;
             }
+        },
+        mounted() {
+            ddmm.on("start onboarding", () => {
+                this.onboarding = true;
+            });
+
+            ddmm.on("onboarding downloaded", () => {
+                this.onboarding = false;
+            });
         }
     }
 </script>
