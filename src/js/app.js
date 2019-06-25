@@ -9,6 +9,8 @@ Vue.use(Vuex);
 // noinspection JSValidateTypes
 const store = new Vuex.Store({
     state: {
+        custom_background: null,
+        custom_background_visible: false,
         options: {
             background: ddmm.config.readConfigValue("background"),
             system_borders: ddmm.config.readConfigValue("systemBorders"),
@@ -91,6 +93,16 @@ const store = new Vuex.Store({
         select_mod(state, payload) {
             Logger.info("ModOpts", "Selected mod " + payload.mod);
             state.selected_mod = payload.mod
+        },
+        override_background(state, background) {
+            if (background) {
+                Logger.info("BG", "Displaying custom background");
+                state.custom_background = background;
+                state.custom_background_visible = true;
+            } else {
+                Logger.info("BG", "Hiding custom background");
+                state.custom_background_visible = false;
+            }
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'

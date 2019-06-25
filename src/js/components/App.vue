@@ -1,16 +1,24 @@
 <template>
-    <div :class="['app', 'os-'+system_platform]" :style="{'background-image': backgroundImageStyle}">
-        <Titlebar :app_name="app_name" :app_version="app_version" :system_borders="system_borders"></Titlebar>
+    <div :class="'os-'+system_platform">
+        <div class="app-container-background">
+            <div class="gradient"></div>
+            <img alt="" :src="backgroundImage" :class="{'visible': !showBackgroundOverride}">
+            <img alt="" :src="backgroundOverride" :class="{'visible': showBackgroundOverride}">
+        </div>
 
-        <Dialogs></Dialogs>
+        <div class="app app-container-contents">
+            <Titlebar :app_name="app_name" :app_version="app_version" :system_borders="system_borders"></Titlebar>
 
-        <OnboardingOverlay v-if="onboarding" @close="onboarding = false;"></OnboardingOverlay>
+            <Dialogs></Dialogs>
 
-        <template v-else>
-            <component :is="tab"></component>
+            <OnboardingOverlay v-if="onboarding" @close="onboarding = false;"></OnboardingOverlay>
 
-            <Navbar :tabs="tabs" @tab="setTab"></Navbar>
-        </template>
+            <template v-else>
+                <component :is="tab"></component>
+
+                <Navbar :tabs="tabs" @tab="setTab"></Navbar>
+            </template>
+        </div>
     </div>
 </template>
 
@@ -67,20 +75,22 @@
         },
         computed: {
             backgroundImage() {
-                return this.$store.state.options.background;
-            },
-            backgroundImageStyle() {
-                if (this.backgroundImage && this.backgroundImage !== "none") {
-                    let imagePath;
-                    if (this.backgroundImage.startsWith("custom:")) {
-                        imagePath = ddmm.fileToURL(this.backgroundImage.split("custom:")[1]);
-                    } else {
-                        imagePath = ddmm.fileToURL("src/renderer/images/backgrounds/" + this.backgroundImage);
-                    }
-                    return `radial-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.99) 90%), url(${imagePath})`;
+                const bg = this.$store.state.options.background;
+                let imagePath;
+                if (bg.startsWith("custom:")) {
+                    imagePath = ddmm.fileToURL(bg.split("custom:")[1]);
                 } else {
-                    return "linear-gradient(#111, #111)";
+                    imagePath = ddmm.fileToURL("src/renderer/images/backgrounds/" + bg);
                 }
+                return imagePath;
+            },
+
+            backgroundOverride() {
+                return this.$store.state.custom_background;
+            },
+
+            showBackgroundOverride() {
+                return this.$store.state.custom_background_visible;
             }
         },
         methods: {
