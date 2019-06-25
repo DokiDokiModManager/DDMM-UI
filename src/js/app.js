@@ -9,8 +9,13 @@ Vue.use(Vuex);
 // noinspection JSValidateTypes
 const store = new Vuex.Store({
     state: {
-        custom_background: null,
-        custom_background_visible: false,
+        custom_background: {
+            src_1: null,
+            src_2: null,
+            display_2: false,
+            display: false
+        },
+
         options: {
             background: ddmm.config.readConfigValue("background"),
             system_borders: ddmm.config.readConfigValue("systemBorders"),
@@ -97,11 +102,17 @@ const store = new Vuex.Store({
         override_background(state, background) {
             if (background) {
                 Logger.info("BG", "Displaying custom background");
-                state.custom_background = background;
-                state.custom_background_visible = true;
+                state.custom_background.display = true;
+                state.custom_background.display_2 = !state.custom_background.display_2;
+                if (state.custom_background.display_2) {
+                    state.custom_background.src_2 = background;
+                } else {
+                    state.custom_background.src_1 = background;
+                }
+
             } else {
                 Logger.info("BG", "Hiding custom background");
-                state.custom_background_visible = false;
+                state.custom_background.display = false;
             }
         }
     },

@@ -2,8 +2,9 @@
     <div :class="'os-'+system_platform">
         <div class="app-container-background">
             <div class="gradient"></div>
-            <img alt="" :src="backgroundImage" :class="{'visible': !showBackgroundOverride}">
-            <img alt="" :src="backgroundOverride" :class="{'visible': showBackgroundOverride}">
+            <img alt="" :src="backgroundImage" :class="{'visible': !showBackground}">
+            <img alt="" :src="backgroundOverride1" :class="{'visible': showBackground && !showBackground2}">
+            <img alt="" :src="backgroundOverride2" :class="{'visible': showBackground && showBackground2}">
         </div>
 
         <div class="app app-container-contents">
@@ -85,12 +86,20 @@
                 return imagePath;
             },
 
-            backgroundOverride() {
-                return this.$store.state.custom_background;
+            backgroundOverride1() {
+                return this.$store.state.custom_background.src_1;
             },
 
-            showBackgroundOverride() {
-                return this.$store.state.custom_background_visible;
+            backgroundOverride2() {
+                return this.$store.state.custom_background.src_2;
+            },
+
+            showBackground() {
+                return this.$store.state.custom_background.display;
+            },
+
+            showBackground2() {
+                return this.$store.state.custom_background.display_2;
             }
         },
         methods: {

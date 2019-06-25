@@ -108,6 +108,13 @@
                 this.$store.commit("show_modal", {modal: "install_options"});
             }
         },
+        watch: {
+          "install.background": function(val) {
+              if (val) {
+                  this.$store.commit("override_background", val);
+              }
+          }
+        },
         mounted() {
             if (this.install.background) {
                 this.$store.commit("override_background", this.install.background);
