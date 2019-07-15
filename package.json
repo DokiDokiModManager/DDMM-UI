@@ -6,7 +6,7 @@
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.0.0",
     "parcel-bundler": "^1.12.3",
-    "sass": "^1.21.0",
+    "sass": "^1.22.4",
     "vue-template-compiler": "^2.6.10"
   },
   "scripts": {
