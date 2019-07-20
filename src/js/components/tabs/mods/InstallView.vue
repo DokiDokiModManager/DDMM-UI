@@ -109,11 +109,9 @@
             }
         },
         watch: {
-          "install.background": function(val) {
-              if (val) {
-                  this.$store.commit("override_background", val);
-              }
-          }
+            "install.background": function (val) {
+                this.$store.commit("override_background", val);
+            }
         },
         mounted() {
             if (this.install.background) {
