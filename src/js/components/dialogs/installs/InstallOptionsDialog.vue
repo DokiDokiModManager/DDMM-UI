@@ -8,6 +8,10 @@
             <i class="fas fa-play fa-fw"></i> {{_("renderer.menu_install_options.launch")}}
         </div>
         <div class="dialog-menu-separator"></div>
+        <div class="dialog-menu-item">
+            <i class="fas fa-plus fa-fw"></i> {{_("renderer.menu_install_options.addons")}}
+        </div>
+        <div class="dialog-menu-separator"></div>
         <div class="dialog-menu-item" @click="rename">
             <i class="fas fa-pencil-alt fa-fw"></i> {{_("renderer.menu_install_options.rename")}}
         </div>
@@ -15,7 +19,7 @@
             <i class="fas fa-external-link-alt fa-fw"></i> {{_("renderer.menu_install_options.shortcut")}}
         </div>
         <div class="dialog-menu-separator"></div>
-        <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave || install.cloudSave}" @click="deleteSave">
+        <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave}" @click="deleteSave">
             <i class="fas fa-undo fa-fw"></i> {{_("renderer.menu_install_options.delete_save")}}
         </div>
         <div class="dialog-menu-item" @click="uninstall">

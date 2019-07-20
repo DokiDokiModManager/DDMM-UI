@@ -1,14 +1,17 @@
 <template>
     <div v-if="install">
         <h1>{{install.name}}
+            <small><a href="javascript:;" @click="openFolder(getPathToInstall(install.folderName))"
+                      :title="_('renderer.tab_mods.install.description_external')"><i
+                    class="fas fa-external-link-alt"></i></a>
+            </small>
             <span class="tag" v-if="install.globalSave">{{_("renderer.tab_mods.install.tag_global_save")}}</span>
             <span class="tag"
                   v-if="install.mod && install.mod.uses_sdk">{{_("renderer.tab_mods.install.tag_sdk")}}</span>
         </h1>
-        <p>{{getPathToInstall(install.folderName)}} <a href="javascript:;"
-                                                       @click="openFolder(getPathToInstall(install.folderName))"
-                                                       :title="_('renderer.tab_mods.mod.description_external')"><i
-                class="fas fa-external-link-alt"></i></a></p>
+
+
+        <p><i class="fas fa-clock"></i> <strong>{{formatTime(install.playTime)}}</strong></p>
 
         <br>
 
@@ -106,11 +109,21 @@
             showOptions(install) {
                 this.$store.commit("select_install", {install});
                 this.$store.commit("show_modal", {modal: "install_options"});
+            },
+            formatTime(timeMS) {
+                const timeSecs = timeMS / 1000;
+                const hours = Math.floor(timeSecs / 3600);
+                const seconds = timeSecs % 3600;
+                const minutes = Math.floor(seconds / 60);
+
+                return hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0");
             }
         },
         watch: {
             "install.background": function (val) {
-                this.$store.commit("override_background", val);
+                if (val) {
+                    this.$store.commit("override_background", val);
+                }
             }
         },
         mounted() {

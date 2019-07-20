@@ -10,8 +10,12 @@
                 <!-- Game install options -->
                 <div class="mod-view-mod-list-title">{{_("renderer.tab_mods.list.header_new")}}</div>
                 <div
-                        :class="{'mod-view-mod-list-entry': true, 'active': selected_item.type === 'create'}"
-                        @click="handleCreateClick()">{{_("renderer.tab_mods.list.link_install")}}
+                        :class="{'mod-view-mod-list-entry': true, 'active': selected_item.type === 'create' && selected_item.id === 'normal'}"
+                        @click="handleCreateClick(false)">{{_("renderer.tab_mods.list.link_install")}}
+                </div>
+                <div
+                        :class="{'mod-view-mod-list-entry': true, 'active': selected_item.type === 'create' && selected_item.id === 'advanced'}"
+                        @click="handleCreateClick(true)">{{_("renderer.tab_mods.list.link_install_advanced")}}
                 </div>
                 <br>
                 <!-- Installed games -->
@@ -51,7 +55,8 @@
             <div class="mod-viewer-mod-display">
                 <InstallView v-if="selectedInstall" :install="selectedInstall"></InstallView>
                 <ModView v-else-if="selectedMod" :mod="selectedMod"></ModView>
-                <CreationView v-else-if="selected_item.type === 'create'"></CreationView>
+                <CreationView v-else-if="selected_item.type === 'create' && selected_item.id === 'normal'"></CreationView>
+                <AdvancedCreationView v-else-if="selected_item.type === 'create' && selected_item.id === 'advanced'"></AdvancedCreationView>
             </div>
         </div>
     </div>
@@ -65,10 +70,11 @@
 
     import Logger from "../../utils/Logger";
     import Launcher from "../../utils/Launcher";
+    import AdvancedCreationView from "./mods/AdvancedCreationView";
 
     export default {
         name: "ModsTab",
-        components: {CreationView, ModView, InstallView},
+        components: {AdvancedCreationView, CreationView, ModView, InstallView},
         methods: {
             // helper methods
             _: ddmm.translate,
@@ -80,20 +86,27 @@
             },
 
             // install list interaction handlers
-            handleCreateClick() {
-                Logger.info("Mod List", "Selected creation");
-                this.selected_item.type = "create";
+            handleCreateClick(advanced) {
+                Logger.info("Mod List", "Selected creation (advanced = " + advanced + ")");
+                this.$store.commit("install_list_selection", {
+                    type: "create",
+                    id: advanced ? "advanced" : "normal"
+                });
             },
             handleInstallClick(folderName) {
                 Logger.info("Mod List", "Selected install " + folderName);
-                this.selected_item.type = "install";
-                this.selected_item.id = folderName;
+                this.$store.commit("install_list_selection", {
+                    type: "install",
+                    id: folderName
+                });
             },
             handleModClick(filename, downloading) {
                 if (downloading) return;
                 Logger.info("Mod List", "Selected mod " + filename);
-                this.selected_item.type = "mod";
-                this.selected_item.id = filename;
+                this.$store.commit("install_list_selection", {
+                    type: "mod",
+                    id: filename
+                });
             },
             showInstallOptions(install) {
                 this.$store.commit("select_install", {install});
@@ -119,10 +132,6 @@
         },
         data() {
             return {
-                selected_item: {
-                    id: "",
-                    type: ""
-                },
                 search: "",
                 search_objs: {
                     installs: null,
@@ -131,6 +140,10 @@
             };
         },
         computed: {
+            selected_item() {
+                return this.$store.state.install_list_selection;
+            },
+
             installs() {
                 return this.$store.state.game_data.installs;
             },

@@ -6,10 +6,15 @@
 
             <div class="form-group">
                 <p><label>{{_("renderer.tab_mods.install_creation.label_install_name")}}</label></p>
-                <p><input type="text" :placeholder="_('renderer.tab_mods.install_creation.placeholder_install_name')"
+                <p><input type="text" :placeholder="_('renderer.tab_mods.install_creation.label_install_name')"
                           v-model="install_creation.install_name" @keyup="generateInstallFolderName"></p>
             </div>
 
+            <div class="form-group">
+                <p><label>{{_("renderer.tab_mods.install_creation.label_folder_name")}}</label></p>
+                <p><input type="text" :placeholder="_('renderer.tab_mods.install_creation.label_folder_name')"
+                          v-model="install_creation.folder_name"></p>
+            </div>
 
             <p v-if="!is_installing && install_creation.folder_name.length > 2 && installExists(install_creation.folder_name)">
                 <strong>{{_("renderer.tab_mods.install_creation.status_exists")}}</strong>
@@ -26,6 +31,24 @@
                           v-model="install_creation.mod" readonly @click="installCreationSelectMod"
                           style="cursor: pointer;"></p>
             </div>
+
+            <div class="form-group">
+                <ChunkyRadioButtons
+                        :options="[_('renderer.tab_mods.install_creation.option_local_save'), _('renderer.tab_mods.install_creation.option_global_save')]"
+                        v-model="install_creation.save_option"></ChunkyRadioButtons>
+            </div>
+
+
+            <div v-if="install_creation.save_option === 1">
+                <p>{{_("renderer.tab_mods.install_creation.description_global_save")}}</p>
+                <br>
+                <p><strong>{{_("renderer.tab_mods.install_creation.warning_global_save")}}</strong></p>
+            </div>
+
+            <div v-else>
+                <p>{{_("renderer.tab_mods.install_creation.description_local_save")}}</p>
+            </div>
+
 
             <div v-if="is_installing" class="form-group">
                 <button class="primary" disabled><i class="fas fa-spinner fa-spin fa-fw"></i>
@@ -51,7 +74,7 @@
     import ChunkyRadioButtons from "../../elements/ChunkyRadioButtons.vue";
 
     export default {
-        name: "CreationView",
+        name: "AdvancedCreationView",
         components: {ChunkyRadioButtons},
         data() {
             return {
@@ -79,10 +102,6 @@
                     .replace(/\W/g, "-")
                     .replace(/-+/g, "-")
                     .substring(0, 32);
-
-                if (ddmm.mods.installExists(this.install_creation.folder_name)) {
-                    this.install_creation.folder_name = this.install_creation.folder_name + "-" + Math.floor(Math.random()*100);
-                }
             },
             installCreationSelectMod() {
                 const mod = ddmm.mods.browseForMod();
@@ -104,7 +123,8 @@
         computed: {
             shouldDisableCreation() {
                 return this.is_installing || (this.install_creation.has_mod && !this.install_creation.mod)
-                    || this.install_creation.install_name.length < 2 || this.install_creation.folder_name.length < 2;
+                    || this.install_creation.install_name.length < 2 || this.install_creation.folder_name.length < 2
+                    || ddmm.mods.installExists(this.install_creation.folder_name);
             },
             user() {
                 return this.$store.state.user;

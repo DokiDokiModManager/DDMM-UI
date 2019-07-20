@@ -1,9 +1,10 @@
 <template>
     <div v-if="mod">
-        <h1>{{mod}}</h1>
-        <p>{{getPathToMod(mod)}} <a href="javascript:;" @click="openFolder(getPathToMod(mod))"
-                                    :title="_('renderer.tab_mods.mod.description_external')"><i
-                class="fas fa-external-link-alt"></i></a></p>
+        <h1>{{mod}}
+            <small><a href="javascript:;" @click="openFolder(getPathToMod(mod))"
+                      :title="_('renderer.tab_mods.mod.description_external')"><i class="fas fa-external-link-alt"></i></a>
+            </small>
+        </h1>
 
         <br>
 

@@ -4,6 +4,7 @@
         <InstallRenameDialog v-if="modalVisible('install_rename')"></InstallRenameDialog>
         <SaveDeleteDialog v-if="modalVisible('save_delete')"></SaveDeleteDialog>
         <UninstallDialog v-if="modalVisible('uninstall')"></UninstallDialog>
+        <InstallDialog v-if="modalVisible('installing')"></InstallDialog>
 
         <ModOptionsDialog v-if="modalVisible('mod_options')"></ModOptionsDialog>
     </div>
@@ -16,10 +17,12 @@
     import UninstallDialog from "./dialogs/installs/UninstallDialog.vue";
     import SaveDeleteDialog from "./dialogs/installs/SaveDeleteDialog.vue";
     import AlertDialog from "./dialogs/base/AlertDialog.vue";
+    import InstallDialog from "./dialogs/installs/InstallDialog";
 
     export default {
         name: "Dialogs",
         components: {
+            InstallDialog,
             SaveDeleteDialog,
             UninstallDialog,
             InstallRenameDialog,

@@ -34,13 +34,18 @@ const store = new Vuex.Store({
             install_rename: false,
             uninstall: false,
             save_delete: false,
-            account_settings: false,
-            account_username: false,
-            password_reset_confirmation: false,
-            cloudsave_conflict: false
+            installing: false
         },
+
+        preloaded_install_folder: "",
+
         selected_install: {},
-        selected_mod: ""
+        selected_mod: "",
+
+        install_list_selection: {
+            type: "",
+            id: ""
+        }
     },
     mutations: {
         options(state, payload) {
@@ -114,6 +119,14 @@ const store = new Vuex.Store({
                 Logger.info("BG", "Hiding custom background");
                 state.custom_background.display = false;
             }
+        },
+        installation_status(state, payload) {
+            console.log(payload);
+            state.modals.installing = !!payload.installing;
+            state.preloaded_install_folder = payload.preloaded_install_folder;
+        },
+        install_list_selection(state, payload) {
+            state.install_list_selection = payload;
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'
@@ -134,6 +147,14 @@ const app = new Vue(App).$mount("#app-mount").$nextTick(() => {
 ddmm.on("install list", installs => {
     Logger.info("Install List", "Got a list of " + installs.length + " installs");
     store.commit("load_installs", installs);
+    if (store.state.preloaded_install_folder) {
+        console.log("PRELEOIJGFW");
+        store.commit("install_list_selection", {
+            type: "install",
+            id: store.state.preloaded_install_folder
+        });
+    }
+    store.commit("installation_status", {installing: false, preloaded_install_folder: ""});
 });
 
 ddmm.on("mod list", mods => {
