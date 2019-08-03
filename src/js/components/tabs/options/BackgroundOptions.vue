@@ -24,6 +24,12 @@
 
         <br>
 
+        <p>
+            <label><input type="checkbox" v-model="modbg_interim" @change="setModBackgrounds(modbg_interim)"> {{_("renderer.tab_options.section_backgrounds.checkbox_modbg")}}</label>
+        </p>
+
+        <br>
+
         <p>{{_("renderer.tab_options.section_backgrounds.description_credit")}}</p>
 
         <br>
@@ -42,6 +48,9 @@
             setBackground(background) {
                 this.$store.commit("options", {background});
             },
+            setModBackgrounds(modBackgrounds) {
+                this.$store.commit("options", {mod_backgrounds: modBackgrounds})
+            },
             chooseBackground() {
                 const el = document.createElement("input");
                 el.type = "file";
@@ -55,7 +64,8 @@
         },
         data() {
             return {
-                backgrounds: ddmm.app.getBackgrounds()
+                backgrounds: ddmm.app.getBackgrounds(),
+                modbg_interim: this.$store.state.options.mod_backgrounds
             }
         }
     }

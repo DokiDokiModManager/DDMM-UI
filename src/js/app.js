@@ -21,7 +21,8 @@ const store = new Vuex.Store({
             system_borders: ddmm.config.readConfigValue("systemBorders"),
             sdk_mode: ddmm.config.readConfigValue("sdkMode"),
             discord: ddmm.config.readConfigValue("discordEnabled"),
-            language: ddmm.config.readConfigValue("language")
+            language: ddmm.config.readConfigValue("language"),
+            mod_backgrounds: ddmm.config.readConfigValue("modBackgrounds")
         },
         game_data: {
             installs: [],
@@ -75,6 +76,11 @@ const store = new Vuex.Store({
                 ddmm.config.saveConfigValue("language", payload.language);
                 state.options.language = payload.language;
             }
+
+            if (payload.hasOwnProperty("mod_backgrounds")) {
+                ddmm.config.saveConfigValue("modBackgrounds", payload.mod_backgrounds);
+                state.options.mod_backgrounds = payload.mod_backgrounds;
+            }
         },
         load_installs(state, payload) {
             state.game_data.installs = payload;
@@ -105,6 +111,8 @@ const store = new Vuex.Store({
             state.selected_mod = payload.mod
         },
         override_background(state, background) {
+            if (!ddmm.config.readConfigValue("modBackgrounds")) return;
+
             if (background) {
                 Logger.info("BG", "Displaying custom background");
                 state.custom_background.display = true;
