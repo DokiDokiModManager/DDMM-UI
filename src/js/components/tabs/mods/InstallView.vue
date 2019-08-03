@@ -57,6 +57,7 @@
 
         <div class="screenshots" v-if="install.screenshots.length > 0">
             <LazyLoadedImage v-for="img in install.screenshots" :alt="img"
+                             :key="install.folderName + img"
                              :src="getPathToScreenshot(install.folderName, img)"
                              @click.native="openScreenshot(install.folderName, img)" width="150"></LazyLoadedImage>
         </div>
@@ -98,6 +99,7 @@
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName);
             },
             getPathToScreenshot(folderName, filename) {
+                console.log(ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName, "install", filename));
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName, "install", filename);
             },
             openScreenshot(folderName, filename) {
@@ -121,9 +123,7 @@
         },
         watch: {
             "install.background": function (val) {
-                if (val) {
-                    this.$store.commit("override_background", val);
-                }
+                this.$store.commit("override_background", val);
             }
         },
         mounted() {
