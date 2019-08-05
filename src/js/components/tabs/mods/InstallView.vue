@@ -54,8 +54,8 @@
         <p>{{_("renderer.tab_mods.install.description_screenshots")}}</p>
 
         <br>
-
         <div class="screenshots" v-if="install.screenshots.length > 0">
+
             <LazyLoadedImage v-for="img in install.screenshots" :alt="img"
                              :key="install.folderName + img"
                              :src="getPathToScreenshot(install.folderName, img)"
@@ -63,6 +63,8 @@
         </div>
 
         <template v-if="install.achievements">
+            <br>
+
             <h2>{{_("renderer.tab_mods.install.title_achievements", install.achievements.filter(a => a.earned).length,
                 install.achievements.length)}}</h2>
             <p v-if="install.achievements.filter(a => a.earned).length < install.achievements.length">
@@ -72,9 +74,13 @@
             <template v-for="achievement in install.achievements">
                 <br>
 
-                <div :style="{'color': !achievement.earned ? '#777' : 'inherit'}">
+                <div>
                     <p><strong>{{achievement.name}}</strong></p>
                     <p>{{achievement.description}}</p>
+                    <p v-if="achievement.earned"><i class="fas fa-lock-open fa-fw"></i>
+                        {{_("renderer.tab_mods.install.description_achievement_earned")}}</p>
+                    <p v-else><i class="fas fa-lock fa-fw"></i>
+                        {{_("renderer.tab_mods.install.description_achievement_not_earned")}}</p>
                 </div>
 
             </template>
