@@ -119,20 +119,17 @@
                 const minutes = Math.floor(seconds / 60);
 
                 return hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0");
+            },
+            doBackground() {
+                this.$store.commit("override_background", ddmm.mods.getInstallBackground(this.install.folderName));
             }
         },
         watch: {
-            "install.background": function (val) {
-                this.$store.commit("override_background", val);
+            "install.folderName": function () {
+                this.$nextTick(() => {
+                    this.doBackground();
+                });
             }
-        },
-        mounted() {
-            if (this.install.background) {
-                this.$store.commit("override_background", this.install.background);
-            }
-        },
-        destroyed() {
-            this.$store.commit("override_background", null);
         }
     }
 </script>
