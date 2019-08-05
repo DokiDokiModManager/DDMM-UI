@@ -130,6 +130,14 @@
                     this.doBackground();
                 });
             }
+        },
+        mounted() {
+            this.$nextTick(() => {
+                this.doBackground();
+            });
+        },
+        destroyed() {
+            this.$store.commit("override_background", null);
         }
     }
 </script>
