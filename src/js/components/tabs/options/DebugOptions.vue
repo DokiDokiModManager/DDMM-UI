@@ -19,6 +19,19 @@
         <p>
             <label><input type="checkbox" v-model="local_ui_interim" @change="setLocalUI(local_ui_interim)"> {{_("renderer.tab_options.section_testing.checkbox_ui_url")}}</label>
         </p>
+
+        <br>
+
+        <h2>{{_("renderer.tab_options.section_testing.header_renpy")}}</h2>
+        <p>{{_("renderer.tab_options.section_testing.description_renpy")}}</p>
+        <br>
+        <p>
+            <label><input type="checkbox" v-model="renpy_interim.skipSplash" @change="setRenpy(renpy_interim)"> {{_("renderer.tab_options.section_testing.checkbox_renpy_skipsplash")}}</label>
+        </p>
+        <p>
+            <label><input type="checkbox" v-model="renpy_interim.skipMenu" @change="setRenpy(renpy_interim)"> {{_("renderer.tab_options.section_testing.checkbox_renpy_skipmenu")}}</label>
+        </p>
+
     </div>
 </template>
 
@@ -29,6 +42,7 @@
             return {
                 sdk_debugging_interim: ddmm.config.readConfigValue("sdkDebuggingEnabled"),
                 local_ui_interim: ddmm.config.readConfigValue("localUI"),
+                renpy_interim: ddmm.config.readConfigValue("renpy")
             }
         },
         methods: {
@@ -38,6 +52,9 @@
             },
             setLocalUI(enabled) {
                 ddmm.config.saveConfigValue("localUI", !!enabled);
+            },
+            setRenpy(renpy) {
+                ddmm.config.saveConfigValue("renpy", renpy);
             }
         }
     }
