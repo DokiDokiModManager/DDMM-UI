@@ -4,6 +4,14 @@ import Vue from "vue";
 import Vuex from "vuex";
 import App from "./components/App.vue";
 
+import * as Sentry from "@sentry/browser";
+import * as Integrations from "@sentry/integrations";
+
+Sentry.init({
+    dsn: "https://bf0edf3f287344d4969e3171c33af4ea@sentry.io/1297252",
+    integrations: [new Integrations.Vue({Vue, attachProps: true})]
+});
+
 Vue.use(Vuex);
 
 // noinspection JSValidateTypes
