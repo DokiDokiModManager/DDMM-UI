@@ -32,10 +32,12 @@ const store = new Vuex.Store({
             language: ddmm.config.readConfigValue("language"),
             mod_backgrounds: ddmm.config.readConfigValue("modBackgrounds")
         },
+
         game_data: {
             installs: [],
             mods: []
         },
+
         modals: {
             login: false,
             install_options: false,
@@ -43,7 +45,8 @@ const store = new Vuex.Store({
             install_rename: false,
             uninstall: false,
             save_delete: false,
-            installing: false
+            installing: false,
+            game_running: false
         },
 
         preloaded_install_folder: "",
@@ -54,7 +57,9 @@ const store = new Vuex.Store({
         install_list_selection: {
             type: "",
             id: ""
-        }
+        },
+
+        running_install_path: null
     },
     mutations: {
         options(state, payload) {
@@ -143,6 +148,9 @@ const store = new Vuex.Store({
         },
         install_list_selection(state, payload) {
             state.install_list_selection = payload;
+        },
+        set_running_install(state, payload) {
+            state.running_install_path = payload;
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'
@@ -164,7 +172,6 @@ ddmm.on("install list", installs => {
     Logger.info("Install List", "Got a list of " + installs.length + " installs");
     store.commit("load_installs", installs);
     if (store.state.preloaded_install_folder) {
-        console.log("PRELEOIJGFW");
         store.commit("install_list_selection", {
             type: "install",
             id: store.state.preloaded_install_folder
@@ -178,6 +185,15 @@ ddmm.on("mod list", mods => {
     store.commit("load_mods", mods);
 });
 
+ddmm.on("running cover", cover => {
+   Logger.info("Game Running", cover.display ? "Install running from " + cover.folder_path : "Game ended");
+   if (cover.display) {
+       store.commit("set_running_install", cover.folder_path);
+       store.commit("show_modal", {modal: "game_running"});
+   } else {
+       store.commit("hide_modal", {modal: "game_running"});
+   }
+});
 
 window.__ddmm_vue = app;
 window.__ddmm_state = store;
