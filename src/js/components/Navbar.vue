@@ -19,6 +19,9 @@
         },
         methods: {
             setTab: function (t) {
+                gtag("event", "screen_view", {
+                    "screen_name" : t.id
+                });
                 Logger.info("Navbar", "Navigated to tab " + t.id);
                 this.tab = t.id;
                 this.$emit("tab", t);

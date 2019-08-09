@@ -5,6 +5,21 @@
 
     <title>Doki Doki Mod Manager</title>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120294697-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+        gtag("config", "UA-120294697-3");
+        gtag("config", "UA-120294697-3", {"app_name": "ddmm"});
+
+    </script>
+
     <link rel="stylesheet" href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="../css/app.scss">
 </head>
@@ -21,11 +36,11 @@
 
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-           navigator.serviceWorker.register("../js/sw/worker.js", {scope: "/"}).then(registration => {
-              console.log("Service worker registration", registration);
-           }).catch(err => {
-               console.warn(err.toString());
-           });
+            navigator.serviceWorker.register("../js/sw/worker.js", {scope: "/"}).then(registration => {
+                console.log("Service worker registration", registration);
+            }).catch(err => {
+                console.warn(err.toString());
+            });
         });
     }
 </script>

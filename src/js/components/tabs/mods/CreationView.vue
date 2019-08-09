@@ -91,6 +91,7 @@
                 }
             },
             install() {
+                gtag("event", "install_create", {event_label: this.install_creation.install_name, advanced: false});
                 this.$store.commit("installation_status", {installing: true, preloaded_install_folder: this.install_creation.folder_name});
                 ddmm.mods.createInstall({
                     folderName: this.install_creation.folder_name,

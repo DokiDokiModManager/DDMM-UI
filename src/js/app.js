@@ -188,9 +188,11 @@ ddmm.on("mod list", mods => {
 ddmm.on("running cover", cover => {
    Logger.info("Game Running", cover.display ? "Install running from " + cover.folder_path : "Game ended");
    if (cover.display) {
+       gtag("event", "game_launch");
        store.commit("set_running_install", cover.folder_path);
        store.commit("show_modal", {modal: "game_running"});
    } else {
+       gtag("event", "game_quit");
        store.commit("hide_modal", {modal: "game_running"});
    }
 });
