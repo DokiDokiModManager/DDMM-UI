@@ -5,6 +5,7 @@
         <SaveDeleteDialog v-if="modalVisible('save_delete')"></SaveDeleteDialog>
         <UninstallDialog v-if="modalVisible('uninstall')"></UninstallDialog>
         <InstallDialog v-if="modalVisible('installing')"></InstallDialog>
+        <ErrorDialog v-if="modalVisible('error')"></ErrorDialog>
 
         <GameRunningDialog v-if="modalVisible('game_running')"></GameRunningDialog>
 
@@ -21,6 +22,7 @@
     import AlertDialog from "./dialogs/base/AlertDialog.vue";
     import InstallDialog from "./dialogs/installs/InstallDialog";
     import GameRunningDialog from "./dialogs/GameRunningDialog";
+    import ErrorDialog from "./dialogs/ErrorDialog";
 
     export default {
         name: "Dialogs",
@@ -32,7 +34,8 @@
             InstallRenameDialog,
             ModOptionsDialog,
             InstallOptionsDialog,
-            AlertDialog
+            AlertDialog,
+            ErrorDialog
         },
         methods: {
             _: ddmm.translate,

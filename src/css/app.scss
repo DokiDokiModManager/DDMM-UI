@@ -48,6 +48,10 @@ body {
   border-radius: 3px;
 }
 
+::-webkit-scrollbar-corner {
+  display: none;
+}
+
 .app-container-background {
   position: fixed;
   top: 0;

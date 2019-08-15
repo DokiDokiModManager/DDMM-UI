@@ -14,6 +14,8 @@ Sentry.init({
 
 Vue.use(Vuex);
 
+window.__DDMM_SENTRY__ = Sentry;
+
 // noinspection JSValidateTypes
 const store = new Vuex.Store({
     state: {
@@ -46,7 +48,8 @@ const store = new Vuex.Store({
             uninstall: false,
             save_delete: false,
             installing: false,
-            game_running: false
+            game_running: false,
+            error: false
         },
 
         preloaded_install_folder: "",
@@ -57,6 +60,11 @@ const store = new Vuex.Store({
         install_list_selection: {
             type: "",
             id: ""
+        },
+
+        error: {
+            fatal: false,
+            stacktrace: "Beans"
         },
 
         running_install_path: null
@@ -151,6 +159,10 @@ const store = new Vuex.Store({
         },
         set_running_install(state, payload) {
             state.running_install_path = payload;
+        },
+        error(state, payload) {
+            state.error.fatal = payload.fatal;
+            state.error.stacktrace = payload.stacktrace;
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'
@@ -195,6 +207,12 @@ ddmm.on("running cover", cover => {
        gtag("event", "game_quit");
        store.commit("hide_modal", {modal: "game_running"});
    }
+});
+
+ddmm.on("error", error => {
+    Logger.error("Main Error", "An error occurred in the main process (fatal = " + error.fatal + ")\n\n" + error.stacktrace);
+    store.commit("show_modal", {modal: "error"});
+    store.commit("error", error);
 });
 
 window.__ddmm_vue = app;
