@@ -6,6 +6,7 @@
         <UninstallDialog v-if="modalVisible('uninstall')"></UninstallDialog>
         <InstallDialog v-if="modalVisible('installing')"></InstallDialog>
         <ErrorDialog v-if="modalVisible('error')"></ErrorDialog>
+        <InstallCategoryDialog v-if="modalVisible('install_category')"></InstallCategoryDialog>
 
         <GameRunningDialog v-if="modalVisible('game_running')"></GameRunningDialog>
 
@@ -23,10 +24,12 @@
     import InstallDialog from "./dialogs/installs/InstallDialog";
     import GameRunningDialog from "./dialogs/GameRunningDialog";
     import ErrorDialog from "./dialogs/ErrorDialog";
+    import InstallCategoryDialog from "./dialogs/installs/InstallCategoryDialog";
 
     export default {
         name: "Dialogs",
         components: {
+            InstallCategoryDialog,
             GameRunningDialog,
             InstallDialog,
             SaveDeleteDialog,

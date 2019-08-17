@@ -146,7 +146,8 @@
         },
         computed: {
             categories() {
-                return Array.from(new Set(this.$store.state.game_data.installs.map(install => install.category)));
+                // noinspection JSCheckFunctionSignatures
+                return Array.from(new Set(this.$store.state.game_data.installs.map(install => install.category))).sort();
             },
 
             selected_item() {

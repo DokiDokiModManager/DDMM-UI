@@ -4,7 +4,10 @@
         <br>
         <p><slot></slot></p>
         <br>
-        <p><button class="primary" @click="submit(true)"><i class="fas fa-check fa-fw"></i> {{yes_text}}</button> <button class="secondary" @click="submit(false)"><i class="fas fa-times fa-fw"></i> {{no_text}}</button></p>
+        <p>
+            <button class="primary" @click="submit(true)"><i class="fas fa-check fa-fw"></i> {{yes_text}}</button>
+            <button class="secondary" @click="submit(false)"><i class="fas fa-times fa-fw"></i> {{no_text}}</button>
+        </p>
     </Dialog>
 </template>
 

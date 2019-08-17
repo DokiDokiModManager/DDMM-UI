@@ -49,7 +49,8 @@ const store = new Vuex.Store({
             save_delete: false,
             installing: false,
             game_running: false,
-            error: false
+            error: false,
+            install_category: false
         },
 
         preloaded_install_folder: "",

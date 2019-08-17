@@ -18,6 +18,9 @@
         <div :class="{'dialog-menu-item': true, 'disabled': !this.isWindows}" @click="createShortcut">
             <i class="fas fa-external-link-alt fa-fw"></i> {{_("renderer.menu_install_options.shortcut")}}
         </div>
+        <div class="dialog-menu-item" @click="categories">
+            <i class="fas fa-th-list fa-fw"></i> {{_("renderer.menu_install_options.category")}}
+        </div>
         <div class="dialog-menu-separator"></div>
         <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave}" @click="deleteSave">
             <i class="fas fa-undo fa-fw"></i> {{_("renderer.menu_install_options.delete_save")}}
@@ -66,9 +69,13 @@
                 this.$store.commit("show_modal", {modal: "install_rename"});
             },
             deleteSave() {
-                if (this.install.globalSave || this.install.cloudSave) return;
+                if (this.install.globalSave) return;
                 this.$store.commit("hide_modal", {modal: "install_options"});
                 this.$store.commit("show_modal", {modal: "save_delete"});
+            },
+            categories() {
+                this.$store.commit("hide_modal", {modal: "install_options"});
+                this.$store.commit("show_modal", {modal: "install_category"});
             },
             uninstall() {
                 this.$store.commit("hide_modal", {modal: "install_options"});
