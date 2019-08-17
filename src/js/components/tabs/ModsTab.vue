@@ -147,7 +147,17 @@
         computed: {
             categories() {
                 // noinspection JSCheckFunctionSignatures
-                return Array.from(new Set(this.$store.state.game_data.installs.map(install => install.category))).sort();
+                return Array.from(new Set(this.$store.state.game_data.installs.map(install => install.category))).sort((a, b) => {
+                    if (!a || a === "") return 1; // sort uncategorised to the bottom
+                    if (!b || b === "") return -1;
+
+                    const uA = a.toUpperCase();
+                    const uB = b.toUpperCase();
+
+                    if (uA < uB) return -1;
+                    if (uA > uB) return 1;
+                    return 0;
+                });
             },
 
             selected_item() {
