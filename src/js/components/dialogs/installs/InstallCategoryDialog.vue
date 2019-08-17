@@ -14,7 +14,7 @@
         </div>
 
         <div class="form-group">
-            <p><input type="text" v-model.trim="category" :placeholder="_('renderer.modal_category.placeholder_category')"></p>
+            <p><input type="text" v-model.trim="category" :placeholder="_('renderer.modal_category.placeholder_category')" maxlength="25"></p>
         </div>
 
         <p>

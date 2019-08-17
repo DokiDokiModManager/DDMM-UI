@@ -266,6 +266,9 @@ a .fab {
   font-weight: bold;
   text-transform: uppercase;
   color: $ui-muted-text-colour;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .mod-view-mod-list-entry {
