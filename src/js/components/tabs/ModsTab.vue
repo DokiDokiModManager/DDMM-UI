@@ -18,23 +18,28 @@
                         @click="handleCreateClick(true)">{{_("renderer.tab_mods.list.link_install_advanced")}}
                 </div>
                 <br>
+
                 <!-- Installed games -->
-                <div class="mod-view-mod-list-title" v-if="searchResultsInstalls.length > 0">
-                    {{_("renderer.tab_mods.list.header_installed")}}
-                </div>
-                <div
-                        :class="{'mod-view-mod-list-entry': true, 'active': selected_item.id === install.folderName && selected_item.type === 'install'}"
-                        v-for="install in searchResultsInstalls"
-                        @dblclick="launchInstall(install.folderName)"
-                        @click="handleInstallClick(install.folderName)"
-                        :title="getPathToInstall(install.folderName)"
-                >
-                    <span>{{install.name}}</span>
-                    <span class="mod-view-mod-list-entry-button"
-                          @click="showInstallOptions(install)"><i
-                            class="fas fa-cog"></i></span>
-                </div>
-                <br v-if="searchResultsInstalls.length > 0">
+                <template v-for="cat in categories">
+                    <div class="mod-view-mod-list-title" v-if="searchResultsInstalls.length > 0">
+                        {{cat ? cat : _("renderer.tab_mods.list.header_installed")}}
+                    </div>
+                    <div
+                            :class="{'mod-view-mod-list-entry': true, 'active': selected_item.id === install.folderName && selected_item.type === 'install'}"
+                            v-for="install in searchResultsInstalls.filter(i => i.category === cat)"
+                            @dblclick="launchInstall(install.folderName)"
+                            @click="handleInstallClick(install.folderName)"
+                            :title="getPathToInstall(install.folderName)"
+                    >
+                        <span>{{install.name}}</span>
+                        <span class="mod-view-mod-list-entry-button"
+                              @click="showInstallOptions(install)"><i
+                                class="fas fa-cog"></i></span>
+                    </div>
+
+                    <br v-if="searchResultsInstalls.filter(i => i.category === cat).length > 0">
+                </template>
+
                 <!-- Downloaded mods -->
                 <div class="mod-view-mod-list-title" v-if="searchResultsMods.length > 0">
                     {{_("renderer.tab_mods.list.header_downloaded")}}
@@ -140,6 +145,10 @@
             };
         },
         computed: {
+            categories() {
+                return Array.from(new Set(this.$store.state.game_data.installs.map(install => install.category)));
+            },
+
             selected_item() {
                 return this.$store.state.install_list_selection;
             },
