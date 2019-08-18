@@ -1,7 +1,8 @@
 <template>
     <MenuDialog>
         <div class="dialog-menu-description">
-            <h3>{{install.name}}</h3>
+            <h2 style="overflow-x: hidden; white-space: pre; text-overflow: ellipsis;">{{install.name}}</h2>
+            <p style="overflow-x: hidden; white-space: pre; text-overflow: ellipsis;">{{install.folderName}}</p>
         </div>
         <div class="dialog-menu-separator"></div>
         <div class="dialog-menu-item" @click="launch">
@@ -22,10 +23,10 @@
             <i class="fas fa-th-list fa-fw"></i> {{_("renderer.menu_install_options.category")}}
         </div>
         <div class="dialog-menu-separator"></div>
-        <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave}" @click="deleteSave">
+        <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave, 'danger': true}" @click="deleteSave">
             <i class="fas fa-undo fa-fw"></i> {{_("renderer.menu_install_options.delete_save")}}
         </div>
-        <div class="dialog-menu-item" @click="uninstall">
+        <div class="dialog-menu-item danger" @click="uninstall">
             <i class="fas fa-trash fa-fw"></i> {{_("renderer.menu_install_options.uninstall")}}
         </div>
         <div class="dialog-menu-separator"></div>

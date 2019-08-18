@@ -581,14 +581,22 @@ td, th {
 }
 
 .dialog-menu-description {
-  padding: 1em;
+  padding: 1em 2em;
   text-align: center;
 }
 
 .dialog-menu-item {
   font-size: 0.9em;
-  padding: 0.75em 1em;
+  padding: 0.65em 1em;
   transition: background-color 0.5s;
+}
+
+.dialog-menu-item:first-child {
+  border-radius: 3px 3px 0 0;
+}
+
+.dialog-menu-item:last-child {
+  border-radius: 0 0 3px 3px;
 }
 
 .dialog-menu-item.disabled {
@@ -597,6 +605,10 @@ td, th {
 
 .dialog-menu-item:not(.disabled):hover {
   background-color: darken($ui-dark-colour-bg, 10%);
+}
+
+.dialog-menu-item:not(.disabled).danger:hover {
+  background-color: darken($ui-danger-colour-bg, 20%);
 }
 
 .dialog-menu-separator {
