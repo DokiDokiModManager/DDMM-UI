@@ -14,7 +14,7 @@
     "build": "parcel build src/html/index.html"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.1",
+    "@fortawesome/fontawesome-free": "^5.10.2",
     "@sentry/browser": "^5.5.0",
     "@sentry/integrations": "^5.5.0",
     "vue": "^2.6.10",
