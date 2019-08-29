@@ -12,7 +12,7 @@
 
             <Dialogs></Dialogs>
 
-            <OnboardingOverlay v-if="onboarding" @close="onboarding = false;"></OnboardingOverlay>
+            <OnboardingOverlay v-if="onboarding" @close="onboarding = false"></OnboardingOverlay>
 
             <template v-else>
                 <component :is="tab"></component>
@@ -29,13 +29,14 @@
     import Navbar from "./Navbar.vue";
     import ModsTab from "./tabs/ModsTab.vue";
     import OptionsTab from "./tabs/OptionsTab.vue";
+    import ExperimentsTab from "./tabs/ExperimentsTab";
     import AboutTab from "./tabs/AboutTab.vue";
     import Dialogs from "./Dialogs.vue";
     import OnboardingOverlay from "./OnboardingOverlay";
 
     export default {
         name: "App",
-        components: {OnboardingOverlay, Navbar, Titlebar, ModsTab, OptionsTab, Dialogs, AboutTab},
+        components: {OnboardingOverlay, Navbar, Titlebar, ModsTab, OptionsTab, Dialogs, AboutTab, ExperimentsTab},
         data() {
             return {
                 // app / system meta
@@ -70,6 +71,11 @@
                         id: "about",
                         name: ddmm.translate("renderer.tabs.tab_about"),
                         component: "AboutTab"
+                    },
+                    {
+                        id: "experiments",
+                        name: ddmm.env.DDMM_DEVELOPER ? "Experiments" : "",
+                        component: "ExperimentsTab"
                     }
                 ],
             }
