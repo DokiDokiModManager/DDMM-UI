@@ -11,7 +11,9 @@
                 </template>
             </div>
             <div class="mod-viewer-mod-display">
-                <component :is="selected_option"></component>
+                <div>
+                    <component :is="selected_option"></component>
+                </div>
             </div>
         </div>
     </div>

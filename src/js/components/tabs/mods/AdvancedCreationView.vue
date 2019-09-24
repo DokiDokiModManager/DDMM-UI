@@ -38,6 +38,7 @@
                         v-model="install_creation.save_option"></ChunkyRadioButtons>
             </div>
 
+            <br>
 
             <div v-if="install_creation.save_option === 1">
                 <p>{{_("renderer.tab_mods.install_creation.description_global_save")}}</p>
