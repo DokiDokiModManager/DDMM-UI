@@ -8,8 +8,9 @@
             <p><label>{{_("renderer.tab_options.section_language.label_language")}}</label></p>
             <p>
                 <select v-model="language_interim" @change="setLanguage">
-                    <option value="en-GB">English (United Kingdom)</option>
-                    <option value="es-419">Español (Latinoamérica)</option>
+                    <option v-for="language in languages" :value="language.code">
+                        {{language.name}}
+                    </option>
                 </select>
             </p>
         </div>
@@ -17,6 +18,8 @@
 </template>
 
 <script>
+    import languages from "../../../../data/languages";
+
     export default {
         name: "LanguageOptions",
         methods: {
@@ -27,7 +30,8 @@
         },
         data() {
             return {
-                language_interim: this.$store.state.options.language
+                language_interim: this.$store.state.options.language,
+                languages: languages.languages
             }
         }
     }
