@@ -11,6 +11,8 @@
         <GameRunningDialog v-if="modalVisible('game_running')"></GameRunningDialog>
 
         <ModOptionsDialog v-if="modalVisible('mod_options')"></ModOptionsDialog>
+
+        <NewsDialog v-if="modalVisible('news')"></NewsDialog>
     </div>
 </template>
 
@@ -25,10 +27,12 @@
     import GameRunningDialog from "./dialogs/GameRunningDialog";
     import ErrorDialog from "./dialogs/ErrorDialog";
     import InstallCategoryDialog from "./dialogs/installs/InstallCategoryDialog";
+    import NewsDialog from "./dialogs/NewsDialog";
 
     export default {
         name: "Dialogs",
         components: {
+            NewsDialog,
             InstallCategoryDialog,
             GameRunningDialog,
             InstallDialog,

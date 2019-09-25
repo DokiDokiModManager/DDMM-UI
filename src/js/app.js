@@ -50,7 +50,8 @@ const store = new Vuex.Store({
             installing: false,
             game_running: false,
             error: false,
-            install_category: false
+            install_category: false,
+            news: false
         },
 
         preloaded_install_folder: "",
@@ -66,6 +67,11 @@ const store = new Vuex.Store({
         error: {
             fatal: false,
             stacktrace: "Beans"
+        },
+
+        news_modal: {
+            title: "",
+            body: ""
         },
 
         running_install_path: null
@@ -164,6 +170,10 @@ const store = new Vuex.Store({
         error(state, payload) {
             state.error.fatal = payload.fatal;
             state.error.stacktrace = payload.stacktrace;
+        },
+        show_news(state, payload) {
+            state.news_modal.title = payload.title;
+            state.news_modal.body = payload.body;
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'
@@ -199,21 +209,33 @@ ddmm.on("mod list", mods => {
 });
 
 ddmm.on("running cover", cover => {
-   Logger.info("Game Running", cover.display ? "Install running from " + cover.folder_path : "Game ended");
-   if (cover.display) {
-       gtag("event", "game_launch");
-       store.commit("set_running_install", cover.folder_path);
-       store.commit("show_modal", {modal: "game_running"});
-   } else {
-       gtag("event", "game_quit");
-       store.commit("hide_modal", {modal: "game_running"});
-   }
+    Logger.info("Game Running", cover.display ? "Install running from " + cover.folder_path : "Game ended");
+    if (cover.display) {
+        gtag("event", "game_launch");
+        store.commit("set_running_install", cover.folder_path);
+        store.commit("show_modal", {modal: "game_running"});
+    } else {
+        gtag("event", "game_quit");
+        store.commit("hide_modal", {modal: "game_running"});
+    }
 });
 
 ddmm.on("error", error => {
     Logger.error("Main Error", "An error occurred in the main process (fatal = " + error.fatal + ")\n\n" + error.stacktrace);
     store.commit("show_modal", {modal: "error"});
     store.commit("error", error);
+});
+
+const NEWS_URL = "https://dokidokimodmanager.github.io/Meta/news.json";
+
+if (!localStorage.getItem("last_news_timestamp")) {
+    localStorage.setItem("last_news_timestamp", "0");
+}
+
+fetch(NEWS_URL).then(res => res.json()).then(news => news.news.filter(news => news.timestamp > localStorage.getItem("last_news_timestamp"))).then(backwards => {
+    const news = backwards.reverse();
+    store.commit("show_news", news[0]);
+    store.commit("show_modal", {modal: "news"});
 });
 
 window.__ddmm_vue = app;
