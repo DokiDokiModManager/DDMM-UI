@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-content">
         <h1>{{_("renderer.tab_mods.install_creation.title")}}</h1>
 
         <template v-if="hasFreeSpace">

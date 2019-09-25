@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-content">
         <h1>{{_("renderer.tab_mods.install_creation.title")}}</h1>
 
         <template v-if="hasFreeSpace">
@@ -112,7 +112,10 @@
             },
             install() {
                 gtag("event", "install_create", {event_label: this.install_creation.install_name, advanced: true});
-                this.$store.commit("installation_status", {installing: true, preloaded_install_folder: this.install_creation.folder_name});
+                this.$store.commit("installation_status", {
+                    installing: true,
+                    preloaded_install_folder: this.install_creation.folder_name
+                });
                 ddmm.mods.createInstall({
                     folderName: this.install_creation.folder_name,
                     installName: this.install_creation.install_name,

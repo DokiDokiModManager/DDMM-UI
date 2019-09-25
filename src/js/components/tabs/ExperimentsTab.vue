@@ -1,6 +1,11 @@
 <template>
     <div class="page-content">
         <div class="text-container">
+
+            <p>{{_("blatantly.wrong.translation.key")}}</p>
+
+            <br>
+
             <p>
                 <button @click="devtools" class="primary">Open DevTools</button>
             </p>
@@ -23,6 +28,7 @@
             }
         },
         methods: {
+            _: ddmm.translate,
             devtools() {
                 ddmm.window.openDevtools();
             },
