@@ -82,7 +82,7 @@
         },
         computed: {
             backgroundImage() {
-                const bg = this.$store.state.options.background;
+                const bg = this.$store.state.background;
                 let imagePath;
                 if (bg.startsWith("custom:")) {
                     imagePath = ddmm.fileToURL(bg.split("custom:")[1]);

@@ -3,8 +3,10 @@
         <h1>{{_("renderer.tab_options.section_advanced_appearance.title")}}</h1>
         <p>{{_("renderer.tab_options.section_advanced_appearance.subtitle")}}</p>
         <br>
-        <button class="danger" v-if="systemBordersEnabled" @click="setSystemBorders(false)"><i class="fas fa-times fa-fw"></i> {{_("renderer.tab_options.section_advanced_appearance.button_disable_sysborders")}}</button>
-        <button class="success" v-else @click="setSystemBorders(true)"><i class="fas fa-check fa-fw"></i> {{_("renderer.tab_options.section_advanced_appearance.button_enable_sysborders")}}</button>
+
+        <p>
+            <label><input type="checkbox" v-model="system_borders_interim" @change="setSystemBorders(system_borders_interim)"> {{_("renderer.tab_options.section_advanced_appearance.button_enable_sysborders")}}</label>
+        </p>
     </div>
 </template>
 
@@ -14,12 +16,12 @@
         methods: {
             _: ddmm.translate,
             setSystemBorders(system_borders) {
-                this.$store.commit("options", {system_borders});
+                ddmm.config.saveConfigValue("systemBorders", system_borders);
             }
         },
-        computed: {
-            systemBordersEnabled() {
-                return this.$store.state.options.system_borders;
+        data() {
+            return {
+                system_borders_interim: ddmm.config.readConfigValue("systemBorders")
             }
         }
     }

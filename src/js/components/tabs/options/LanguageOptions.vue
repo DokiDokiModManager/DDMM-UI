@@ -25,12 +25,12 @@
         methods: {
             _: ddmm.translate,
             setLanguage() {
-                this.$store.commit("options", {language: this.language_interim});
+                ddmm.config.saveConfigValue("language", this.language_interim)
             }
         },
         data() {
             return {
-                language_interim: this.$store.state.options.language,
+                language_interim: ddmm.config.readConfigValue("language"),
                 languages: languages.languages
             }
         }

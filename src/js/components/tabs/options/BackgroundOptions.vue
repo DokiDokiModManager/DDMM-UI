@@ -46,10 +46,10 @@
         methods: {
             _: ddmm.translate,
             setBackground(background) {
-                this.$store.commit("options", {background});
+                this.$store.commit("set_background", background);
             },
             setModBackgrounds(modBackgrounds) {
-                this.$store.commit("options", {mod_backgrounds: modBackgrounds})
+                ddmm.config.saveConfigValue("modBackgrounds", modBackgrounds);
             },
             chooseBackground() {
                 const el = document.createElement("input");
@@ -57,7 +57,7 @@
                 el.accept = "image/*";
                 el.onchange = () => {
                     console.log(el.files[0]);
-                    this.$store.commit("options", {background: "custom:" + el.files[0].path});
+                    ddmm.config.saveConfigValue("background", "custom:" + el.files[0]);
                 };
                 el.click();
             }
@@ -65,7 +65,7 @@
         data() {
             return {
                 backgrounds: ddmm.app.getBackgrounds(),
-                modbg_interim: this.$store.state.options.mod_backgrounds
+                modbg_interim: ddmm.config.readConfigValue("modbg_interim")
             }
         }
     }
