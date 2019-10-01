@@ -143,9 +143,6 @@ const store = new Vuex.Store({
     strict: ddmm.env.NODE_ENV !== 'production'
 });
 
-// hacky way to enable Vuex injection without using runtime compiled templates
-// this way i get to keep my CSP
-// <3
 Object.assign(App, {
     store
 });
