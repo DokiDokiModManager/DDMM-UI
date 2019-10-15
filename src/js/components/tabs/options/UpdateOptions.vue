@@ -47,7 +47,9 @@
                 }).catch(() => {
                     this.error = true;
                 }).finally(() => {
-                    this.checking = false;
+                    setTimeout(() => {
+                        this.checking = false;
+                    }, 1000);
                 });
             }
         },

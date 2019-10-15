@@ -32,6 +32,13 @@
                         <strong>{{translator.name}}</strong> - {{translator.language}}
                     </li>
                 </ul>
+                <br>
+                <p>
+                    <Link to="https://hosted.weblate.org/engage/doki-doki-mod-manager/">
+                        <i class="fas fa-globe"></i>
+                        {{_("renderer.tab_about.link_weblate")}}
+                    </Link>
+                </p>
             </template>
 
             <br>
