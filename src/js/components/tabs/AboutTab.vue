@@ -43,21 +43,6 @@
 
             <br>
 
-            <template v-if="supporters.length > 0">
-                <h2>{{_("renderer.tab_about.title_supporters")}}</h2>
-                <p>{{supporters.join(", ")}}</p>
-                <br>
-            </template>
-            <h2 v-else>{{_("renderer.tab_about.title_supporters_none")}}</h2>
-
-            <p>
-                <Link to="https://patreon.com/ddmm"><i class="fab fa-patreon fa-fw"></i>
-                    {{_("renderer.tab_about.link_patreon")}}
-                </Link>
-            </p>
-
-            <br>
-
             <h2>{{_("renderer.tab_about.title_disclaimer")}}</h2>
             <p>{{_("renderer.tab_about.disclaimer_1")}}</p>
             <br>

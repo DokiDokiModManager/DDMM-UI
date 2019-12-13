@@ -8,28 +8,28 @@ workbox.setConfig({
 
 workbox.routing.registerRoute(
     "/",
-    new workbox.strategies.NetworkFirst({
+    new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'static-html',
     })
 );
 
 workbox.routing.registerRoute(
     /\.(?:js)$/,
-    new workbox.strategies.NetworkFirst({
+    new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'static-js',
     })
 );
 
 workbox.routing.registerRoute(
     /\.(?:css)$/,
-    new workbox.strategies.NetworkFirst({
+    new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'static-css',
     })
 );
 
 workbox.routing.registerRoute(
     /\.(?:ttf|svg|woff|woff2|eot)$/,
-    new workbox.strategies.NetworkFirst({
+    new workbox.strategies.StaleWhileRevalidate    ({
         cacheName: 'static-fonts',
     })
 );

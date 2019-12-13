@@ -1,8 +1,9 @@
 <template>
     <ConfirmDialog :title="_('renderer.modal_save_delete.title')"
-                  :yes_text="_('renderer.modal_save_delete.button_affirmative')"
-                  :no_text="_('renderer.modal_save_delete.button_negative')"
-                  @input="uninstall"
+                   :yes_text="_('renderer.modal_save_delete.button_affirmative')"
+                   :no_text="_('renderer.modal_save_delete.button_negative')"
+                   :checkbox="_('renderer.modal_save_delete.confirmation')"
+                   @input="uninstall"
     >
         {{_("renderer.modal_save_delete.body", install.name)}}
     </ConfirmDialog>

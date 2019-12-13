@@ -16,7 +16,7 @@
         <div class="dialog-menu-item" @click="rename">
             <i class="fas fa-pencil-alt fa-fw"></i> {{_("renderer.menu_install_options.rename")}}
         </div>
-        <div :class="{'dialog-menu-item': true, 'disabled': !this.isWindows}" @click="createShortcut">
+        <div class="dialog-menu-item" v-if="this.isWindows" @click="createShortcut">
             <i class="fas fa-external-link-alt fa-fw"></i> {{_("renderer.menu_install_options.shortcut")}}
         </div>
         <div class="dialog-menu-item" @click="categories">

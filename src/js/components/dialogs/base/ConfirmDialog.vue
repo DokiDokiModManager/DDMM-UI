@@ -2,10 +2,20 @@
     <Dialog>
         <h2>{{title}}</h2>
         <br>
-        <p><slot></slot></p>
+        <p>
+            <slot></slot>
+        </p>
+        <br>
+        <p v-if="checkbox">
+            <label>
+                <input v-model="checkbox_state" type="checkbox"> {{checkbox}}
+            </label>
+        </p>
         <br>
         <p>
-            <button class="primary" @click="submit(true)"><i class="fas fa-check fa-fw"></i> {{yes_text}}</button>
+            <button class="primary" @click="submit(true)" :disabled="!checkbox || !checkbox_state">
+                <i class="fas fa-check fa-fw"></i> {{yes_text}}
+            </button>
             <button class="secondary" @click="submit(false)"><i class="fas fa-times fa-fw"></i> {{no_text}}</button>
         </p>
     </Dialog>
@@ -17,7 +27,12 @@
     export default {
         name: "ConfirmDialog",
         components: {Dialog},
-        props: ["title", "yes_text", "no_text"],
+        props: ["title", "yes_text", "no_text", "checkbox"],
+        data() {
+            return {
+                checkbox_state: false
+            }
+        },
         methods: {
             submit(value) {
                 this.$emit("input", value);
