@@ -29,7 +29,7 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
     /\.(?:ttf|svg|woff|woff2|eot)$/,
-    new workbox.strategies.StaleWhileRevalidate    ({
+    new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'static-fonts',
     })
 );

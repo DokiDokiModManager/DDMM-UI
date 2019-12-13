@@ -39,27 +39,9 @@
 
                     <br v-if="searchResultsInstalls.filter(i => i.category === cat).length > 0">
                 </template>
-
-                <!-- Downloaded mods -->
-                <div class="mod-view-mod-list-title" v-if="searchResultsMods.length > 0">
-                    {{_("renderer.tab_mods.list.header_downloaded")}}
-                </div>
-                <div
-                        :class="{'mod-view-mod-list-entry': true, 'active': selected_item.id === mod.filename && selected_item.type === 'mod', 'disabled': mod.downloading}"
-                        v-for="mod in searchResultsMods"
-                        @click="handleModClick(mod.filename, mod.downloading)"
-                        @dblclick="showCreateInstall(getPathToMod(mod.filename))"
-                        :title="getPathToMod(mod.filename)"
-                >
-                    <span><i class="fas fa-spinner fa-spin fa-fw" v-if="mod.downloading"></i> {{mod.filename}}</span>
-                    <span class="mod-view-mod-list-entry-button"
-                          @click="showModOptions(mod.filename)"><i
-                            class="fas fa-cog"></i></span>
-                </div>
             </div>
             <div class="mod-viewer-mod-display">
                 <InstallView v-if="selectedInstall" :install="selectedInstall"></InstallView>
-                <ModView v-else-if="selectedMod" :mod="selectedMod"></ModView>
                 <CreationView v-else-if="selected_item.type === 'create' && selected_item.id === 'normal'"></CreationView>
                 <AdvancedCreationView v-else-if="selected_item.type === 'create' && selected_item.id === 'advanced'"></AdvancedCreationView>
             </div>
@@ -86,9 +68,6 @@
             getPathToInstall(folderName) {
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName);
             },
-            getPathToMod(filename) {
-                return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", filename);
-            },
 
             // install list interaction handlers
             handleCreateClick(advanced) {
@@ -105,21 +84,9 @@
                     id: folderName
                 });
             },
-            handleModClick(filename, downloading) {
-                if (downloading) return;
-                Logger.info("Mod List", "Selected mod " + filename);
-                this.$store.commit("install_list_selection", {
-                    type: "mod",
-                    id: filename
-                });
-            },
             showInstallOptions(install) {
                 this.$store.commit("select_install", {install});
                 this.$store.commit("show_modal", {modal: "install_options"});
-            },
-            showModOptions(mod) {
-                this.$store.commit("select_mod", {mod});
-                this.$store.commit("show_modal", {modal: "mod_options"});
             },
 
             // install launch logic
@@ -140,7 +107,6 @@
                 search: "",
                 search_objs: {
                     installs: null,
-                    mods: null
                 }
             };
         },
@@ -168,29 +134,14 @@
                 return this.$store.state.game_data.installs;
             },
 
-            mods() {
-                return this.$store.state.game_data.mods;
-            },
-
             searchResultsInstalls() {
                 return this.$store.state.game_data.installs || [];
                 // return this.search.length > 0 ? this.installs_search.search(this.search) : this.installs;
-            },
-            searchResultsMods() {
-                return this.$store.state.game_data.mods || [];
-                // return this.search.length > 0 ? this.mods_search.search(this.search) : this.mods;
             },
 
             selectedInstall() {
                 if (this.selected_item.type === "install") {
                     return this.installs.find(install => install.folderName === this.selected_item.id);
-                } else {
-                    return null;
-                }
-            },
-            selectedMod() {
-                if (this.selected_item.type === "mod") {
-                    return this.selected_item.id;
                 } else {
                     return null;
                 }

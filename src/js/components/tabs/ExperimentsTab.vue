@@ -13,6 +13,12 @@
             <br>
 
             <p>
+                <button @click="langReload" class="primary">Reload Languages</button>
+            </p>
+
+            <br>
+
+            <p>
                 <label><input type="checkbox" v-model="local_ui_interim" @change="setLocalUI(local_ui_interim)"> Local UI</label>
             </p>
         </div>
@@ -34,6 +40,9 @@
             },
             setLocalUI(enabled) {
                 ddmm.config.saveConfigValue("localUI", !!enabled);
+            },
+            langReload() {
+                ddmm.reloadLanguages();
             }
         }
     }

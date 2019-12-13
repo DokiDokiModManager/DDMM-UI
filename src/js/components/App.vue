@@ -33,10 +33,21 @@
     import AboutTab from "./tabs/AboutTab.vue";
     import Dialogs from "./Dialogs.vue";
     import OnboardingOverlay from "./OnboardingOverlay";
+    import DownloadsTab from "./tabs/DownloadsTab";
 
     export default {
         name: "App",
-        components: {OnboardingOverlay, Navbar, Titlebar, ModsTab, OptionsTab, Dialogs, AboutTab, ExperimentsTab},
+        components: {
+            OnboardingOverlay,
+            Navbar,
+            Titlebar,
+            ModsTab,
+            OptionsTab,
+            Dialogs,
+            AboutTab,
+            ExperimentsTab,
+            DownloadsTab
+        },
         data() {
             return {
                 // app / system meta
@@ -58,9 +69,9 @@
                         component: "ModsTab"
                     },
                     {
-                        id: "store",
-                        name: ddmm.translate("renderer.tabs.tab_store"),
-                        component: ""
+                        id: "downloads",
+                        name: ddmm.translate("renderer.tabs.tab_downloads"),
+                        component: "DownloadsTab"
                     },
                     {
                         id: "options",
