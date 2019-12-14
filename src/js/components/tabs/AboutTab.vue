@@ -13,7 +13,7 @@
                 </Link>
             </p>
             <p>
-                <Link to="https://www.reddit.com/message/compose?to=zuudo"><i class="fab fa-reddit fa-fw"></i>
+                <Link to="https://www.reddit.com/message/compose?to=zuudo&subject=Doki+Doki+Mod+Manager"><i class="fab fa-reddit fa-fw"></i>
                     {{_("renderer.tab_about.social_reddit")}}
                 </Link>
             </p>

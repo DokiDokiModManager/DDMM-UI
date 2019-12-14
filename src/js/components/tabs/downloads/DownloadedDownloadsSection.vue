@@ -4,6 +4,7 @@
 
         <div v-for="mod in mods" class="mod">
             <h3>{{mod.filename}}</h3>
+            <p>{{getPathToMod(mod.filename)}}</p>
             <br>
             <p>
                 <button class="primary"><i class="fas fa-bolt fa-fw"></i>
@@ -26,6 +27,9 @@
             showOptions(mod) {
                 this.$store.commit("select_mod", {mod});
                 this.$store.commit("show_modal", {modal: "mod_options"});
+            },
+            getPathToMod(filename) {
+                return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", filename);
             }
         },
         computed: {

@@ -10,12 +10,8 @@
                 <!-- Game install options -->
                 <div class="mod-view-mod-list-title">{{_("renderer.tab_mods.list.header_new")}}</div>
                 <div
-                        :class="{'mod-view-mod-list-entry': true, 'active': selected_item.type === 'create' && selected_item.id === 'normal'}"
+                        :class="{'mod-view-mod-list-entry': true, 'active': selected_item.type === 'create'}"
                         @click="handleCreateClick(false)">{{_("renderer.tab_mods.list.link_install")}}
-                </div>
-                <div
-                        :class="{'mod-view-mod-list-entry': true, 'active': selected_item.type === 'create' && selected_item.id === 'advanced'}"
-                        @click="handleCreateClick(true)">{{_("renderer.tab_mods.list.link_install_advanced")}}
                 </div>
                 <br>
 
@@ -42,8 +38,7 @@
             </div>
             <div class="mod-viewer-mod-display">
                 <InstallView v-if="selectedInstall" :install="selectedInstall"></InstallView>
-                <CreationView v-else-if="selected_item.type === 'create' && selected_item.id === 'normal'"></CreationView>
-                <AdvancedCreationView v-else-if="selected_item.type === 'create' && selected_item.id === 'advanced'"></AdvancedCreationView>
+                <CreationView v-else-if="selected_item.type === 'create'"></CreationView>
             </div>
         </div>
     </div>
@@ -57,11 +52,10 @@
 
     import Logger from "../../utils/Logger";
     import Launcher from "../../utils/Launcher";
-    import AdvancedCreationView from "./mods/AdvancedCreationView";
 
     export default {
         name: "ModsTab",
-        components: {AdvancedCreationView, CreationView, ModView, InstallView},
+        components: {CreationView, ModView, InstallView},
         methods: {
             // helper methods
             _: ddmm.translate,

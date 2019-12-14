@@ -16,16 +16,34 @@
             </p>
 
             <div class="form-group">
-                <p><label><input type="checkbox" v-model="install_creation.has_mod">
-                    {{_("renderer.tab_mods.install_creation.label_has_mod")}}</label></p>
+                <p><label>{{_("renderer.tab_mods.install_creation.label_mod")}}</label></p>
+                <p>
+                    <select v-model="install_creation.mod_selection">
+                        <option :value="'!none'">{{_("renderer.tab_mods.install_creation.modlist_none")}}</option>
+                        <option :value="'!custom'">{{_("renderer.tab_mods.install_creation.modlist_custom")}}</option>
+
+                        <optgroup :label="_('renderer.tab_mods.install_creation.modlist_library')">
+                            <option v-for="mod in mods" :value="getPathToMod(mod.filename)">{{mod.filename}}</option>
+                        </optgroup>
+                    </select>
+                </p>
+                <template v-if="install_creation.mod_selection === '!custom'">
+                    <br>
+                    <p><input type="text" :placeholder="_('renderer.tab_mods.install_creation.description_mod')"
+                              v-model="install_creation.mod" readonly @click="installCreationSelectMod"
+                              style="cursor: pointer;"></p>
+                </template>
             </div>
 
-            <div class="form-group" v-if="install_creation.has_mod">
-                <p><label>{{_("renderer.tab_mods.install_creation.label_mod")}}</label></p>
-                <p><input type="text" :placeholder="_('renderer.tab_mods.install_creation.description_mod')"
-                          v-model="install_creation.mod" readonly @click="installCreationSelectMod"
-                          style="cursor: pointer;"></p>
+            <div class="form-group">
+                <ChunkyRadioButtons
+                        :options="[_('renderer.tab_mods.install_creation.option_local_save'), _('renderer.tab_mods.install_creation.option_global_save')]"
+                        v-model="install_creation.save_option"></ChunkyRadioButtons>
             </div>
+
+            <p v-if="install_creation.save_option === 1">
+                {{_("renderer.tab_mods.install_creation.warning_global_save")}}
+            </p>
 
             <div v-if="is_installing" class="form-group">
                 <button class="primary" disabled><i class="fas fa-spinner fa-spin fa-fw"></i>
@@ -58,7 +76,7 @@
                 install_creation: {
                     install_name: "",
                     folder_name: "",
-                    has_mod: false,
+                    mod_selection: "!none",
                     mod: "",
                     save_option: 0
                 },
@@ -81,7 +99,7 @@
                     .substring(0, 32);
 
                 if (ddmm.mods.installExists(this.install_creation.folder_name)) {
-                    this.install_creation.folder_name = this.install_creation.folder_name + "-" + Math.floor(Math.random()*100);
+                    this.install_creation.folder_name = this.install_creation.folder_name + "-" + Math.floor(Math.random() * 100);
                 }
             },
             installCreationSelectMod() {
@@ -92,23 +110,36 @@
             },
             install() {
                 gtag("event", "install_create", {event_label: this.install_creation.install_name, advanced: false});
-                this.$store.commit("installation_status", {installing: true, preloaded_install_folder: this.install_creation.folder_name});
+                this.$store.commit("installation_status", {
+                    installing: true,
+                    preloaded_install_folder: this.install_creation.folder_name
+                });
                 ddmm.mods.createInstall({
                     folderName: this.install_creation.folder_name,
                     installName: this.install_creation.install_name,
                     globalSave: this.install_creation.save_option === 1,
-                    mod: this.install_creation.has_mod ? this.install_creation.mod : null
+                    mod: this.selectedMod
                 });
                 this.is_installing = true;
+            },
+            getPathToMod(filename) {
+                return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", filename);
             }
         },
         computed: {
             shouldDisableCreation() {
-                return this.is_installing || (this.install_creation.has_mod && !this.install_creation.mod)
+                return this.is_installing || !(this.selectedMod || this.install_creation.mod_selection === "!none")
                     || this.install_creation.install_name.length < 2 || this.install_creation.folder_name.length < 2;
             },
             user() {
                 return this.$store.state.user;
+            },
+            mods() {
+                return this.$store.state.game_data.mods;
+            },
+            selectedMod() {
+                return this.install_creation.mod_selection !== "!none" ?
+                    (this.install_creation.mod_selection === "!custom" ? this.install_creation.mod : this.install_creation.mod_selection) : null;
             }
         }
     }
