@@ -1,26 +1,54 @@
 <template>
     <div class="cover">
-        <h1>{{_("renderer.onboarding.title")}}</h1>
-        <p>{{_("renderer.onboarding.description_download")}}</p>
-        <br>
-        <p><button class="primary" :disabled="!online || downloading" @click="download">{{_("renderer.onboarding.button_download")}}</button> <button class="secondary" :disabled="downloading" @click="open">{{_("renderer.onboarding.button_choose")}}</button></p>
-        <br>
-        <div v-if="!downloading">{{_("renderer.onboarding.description_location", install_folder)}} <a href="javascript:;" @click="changeFolder">{{_("renderer.onboarding.link_change")}}</a><br><br></div>
-        <p>{{_("renderer.onboarding.heading_why")}}</p>
-        <div>{{_("renderer.onboarding.description_why")}}</div>
-        <br>
-        <div>{{_("renderer.onboarding.description_unexpected")}}</div>
-        <br>
-        <div v-if="downloading && online">
-            <div class="progress">
-                <div class="bar" :style="{'width': formattedPercentage}"></div>
+        <div class="onboarding-wizard">
+            <div class="wizard-step" v-if="step === 1">
+                <div class="wizard-step-content full-center">
+                    <div>
+                        <h1>Welcome to <strong>Doki Doki Mod Manager</strong> 4</h1>
+                        <br>
+                        <p>
+                            <button class="primary" @click="next"><i class="fas fa-arrow-right fa-fw"></i> Get Started
+                            </button>
+                        </p>
+                    </div>
+                </div>
             </div>
-            <br>
-            <div>{{_("renderer.onboarding.status_downloading", formattedPercentage, eta, speed)}}</div>
-            <br>
+
+            <div class="wizard-step" v-if="step === 2">
+                <div class="wizard-step-content">
+                    <div>
+                        <h1>Download DDLC</h1>
+                        <p>You will need to select a copy of the Doki Doki Literature Club
+                            game in the next step.</p>
+
+                        <br>
+
+                        <p class="text-center"><strong>Please read the following information carefully.</strong></p>
+
+                        <br>
+
+                        <div class="regular-font">
+                            <h2>Information for Steam users</h2>
+                            <p>The Steam version of Doki Doki Literature Club is <strong>not</strong> compatible with
+                                Doki Doki Mod
+                                Manager. You will need to download a new copy of the game.</p>
+
+                            <br>
+
+                            <h2>Information for Safari users</h2>
+
+                            <p>Safari may automatically extract the downloaded game. See
+                                <Link to="https://apple.stackexchange.com/a/48749">this page</Link>
+                                for information on how to disable this behaviour.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="wizard-step-controls">
+                    <button class="primary" @click="next"><i class="fas fa-arrow-right fa-fw"></i> Next</button>
+                </div>
+            </div>
         </div>
-        <div v-if="!online"><strong>{{_("renderer.onboarding.status_offline")}}</strong><br></div>
-        <div v-if="errored"><strong>{{_("renderer.onboarding.status_errored")}}</strong><br></div>
     </div>
 </template>
 
@@ -30,78 +58,18 @@
 
         data() {
             return {
-                online: navigator.onLine,
-                downloading: false,
-                errored: false,
-                percentage: 0,
-                eta: 0,
-                speed: 0,
-                install_folder: ddmm.config.readConfigValue("installFolder")
+                step: 1
             }
         },
 
         methods: {
             _: ddmm.translate,
-            _progressCallback(progressData) {
-                if (progressData.meta !== "ONBOARDING_DOWNLOAD") return;
-                if (progressData.total !== 0) {
-                    this.percentage = Math.floor((progressData.downloaded / progressData.total) * 100);
-
-                    const elapsedTime = Date.now() / 1000 - progressData.startTime;
-
-                    const etaSeconds = (elapsedTime * (progressData.total / progressData.downloaded)) - elapsedTime;
-
-                    const speed = (progressData.downloaded / 1000000) / elapsedTime;
-
-                    this.speed = Math.floor(speed * 100) / 100;
-
-                    this.eta = (etaSeconds <= 60 ? "about a minute" : Math.floor(etaSeconds / 60) + 1 + " minutes");
-                }
+            next() {
+                this.step += 1;
             },
-
-            _downloadedCallback() {
-                this.$emit("close");
-            },
-
-            _stalledCallback() {
-                this.errored = true;
-                this.downloading = false;
-            },
-            _onlineCallback() {
-                this.online = navigator.onLine;
-            },
-            download() {
-                this.downloading = true;
-                ddmm.onboarding.downloadGame();
-            },
-            open() {
-                ddmm.onboarding.browseForGame();
-            },
-            changeFolder() {
-                ddmm.app.beginMoveInstall();
+            previous() {
+                this.step -= 1;
             }
-        },
-
-        computed: {
-            formattedPercentage(percentage) {
-                return percentage + "%";
-            }
-        },
-
-        mounted() {
-            ddmm.on("download progress", this._progressCallback);
-            ddmm.on("download stalled", this._stalledCallback);
-            ddmm.on("onboarding download failed", this._stalledCallback);
-            window.addEventListener("online", this._onlineCallback);
-            window.addEventListener("offline", this._onlineCallback);
-        },
-
-        destroyed() {
-            ddmm.off("download progress", this._progressCallback);
-            ddmm.off("download stalled", this._stalledCallback);
-            ddmm.off("onboarding download failed", this._stalledCallback);
-            window.removeEventListener("online", this._onlineCallback);
-            window.removeEventListener("offline", this._onlineCallback);
         }
     }
 </script>

@@ -471,12 +471,12 @@ input:focus, textarea:focus {
   //top: 0;
   //left: 0;
   //width: 100vw;
-  //height: 100vh;
+  //height: 100%;
   z-index: 100;
   background-size: cover;
   color: $ui-text-colour;
   //background-color: $ui-background-colour;
-  padding: 0 1.5em;
+  //padding: 0 1.5em;
 }
 
 .cover.crash {
@@ -545,6 +545,7 @@ td, th {
   padding: 0.25em;
   text-align: center;
 }
+
 // endregion
 
 // region chunky radio buttons
@@ -654,3 +655,47 @@ td, th {
 .mod {
   padding: 0.75em 0;
 }
+
+// endregion
+
+// region Onboarding
+.onboarding-wizard {
+  height: calc(100vh - 63px);
+}
+
+.wizard-step {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.wizard-step-content {
+  padding: 0 1.5em;
+  flex-grow: 1;
+}
+
+.wizard-step-controls {
+  padding: 1.5em;
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.full-center {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.regular-font {
+  font-size: 0.75em;
+}
+
+// center on the whole window, not just the cover div
+.full-center > div {
+  transform: translateY(-68px);
+}
+// endregion
