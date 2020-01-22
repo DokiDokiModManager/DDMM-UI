@@ -4,7 +4,8 @@
             <div class="wizard-step" v-if="step === 1">
                 <div class="wizard-step-content full-center">
                     <div>
-                        <h1>Welcome to <strong>Doki Doki Mod Manager</strong> 4</h1>
+                        <p>Welcome to</p>
+                        <h1><strong>Doki Doki Mod Manager</strong> 4</h1>
                         <br>
                         <p>
                             <button class="primary" @click="next"><i class="fas fa-arrow-right fa-fw"></i> Get Started
@@ -30,17 +31,14 @@
                         <div class="regular-font">
                             <h2>Information for Steam users</h2>
                             <p>The Steam version of Doki Doki Literature Club is <strong>not</strong> compatible with
-                                Doki Doki Mod
-                                Manager. You will need to download a new copy of the game.</p>
+                                Doki Doki Mod Manager. If you previously played through Steam, you will need to download
+                                a new copy of the game.</p>
 
                             <br>
 
                             <h2>Information for Safari users</h2>
 
-                            <p>Safari may automatically extract the downloaded game. See
-                                <Link to="https://apple.stackexchange.com/a/48749">this page</Link>
-                                for information on how to disable this behaviour.
-                            </p>
+                            <p>Safari may automatically extract the downloaded game.</p>
                         </div>
                     </div>
                 </div>
@@ -53,15 +51,14 @@
 </template>
 
 <script>
+
     export default {
         name: "OnboardingOverlay",
-
         data() {
             return {
                 step: 1
             }
         },
-
         methods: {
             _: ddmm.translate,
             next() {
