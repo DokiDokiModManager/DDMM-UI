@@ -21,7 +21,6 @@
 <script>
     import languages from "../../../../data/languages";
     import Link from "../../elements/Link";
-    import Vue from "vue";
 
     export default {
         name: "LanguageOptions",
@@ -31,7 +30,7 @@
             setLanguage() {
                 ddmm.config.saveConfigValue("language", this.language_interim);
                 ddmm.reloadLanguages();
-                window.location.reload();
+                this.$store.commit("rerender");
             }
         },
         data() {

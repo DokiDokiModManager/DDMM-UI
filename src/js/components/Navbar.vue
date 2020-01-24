@@ -1,7 +1,7 @@
 <template>
     <div class="navbar">
         <div class="nav-links">
-            <div v-for="t in tabs" :class="{'active': t.id === tab}" @click="setTab(t)">{{t.name}}</div>
+            <div v-for="t in tabs" :class="{'active': t.component === tab}" @click="setTab(t)">{{t.name()}}</div>
         </div>
     </div>
 </template>
@@ -12,15 +12,15 @@
     export default {
         name: "Navbar",
         props: ["tabs"],
-            data: function () {
-            return {
-                tab: this.tabs[0].id
+        computed: {
+            tab() {
+                return this.$store.state.tab;
             }
         },
         methods: {
             setTab: function (t) {
                 gtag("event", "screen_view", {
-                    "screen_name" : t.id
+                    "screen_name": t.id
                 });
                 Logger.info("Navbar", "Navigated to tab " + t.id);
                 this.tab = t.id;

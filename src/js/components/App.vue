@@ -1,5 +1,5 @@
 <template>
-    <div :class="'os-'+system_platform">
+    <div :class="'os-'+system_platform" :key="rerenderKey">
         <div class="app-container-background">
             <div class="gradient"></div>
             <img alt="" :src="backgroundImage" :class="{'visible': !showBackground}">
@@ -61,37 +61,39 @@
                 system_borders: ddmm.config.readConfigValue("systemBorders"),
 
                 // tabs
-                tab: "ModsTab",
                 tabs: [
                     {
-                        id: "mods",
-                        name: ddmm.translate("renderer.tabs.tab_mods"),
+                        name: ddmm.translate.bind(null, "renderer.tabs.tab_play"),
                         component: "ModsTab"
                     },
                     {
-                        id: "downloads",
-                        name: ddmm.translate("renderer.tabs.tab_downloads"),
+                        name: ddmm.translate.bind(null, "renderer.tabs.tab_downloads"),
                         component: "DownloadsTab"
                     },
                     {
-                        id: "options",
-                        name: ddmm.translate("renderer.tabs.tab_options"),
+                        name: ddmm.translate.bind(null, "renderer.tabs.tab_options"),
                         component: "OptionsTab"
                     },
                     {
-                        id: "about",
-                        name: ddmm.translate("renderer.tabs.tab_about"),
+                        name: ddmm.translate.bind(null, "renderer.tabs.tab_about"),
                         component: "AboutTab"
                     },
                     {
-                        id: "experiments",
-                        name: ddmm.env.DDMM_DEVELOPER ? "Experiments" : "",
+                        name: () => ddmm.env.DDMM_DEVELOPER ? "Experiments" : "",
                         component: "ExperimentsTab"
                     }
                 ],
             }
         },
         computed: {
+            rerenderKey() {
+                return this.$store.state.rerender_key;
+            },
+
+            tab() {
+                return this.$store.state.tab;
+            },
+
             backgroundImage() {
                 const bg = this.$store.state.background;
                 let imagePath;
@@ -121,7 +123,7 @@
         },
         methods: {
             setTab(tab) {
-                this.tab = tab.component;
+                this.$store.commit("set_tab", tab.component);
             }
         },
         mounted() {

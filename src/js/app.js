@@ -26,6 +26,8 @@ const store = new Vuex.Store({
             display: false
         },
 
+        tab: "ModsTab",
+
         background: ddmm.config.readConfigValue("background"),
 
         game_data: {
@@ -67,7 +69,9 @@ const store = new Vuex.Store({
             body: ""
         },
 
-        running_install_path: null
+        running_install_path: null,
+
+        rerender_key: Math.random()
     },
     mutations: {
         load_installs(state, payload) {
@@ -138,6 +142,12 @@ const store = new Vuex.Store({
         show_news(state, payload) {
             state.news_modal.title = payload.title;
             state.news_modal.body = payload.body;
+        },
+        rerender(state) {
+            state.rerender_key = Math.random();
+        },
+        set_tab(state, payload) {
+            state.tab = payload;
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'
