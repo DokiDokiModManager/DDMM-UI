@@ -15,6 +15,9 @@
                 </option>
             </select>
         </p>
+        <br>
+
+        <img src="https://hosted.weblate.org/widgets/doki-doki-mod-manager/-/multi-auto.svg">
     </div>
 </template>
 
@@ -38,6 +41,9 @@
                 language_interim: ddmm.config.readConfigValue("language"),
                 languages: languages.languages
             }
+        },
+        mounted() {
+            // fetch("https://hosted.weblate.org/exports/stats/doki-doki-mod-manager/doki-doki-mod-manager/?format=json").then(r => r.json()).then()
         }
     }
 </script>

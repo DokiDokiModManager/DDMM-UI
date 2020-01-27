@@ -29,21 +29,44 @@
                         <br>
 
                         <div class="regular-font">
-                            <h2>Information for Steam users</h2>
+                            <h2><i class="fab fa-steam fa-fw"></i> Information for Steam users</h2>
                             <p>The Steam version of Doki Doki Literature Club is <strong>not</strong> compatible with
                                 Doki Doki Mod Manager. If you previously played through Steam, you will need to download
                                 a new copy of the game.</p>
 
                             <br>
 
-                            <h2>Information for Safari users</h2>
+                            <template v-if="warnings.mac_safari || true">
+                                <h2><i class="fab fa-apple fa-fw"></i> Information for macOS / Safari users</h2>
 
-                            <p>Safari may automatically extract the downloaded game.</p>
+                                <p>Safari may automatically extract the downloaded game. You should disable this feature
+                                    as
+                                    it interferes with the setup process. This can be done from Safari's preferences
+                                    screen.
+                                    <Link to="https://help.doki.space/images/user_guide/macos_auto_extract.png">
+                                        (Click here for a visual guide)
+                                    </Link>
+                                </p>
+                            </template>
                         </div>
                     </div>
                 </div>
                 <div class="wizard-step-controls">
                     <button class="primary" @click="next"><i class="fas fa-arrow-right fa-fw"></i> Next</button>
+                </div>
+            </div>
+
+            <div class="wizard-step" v-if="step === 3">
+                <div class="wizard-step-content">
+                    <div>
+                        <h1>Download DDLC</h1>
+                        <p>You will need to select a copy of the Doki Doki Literature Club
+                            game in the next step.</p>
+
+                    </div>
+                </div>
+                <div class="wizard-step-controls">
+                    <button class="primary" @click="$emit('close')"><i class="fas fa-arrow-right fa-fw"></i> Next</button>
                 </div>
             </div>
         </div>
@@ -52,11 +75,17 @@
 
 <script>
 
+    import Link from "./elements/Link";
+
     export default {
         name: "OnboardingOverlay",
+        components: {Link},
         data() {
             return {
-                step: 1
+                step: 1,
+                warnings: {
+                    mac_safari: ddmm.platform === "darwin"
+                }
             }
         },
         methods: {
