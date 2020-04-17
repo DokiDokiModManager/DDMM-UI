@@ -23,10 +23,11 @@
     import Logger from "../../utils/Logger";
     import DownloadedDownloadsSection from "./downloads/DownloadedDownloadsSection";
     import FeaturedModsSection from "./downloads/FeaturedModsSection";
+    import DownloadsSection from "./downloads/DownloadsSection";
 
     export default {
         name: "DownloadsTab",
-        components: {DownloadedDownloadsSection, FeaturedModsSection},
+        components: {DownloadedDownloadsSection, DownloadsSection,FeaturedModsSection},
         methods: {
             _: ddmm.translate,
             selectOption(component) {
@@ -48,7 +49,7 @@
                             },
                             {
                                 title: ddmm.translate("renderer.tab_downloads.list.link_downloads"),
-                                component: ""
+                                component: "DownloadsSection"
                             }
                         ]
                     },

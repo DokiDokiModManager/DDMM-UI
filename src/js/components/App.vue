@@ -17,7 +17,7 @@
             <template v-else>
                 <component :is="tab"></component>
 
-                <Navbar :tabs="tabs" @tab="setTab"></Navbar>
+                <Navbar :tabs="tabs"></Navbar>
             </template>
         </div>
     </div>
@@ -119,11 +119,6 @@
 
             showBackground2() {
                 return this.$store.state.custom_background.display_2;
-            }
-        },
-        methods: {
-            setTab(tab) {
-                this.$store.commit("set_tab", tab.component);
             }
         },
         mounted() {

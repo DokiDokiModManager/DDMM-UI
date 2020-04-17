@@ -1,0 +1,49 @@
+@import "variables";
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  height: calc(100% - 63px - 67px);
+}
+
+.text-container {
+  padding: 0 1.5em;
+  max-height: 100%;
+  overflow-y: scroll;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+small {
+  font-size: 0.6em;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: $ui-text-colour;
+  text-decoration: none;
+  font-weight: bold;
+  -webkit-app-region: no-drag;
+  outline: none;
+}
+
+a .fab {
+  font-weight: normal;
+}
+
+.tag {
+  font-size: 0.5em;
+  padding: 0.1em 0.25em;
+  background-color: $ui-text-colour;
+  color: #000;
+  border-radius: 3px;
+}

@@ -1,0 +1,39 @@
+.onboarding-wizard {
+  height: calc(100vh - 63px);
+}
+
+.wizard-step {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.wizard-step-content {
+  padding: 0 1.5em;
+  flex-grow: 1;
+}
+
+.wizard-step-controls {
+  padding: 1.5em;
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.full-center {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.regular-font {
+  font-size: 0.75em;
+}
+
+// center on the whole window, not just the cover div
+.full-center > div {
+  transform: translateY(-68px);
+}
