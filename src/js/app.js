@@ -71,7 +71,9 @@ const store = new Vuex.Store({
 
         running_install_path: null,
 
-        rerender_key: Math.random()
+        rerender_key: Math.random(),
+
+        downloads: []
     },
     mutations: {
         load_installs(state, payload) {
@@ -148,6 +150,10 @@ const store = new Vuex.Store({
         },
         set_tab(state, payload) {
             state.tab = payload;
+        },
+        set_downloads(state, payload) {
+            console.log(payload);
+            state.downloads = payload;
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'
@@ -196,6 +202,10 @@ ddmm.on("error", error => {
     store.commit("show_modal", {modal: "error"});
     store.commit("error", error);
 });
+
+ddmm.on("got downloads", downloads => {
+    store.commit("set_downloads", downloads);
+})
 
 const NEWS_URL = "https://dokidokimodmanager.github.io/Meta/news.json";
 

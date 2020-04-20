@@ -2,7 +2,12 @@
     <div>
         <h1>{{_("renderer.tab_downloads.downloads.title")}}</h1>
 
-        <div class="mod" v-for="download in downloads">
+        <div v-if="downloads.length === 0" class="text-center">
+            <br>
+            <p>{{_("renderer.tab_downloads.downloads.message_none")}}</p>
+        </div>
+
+        <div class="mod" v-for="download in downloads" :key="download.filename">
             <h3>{{download.filename}}</h3>
             <template v-if="download.total === 0">
                 <p>{{_("renderer.tab_downloads.downloads.status_text_downloading_uncertain",
@@ -18,7 +23,7 @@
                     download.total, download.startTime))}}</p>
                 <br>
                 <div class="progress">
-                    <div class="bar"></div>
+                    <div class="bar" :style="{'width': percentage(download.downloaded, download.total) + '%'}"></div>
                 </div>
             </template>
         </div>
@@ -54,22 +59,9 @@
                 return timeStr;
             }
         },
-        data() {
-            return {
-                downloads: [
-                    {
-                        filename: "test-download.zip",
-                        downloaded: 1e7,
-                        total: 5e8,
-                        startTime: Date.now() - 10000
-                    },
-                    {
-                        filename: "uncertain-download.zip",
-                        downloaded: 1e7,
-                        total: 0,
-                        startTime: Date.now() - 10000
-                    }
-                ]
+        computed: {
+            downloads() {
+                return this.$store.state.downloads;
             }
         }
     }

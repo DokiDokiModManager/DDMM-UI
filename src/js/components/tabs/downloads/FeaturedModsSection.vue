@@ -6,7 +6,7 @@
             <h3><strong>{{mod.name}}</strong> - {{mod.author}}</h3>
             <p>{{mod.description}}</p>
             <br>
-            <button class="primary"><i class="fas fa-download fa-fw"></i> Download</button>
+            <button class="primary" @click="startDownload(mod.url)"><i class="fas fa-download fa-fw"></i> Download</button>
         </div>
     </div>
 </template>
@@ -17,6 +17,11 @@
         data() {
             return {
                 mods: []
+            }
+        },
+        methods: {
+            startDownload(url) {
+                ddmm.downloads.startDownload(url);
             }
         },
         mounted() {

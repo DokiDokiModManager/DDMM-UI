@@ -23,7 +23,7 @@
                         <option :value="'!custom'">{{_("renderer.tab_mods.install_creation.modlist_custom")}}</option>
 
                         <optgroup :label="_('renderer.tab_mods.install_creation.modlist_library')">
-                            <option v-for="mod in mods" :value="getPathToMod(mod.filename)">{{mod.filename}}</option>
+                            <option v-for="mod in mods" :value="getPathToMod(mod)">{{mod}}</option>
                         </optgroup>
                     </select>
                 </p>

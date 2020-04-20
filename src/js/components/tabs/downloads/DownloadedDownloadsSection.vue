@@ -3,15 +3,15 @@
         <h1>{{_("renderer.tab_downloads.downloaded.title")}}</h1>
 
         <div v-for="mod in mods" class="mod">
-            <h3>{{mod.filename}}</h3>
-            <p>{{getPathToMod(mod.filename)}}</p>
+            <h3>{{mod}}</h3>
+            <p>{{getPathToMod(mod)}}</p>
             <br>
             <p>
                 <button class="primary"><i class="fas fa-bolt fa-fw"></i>
                     {{_("renderer.tab_downloads.downloaded.button_install")}}
                 </button>
 
-                <button class="secondary" @click="showOptions(mod.filename)"><i class="fas fa-cog fa-fw"></i>
+                <button class="secondary" @click="showOptions(mod)"><i class="fas fa-cog fa-fw"></i>
                     {{_("renderer.tab_downloads.downloaded.button_options")}}
                 </button>
             </p>
