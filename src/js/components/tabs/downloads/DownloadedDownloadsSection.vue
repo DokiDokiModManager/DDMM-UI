@@ -3,7 +3,7 @@
         <h1>{{_("renderer.tab_downloads.downloaded.title")}}</h1>
 
         <div v-for="mod in mods" class="mod">
-            <h3>{{mod}}</h3>
+            <h3>{{getDisplayName(mod)}}</h3>
             <p>{{getPathToMod(mod)}}</p>
             <br>
             <p>
@@ -30,6 +30,11 @@
             },
             getPathToMod(filename) {
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", filename);
+            },
+            getDisplayName(filename) {
+                const parts = filename.split(".");
+                parts.pop();
+                return parts.join(".");
             }
         },
         computed: {

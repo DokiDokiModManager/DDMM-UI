@@ -6,7 +6,7 @@
             <h3><strong>{{mod.name}}</strong> - {{mod.author}}</h3>
             <p>{{mod.description}}</p>
             <br>
-            <button class="primary" @click="startDownload(mod.url)"><i class="fas fa-download fa-fw"></i> Download</button>
+            <button class="primary" @click="startDownload(mod.url, mod.filename)" :disabled="hasModAlready(mod.filename)"><i class="fas fa-download fa-fw"></i> Download</button>
         </div>
     </div>
 </template>
@@ -16,12 +16,17 @@
         name: "FeaturedModsSection",
         data() {
             return {
-                mods: []
+                mods: [],
+                clickedDownloads: []
             }
         },
         methods: {
-            startDownload(url) {
-                ddmm.downloads.startDownload(url);
+            startDownload(url, filename) {
+                this.clickedDownloads.push(filename);
+                ddmm.downloads.startDownload(url, filename);
+            },
+            hasModAlready(filename) {
+                return (this.clickedDownloads.indexOf(filename) !== -1) || (this.$store.state.game_data.mods.indexOf(filename) !== -1) || (this.$store.state.downloads.find(dl => dl.filename === filename));
             }
         },
         mounted() {

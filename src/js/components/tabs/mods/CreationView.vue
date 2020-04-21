@@ -23,7 +23,7 @@
                         <option :value="'!custom'">{{_("renderer.tab_mods.install_creation.modlist_custom")}}</option>
 
                         <optgroup :label="_('renderer.tab_mods.install_creation.modlist_library')">
-                            <option v-for="mod in mods" :value="getPathToMod(mod)">{{mod}}</option>
+                            <option v-for="mod in mods" :value="getPathToMod(mod)">{{getDisplayName(mod)}}</option>
                         </optgroup>
                     </select>
                 </p>
@@ -124,6 +124,11 @@
             },
             getPathToMod(filename) {
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", filename);
+            },
+            getDisplayName(filename) {
+                const parts = filename.split(".");
+                parts.pop();
+                return parts.join(".");
             }
         },
         computed: {
