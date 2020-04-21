@@ -68,7 +68,10 @@
                     },
                     {
                         name: ddmm.translate.bind(null, "renderer.tabs.tab_downloads"),
-                        component: "DownloadsTab"
+                        component: "DownloadsTab",
+                        badge: () => {
+                            return this.$store.state.downloads.length > 0;
+                        }
                     },
                     {
                         name: ddmm.translate.bind(null, "renderer.tabs.tab_options"),

@@ -41,7 +41,7 @@
   flex-grow: 1;
 }
 
-.nav-links div {
+.nav-links > div {
   height: 100%;
   padding: 0.5em;
   -webkit-app-region: no-drag;
@@ -49,7 +49,7 @@
   transition: color 0.25s, text-shadow 0.25s;
 }
 
-.nav-links div:hover {
+.nav-links > div:hover {
   color: $ui-highlight-text-colour;
 }
 
@@ -81,6 +81,30 @@
 
 .window-buttons div:hover {
   color: $ui-highlight-text-colour;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link-badge {
+  background-color: $ui-danger-colour-bg;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.nav-link-text {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0 0.5em;
 }
 
 @keyframes draw-attention {
