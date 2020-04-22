@@ -1,3 +1,12 @@
 .mod {
   padding: 0.75em 0;
+  display: flex;
+}
+
+.mod > div:not(.image) {
+  flex-grow: 1;
+}
+
+.mod .image {
+  padding: 0 1em 0 0;
 }

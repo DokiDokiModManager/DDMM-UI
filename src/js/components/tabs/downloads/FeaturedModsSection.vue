@@ -1,12 +1,17 @@
 <template>
     <div>
-        <h1>Featured Mods</h1>
+        <h1>{{_("renderer.tab_downloads.featured.title")}}</h1>
 
         <div v-for="mod in mods" class="mod">
-            <h3><strong>{{mod.name}}</strong> - {{mod.author}}</h3>
-            <p>{{mod.description}}</p>
-            <br>
-            <button class="primary" @click="startDownload(mod.url, mod.filename)" :disabled="hasModAlready(mod.filename)"><i class="fas fa-download fa-fw"></i> Download</button>
+            <div>
+                <h3><strong>{{mod.name}}</strong> - {{mod.author}}</h3>
+                <p>{{mod.description}}</p>
+                <br>
+                <button class="primary" @click="startDownload(mod.url, mod.filename)"
+                        :disabled="hasModAlready(mod.filename)"><i class="fas fa-download fa-fw"></i>
+                    {{_("renderer.tab_downloads.featured.button_download")}}
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -21,6 +26,7 @@
             }
         },
         methods: {
+            _: ddmm.translate,
             startDownload(url, filename) {
                 this.clickedDownloads.push(filename);
                 ddmm.downloads.startDownload(url, filename);
@@ -32,7 +38,9 @@
         mounted() {
             fetch("https://raw.githubusercontent.com/DokiDokiModManager/FeaturedMods/master/mods.json")
                 .then(res => res.json())
-                .then(mods => { this.mods = mods });
+                .then(mods => {
+                    this.mods = mods
+                });
         }
     }
 </script>

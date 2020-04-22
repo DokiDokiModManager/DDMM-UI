@@ -8,24 +8,28 @@
         </div>
 
         <div class="mod" v-for="download in downloads" :key="download.filename">
-            <h3>{{download.filename}}</h3>
-            <template v-if="download.total === 0">
-                <p>{{_("renderer.tab_downloads.downloads.status_text_downloading_uncertain",
-                    bytesToMB(download.downloaded), downloadSpeed(download.downloaded, download.startTime))}}</p>
-                <br>
-                <div class="progress uncertain">
-                    <div class="bar"></div>
-                </div>
-            </template>
-            <template v-else>
-                <p>{{_("renderer.tab_downloads.downloads.status_text_downloading", percentage(download.downloaded,
-                    download.total), downloadSpeed(download.downloaded, download.startTime), eta(download.downloaded,
-                    download.total, download.startTime))}}</p>
-                <br>
-                <div class="progress">
-                    <div class="bar" :style="{'width': percentage(download.downloaded, download.total) + '%'}"></div>
-                </div>
-            </template>
+            <div>
+                <h3>{{download.filename}}</h3>
+                <template v-if="download.total === 0">
+                    <p>{{_("renderer.tab_downloads.downloads.status_text_downloading_uncertain",
+                        bytesToMB(download.downloaded), downloadSpeed(download.downloaded, download.startTime))}}</p>
+                    <br>
+                    <div class="progress uncertain">
+                        <div class="bar"></div>
+                    </div>
+                </template>
+                <template v-else>
+                    <p>{{_("renderer.tab_downloads.downloads.status_text_downloading", percentage(download.downloaded,
+                        download.total), downloadSpeed(download.downloaded, download.startTime),
+                        eta(download.downloaded,
+                        download.total, download.startTime))}}</p>
+                    <br>
+                    <div class="progress">
+                        <div class="bar"
+                             :style="{'width': percentage(download.downloaded, download.total) + '%'}"></div>
+                    </div>
+                </template>
+            </div>
         </div>
     </div>
 </template>

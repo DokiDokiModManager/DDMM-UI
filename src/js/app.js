@@ -6,6 +6,7 @@ import App from "./components/App.vue";
 
 import * as Sentry from "@sentry/browser";
 import * as Integrations from "@sentry/integrations";
+import DDLCModClub from "./stores/DDLCModClub";
 
 Sentry.init({
     dsn: "https://bf0edf3f287344d4969e3171c33af4ea@sentry.io/1297252",
@@ -46,7 +47,8 @@ const store = new Vuex.Store({
             game_running: false,
             error: false,
             install_category: false,
-            news: false
+            news: false,
+            download_initiation: false
         },
 
         preloaded_install_folder: "",
@@ -73,7 +75,9 @@ const store = new Vuex.Store({
 
         rerender_key: Math.random(),
 
-        downloads: []
+        downloads: [],
+
+        download_initiation_url: "http://example.com"
     },
     mutations: {
         load_installs(state, payload) {
@@ -154,6 +158,10 @@ const store = new Vuex.Store({
         set_downloads(state, payload) {
             console.log(payload);
             state.downloads = payload;
+        },
+        initiate_download(state, payload) {
+            state.download_initiation_url = payload;
+            state.modals.download_initiation = true;
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'
@@ -205,7 +213,11 @@ ddmm.on("error", error => {
 
 ddmm.on("got downloads", downloads => {
     store.commit("set_downloads", downloads);
-})
+});
+
+ddmm.on("download started", url => {
+    store.commit("hide_modal", {modal: "download_initiation"});
+});
 
 const NEWS_URL = "https://dokidokimodmanager.github.io/Meta/news.json";
 
@@ -219,5 +231,4 @@ fetch(NEWS_URL).then(res => res.json()).then(news => news.news.filter(news => ne
     store.commit("show_modal", {modal: "news"});
 });
 
-window.__ddmm_vue = app;
-window.__ddmm_state = store;
+window.test = new DDLCModClub();
