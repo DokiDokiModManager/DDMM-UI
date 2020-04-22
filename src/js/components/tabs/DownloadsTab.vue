@@ -6,7 +6,12 @@
                     <div class="mod-view-mod-list-title">{{section.header}}</div>
                     <div v-for="item in section.contents"
                          :class="{'mod-view-mod-list-entry': true, 'active': selected_option === item.component}"
-                         @click="selectOption(item.component)"><span>{{item.title}}</span></div>
+                         @click="selectOption(item.component)">
+                        <span class="mod-view-mod-list-entry-title">{{item.title}}</span>
+                        <span class="mod-view-mod-list-tag" v-if="item.tag && item.tag()">
+                            <span>{{item.tag()}}</span>
+                        </span>
+                    </div>
                     <br>
                 </template>
             </div>
@@ -49,7 +54,10 @@
                             },
                             {
                                 title: ddmm.translate("renderer.tab_downloads.list.link_downloads"),
-                                component: "DownloadsSection"
+                                component: "DownloadsSection",
+                                tag: () => {
+                                    return (this.$store.state.downloads.length > 0 ? this.$store.state.downloads.length : "");
+                                }
                             }
                         ]
                     },

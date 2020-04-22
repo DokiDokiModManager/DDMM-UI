@@ -66,7 +66,7 @@
   color: $ui-highlight-text-colour;
 }
 
-.mod-view-mod-list-entry span:not(.mod-view-mod-list-entry-button) {
+.mod-view-mod-list-entry .mod-view-mod-list-entry-title {
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -90,6 +90,28 @@
 .mod-view-mod-list-entry.active {
   background-image: $ui-highlight-gradient;
   color: $ui-highlight-text-colour;
+}
+
+.mod-view-mod-list-tag {
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: inline;
+  text-align: right;
+}
+
+.mod-view-mod-list-tag > span {
+  text-align: center;
+  background-color: $ui-text-colour;
+  color: #000;
+  border-radius: 3px;
+  font-size: 0.85em;
+  padding: 0 0.5em;
+  line-height: 1rem;
+}
+
+
+.mod-view-mod-list-tag:hover {
+  color: #000 !important;
 }
 
 .screenshots {
