@@ -4,9 +4,13 @@
             <div class="mod-viewer-mod-list">
                 <template v-for="section in menu">
                     <div class="mod-view-mod-list-title">{{section.header}}</div>
-                    <div v-for="item in section.contents"
-                         :class="{'mod-view-mod-list-entry': true, 'active': selected_option === item.component}"
-                         @click="selectOption(item.component)"><span>{{item.title}}</span></div>
+                    <template v-for="item in section.contents">
+                        <div :class="{'mod-view-mod-list-entry': true, 'active': selected_option === item.component}"
+                             @click="selectOption(item.component)"
+                             v-if="!item.hideIf || !item.hideIf()"
+                        >
+                            <span>{{item.title}}</span></div>
+                    </template>
                     <br>
                 </template>
             </div>
@@ -45,22 +49,24 @@
         },
         data() {
             return {
-                selected_option: sessionStorage.getItem("tab_options_last_selection") ? sessionStorage.getItem("tab_options_last_selection") : "UpdateOptions",
+                selected_option: sessionStorage.getItem("tab_options_last_selection") ? sessionStorage.getItem("tab_options_last_selection") : "LanguageOptions",
                 menu: [
                     {
                         header: ddmm.translate("renderer.tab_options.list.header_application"),
                         contents: [
                             {
+                                title: ddmm.translate("renderer.tab_options.list.link_language"),
+                                component: "LanguageOptions"
+                            },
+                            {
                                 title: ddmm.translate("renderer.tab_options.list.link_updates"),
-                                component: "UpdateOptions"
+                                component: "UpdateOptions",
+                                hideIf() { return !!ddmm.env.SNAP }
                             },
                             {
                                 title: ddmm.translate("renderer.tab_options.list.link_storage"),
-                                component: "StorageOptions"
-                            },
-                            {
-                                title: ddmm.translate("renderer.tab_options.list.link_language"),
-                                component: "LanguageOptions"
+                                component: "StorageOptions",
+                                hideIf() { return !!ddmm.env.SNAP }
                             }
                         ]
                     },
