@@ -14,7 +14,7 @@
 
         <NewsDialog v-if="modalVisible('news')"></NewsDialog>
 
-        <DownloadInitiationDialog v-if="modalVisible('download_initiation')"></DownloadInitiationDialog>
+        <ModPreviewDialog v-if="modalVisible('mod_preview')"></ModPreviewDialog>
     </div>
 </template>
 
@@ -30,12 +30,11 @@
     import ErrorDialog from "./dialogs/ErrorDialog";
     import InstallCategoryDialog from "./dialogs/installs/InstallCategoryDialog";
     import NewsDialog from "./dialogs/NewsDialog";
-    import DownloadInitiationDialog from "./dialogs/DownloadInitiationDialog";
+    import ModPreviewDialog from "./tabs/ModPreviewDialog";
 
     export default {
         name: "Dialogs",
         components: {
-            DownloadInitiationDialog,
             NewsDialog,
             InstallCategoryDialog,
             GameRunningDialog,
@@ -46,7 +45,8 @@
             ModOptionsDialog,
             InstallOptionsDialog,
             AlertDialog,
-            ErrorDialog
+            ErrorDialog,
+            ModPreviewDialog
         },
         methods: {
             _: ddmm.translate,

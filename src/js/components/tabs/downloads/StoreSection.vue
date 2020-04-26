@@ -16,7 +16,7 @@
         <br>
 
 
-        <div v-for="mod in mods" class="mod" @click="startDownload(mod)">
+        <div v-for="mod in mods" class="mod" @click="viewMod(mod)">
             <div class="image">
                 <img :src="mod.icon" width="75" v-if="mod.icon">
                 <img src="../../../../../src/images/logo.png" width="75" v-else>
@@ -48,12 +48,8 @@
         },
         methods: {
             _: ddmm.translate,
-            startDownload(mod) {
-                if (mod.directDownload) {
-                    ddmm.downloads.startDownload(mod.downloadURL);
-                } else {
-                    ddmm.downloads.downloadWithInteraction(mod.downloadURL);
-                }
+            viewMod(mod) {
+                this.$store.commit("preview_mod", mod);
             }
         },
         mounted() {

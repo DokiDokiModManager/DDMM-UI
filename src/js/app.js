@@ -48,7 +48,7 @@ const store = new Vuex.Store({
             error: false,
             install_category: false,
             news: false,
-            download_initiation: false
+            mod_preview: false
         },
 
         preloaded_install_folder: "",
@@ -77,7 +77,7 @@ const store = new Vuex.Store({
 
         downloads: [],
 
-        download_initiation_url: "http://example.com"
+        mod_preview: {}
     },
     mutations: {
         load_installs(state, payload) {
@@ -159,9 +159,9 @@ const store = new Vuex.Store({
             console.log(payload);
             state.downloads = payload;
         },
-        initiate_download(state, payload) {
-            state.download_initiation_url = payload;
-            state.modals.download_initiation = true;
+        preview_mod(state, payload) {
+            state.mod_preview = payload;
+            state.modals.mod_preview = true;
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'
