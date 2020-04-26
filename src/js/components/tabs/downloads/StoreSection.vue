@@ -16,17 +16,14 @@
         <br>
 
 
-        <div v-for="mod in mods" class="mod" @click="viewMod(mod)">
+        <div v-for="mod in mods" class="mod" @click="viewMod(mod)" style="cursor: pointer;">
             <div class="image">
-                <img :src="mod.icon" width="75" v-if="mod.icon">
-                <img src="../../../../../src/images/logo.png" width="75" v-else>
+                <img alt="" :src="mod.icon" width="75" v-if="mod.icon">
+                <img alt="" src="../../../../../src/images/logo.png" width="75" v-else>
             </div>
             <div>
                 <h3><strong>{{mod.name}}</strong></h3>
                 <p>{{mod.shortDescription}}</p>
-<!--                <p>{{mod.downloadURL}}</p>-->
-                <!--            <br>-->
-                <!--            <button class="primary" @click="startDownload(mod.url, mod.filename)" :disabled="hasModAlready(mod.filename)"><i class="fas fa-download fa-fw"></i> Download</button>-->
             </div>
         </div>
     </div>
