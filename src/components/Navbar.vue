@@ -24,9 +24,6 @@
         },
         methods: {
             setTab: function (t) {
-                gtag("event", "screen_view", {
-                    "screen_name": t.id
-                });
                 Logger.info("Navbar", "Navigated to tab " + t.component);
                 this.$store.commit("set_tab", t.component);
             }

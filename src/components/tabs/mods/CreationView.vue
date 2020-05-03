@@ -103,7 +103,6 @@
                 }
             },
             install() {
-                gtag("event", "install_create", {event_label: this.install_creation.install_name, advanced: false});
                 this.$store.commit("installation_status", {
                     installing: true,
                     preloaded_install_folder: this.install_creation.folder_name
@@ -115,6 +114,11 @@
                     mod: this.selectedMod
                 });
                 this.is_installing = true;
+                this.$store.commit("set_install_creation", {
+                    mod: "!none",
+                    install_name: "",
+                    folder_name: ""
+                })
             },
             getPathToMod(filename) {
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", filename);
