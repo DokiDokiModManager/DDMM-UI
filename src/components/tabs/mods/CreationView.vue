@@ -73,14 +73,6 @@
         components: {ChunkyRadioButtons},
         data() {
             return {
-                install_creation: {
-                    install_name: "",
-                    folder_name: "",
-                    mod_selection: "!none",
-                    mod: "",
-                    save_option: 0
-                },
-
                 is_installing: false
             }
         },
@@ -99,13 +91,15 @@
                     .substring(0, 32);
 
                 if (ddmm.mods.installExists(this.install_creation.folder_name)) {
-                    this.install_creation.folder_name = this.install_creation.folder_name + "-" + Math.floor(Math.random() * 100);
+                    this.$store.commit("set_install_creation", {
+                        folder_name: this.install_creation.folder_name + "-" + Math.floor(Math.random() * 100)
+                    });
                 }
             },
             installCreationSelectMod() {
                 const mod = ddmm.mods.browseForMod();
                 if (mod) {
-                    this.install_creation.mod = mod;
+                    this.$store.commit("set_install_creation", {mod});
                 }
             },
             install() {
@@ -132,6 +126,9 @@
             }
         },
         computed: {
+            install_creation() {
+                return this.$store.state.install_creation_data;
+            },
             shouldDisableCreation() {
                 return this.is_installing || !(this.selectedMod || this.install_creation.mod_selection === "!none")
                     || this.install_creation.install_name.length < 2 || this.install_creation.folder_name.length < 2;

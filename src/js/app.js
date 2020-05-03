@@ -77,7 +77,15 @@ const store = new Vuex.Store({
 
         downloads: [],
 
-        mod_preview: {}
+        mod_preview: {},
+
+        install_creation_data: {
+            install_name: "",
+            folder_name: "",
+            mod_selection: "!none",
+            mod: "",
+            save_option: 0
+        }
     },
     mutations: {
         load_installs(state, payload) {
@@ -162,6 +170,21 @@ const store = new Vuex.Store({
         preview_mod(state, payload) {
             state.mod_preview = payload;
             state.modals.mod_preview = true;
+        },
+        set_install_creation(state, payload) {
+            Object.assign(state.install_creation_data, payload);
+        }
+    },
+    actions: {
+        install_mod(context, payload) {
+            context.commit("set_tab", "ModsTab");
+            context.commit("set_install_creation", {
+                mod_selection: payload.custom ? "!custom" : payload.mod,
+                mod: payload.mod
+            });
+            context.commit("install_list_selection", {
+                type: "create"
+            });
         }
     },
     strict: ddmm.env.NODE_ENV !== 'production'

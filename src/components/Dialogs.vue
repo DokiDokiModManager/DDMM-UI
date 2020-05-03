@@ -30,7 +30,7 @@
     import ErrorDialog from "./dialogs/ErrorDialog";
     import InstallCategoryDialog from "./dialogs/installs/InstallCategoryDialog";
     import NewsDialog from "./dialogs/NewsDialog";
-    import ModPreviewDialog from "./tabs/ModPreviewDialog";
+    import ModPreviewDialog from "./dialogs/ModPreviewDialog";
 
     export default {
         name: "Dialogs",

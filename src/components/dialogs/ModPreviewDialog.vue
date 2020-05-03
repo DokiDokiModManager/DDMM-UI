@@ -22,7 +22,7 @@
 </template>
 
 <script>
-    import AlertDialog from "../dialogs/base/AlertDialog";
+    import AlertDialog from "./base/AlertDialog";
     import DDLStatus from "../../js/stores/types/DDLStatus";
 
     export default {

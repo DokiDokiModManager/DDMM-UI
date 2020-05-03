@@ -8,7 +8,7 @@
                 <p>{{getPathToMod(mod)}}</p>
                 <br>
                 <p>
-                    <button class="primary"><i class="fas fa-bolt fa-fw"></i>
+                    <button class="primary" @click="installMod(mod)"><i class="fas fa-bolt fa-fw"></i>
                         {{_("renderer.tab_downloads.downloaded.button_install")}}
                     </button>
 
@@ -37,6 +37,12 @@
                 const parts = filename.split(".");
                 parts.pop();
                 return parts.join(".");
+            },
+            installMod(mod) {
+                this.$store.dispatch("install_mod", {
+                    mod: this.getPathToMod(mod),
+                    custom: false
+                });
             }
         },
         computed: {
