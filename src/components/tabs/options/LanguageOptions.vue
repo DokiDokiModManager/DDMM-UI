@@ -15,9 +15,6 @@
                 </option>
             </select>
         </p>
-        <br>
-
-        <img src="https://hosted.weblate.org/widgets/doki-doki-mod-manager/-/multi-auto.svg">
     </div>
 </template>
 
