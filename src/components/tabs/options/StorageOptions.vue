@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import Logger from "../../../utils/Logger";
+    import Logger from "../../../js/utils/Logger";
 
     export default {
         name: "StorageOptions",

@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import Logger from "../../utils/Logger";
+    import Logger from "../../js/utils/Logger";
 
     import BackgroundOptions from "./options/BackgroundOptions.vue";
     import AdvancedAppearanceOptions from "./options/AdvancedAppearanceOptions.vue";

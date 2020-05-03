@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import Logger from "../../../utils/Logger";
+    import Logger from "../../../js/utils/Logger";
     import * as semver from "semver";
 
     export default {

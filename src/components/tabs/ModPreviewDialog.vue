@@ -23,7 +23,7 @@
 
 <script>
     import AlertDialog from "../dialogs/base/AlertDialog";
-    import DDLStatus from "../../stores/types/DDLStatus";
+    import DDLStatus from "../../js/stores/types/DDLStatus";
 
     export default {
         name: "ModPreviewDialog",

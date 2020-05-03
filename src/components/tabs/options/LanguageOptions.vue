@@ -22,7 +22,7 @@
 </template>
 
 <script>
-    import languages from "../../../../data/languages";
+    import languages from "../../../data/languages.json";
     import Link from "../../elements/Link";
 
     export default {

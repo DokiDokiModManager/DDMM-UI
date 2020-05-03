@@ -2,7 +2,7 @@ import Logger from "./utils/Logger";
 
 import Vue from "vue";
 import Vuex from "vuex";
-import App from "./components/App.vue";
+import App from "../components/App.vue";
 
 import * as Sentry from "@sentry/browser";
 import * as Integrations from "@sentry/integrations";
@@ -171,7 +171,7 @@ Object.assign(App, {
     store
 });
 
-const app = new Vue(App).$mount("#app-mount").$nextTick(() => {
+new Vue(App).$mount("#app-mount").$nextTick(() => {
     ddmm.mods.refreshInstallList();
     ddmm.mods.refreshModList();
 });
@@ -215,7 +215,7 @@ ddmm.on("got downloads", downloads => {
     store.commit("set_downloads", downloads);
 });
 
-ddmm.on("download started", url => {
+ddmm.on("download started", () => {
     store.commit("hide_modal", {modal: "download_initiation"});
 });
 

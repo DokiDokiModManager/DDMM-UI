@@ -110,7 +110,7 @@
 </template>
 
 <script>
-    import Launcher from "../../../utils/Launcher";
+    import Launcher from "../../../js/utils/Launcher";
     import LazyLoadedImage from "../../elements/LazyLoadedImage";
     import MASExportControl from "./MASExportControl";
 

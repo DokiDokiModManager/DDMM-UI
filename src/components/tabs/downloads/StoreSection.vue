@@ -19,7 +19,7 @@
         <div v-for="mod in mods" class="mod" @click="viewMod(mod)" style="cursor: pointer;">
             <div class="image">
                 <img alt="" :src="mod.icon" width="75" v-if="mod.icon">
-                <img alt="" src="../../../../../src/images/logo.png" width="75" v-else>
+                <img alt="" src="../../../images/logo.png" width="75" v-else>
             </div>
             <div>
                 <h3><strong>{{mod.name}}</strong></h3>
@@ -30,8 +30,8 @@
 </template>
 
 <script>
-    import DDLCModClub from "../../../stores/DDLCModClub";
-    import Logger from "../../../utils/Logger";
+    import DDLCModClub from "../../../js/stores/DDLCModClub";
+    import Logger from "../../../js/utils/Logger";
 
     export default {
         name: "StoreSection",

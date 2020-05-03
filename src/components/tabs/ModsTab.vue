@@ -50,8 +50,8 @@
     import ModView from "./mods/ModView.vue";
     import CreationView from "./mods/CreationView.vue";
 
-    import Logger from "../../utils/Logger";
-    import Launcher from "../../utils/Launcher";
+    import Logger from "../../js/utils/Logger";
+    import Launcher from "../../js/utils/Launcher";
 
     export default {
         name: "ModsTab",

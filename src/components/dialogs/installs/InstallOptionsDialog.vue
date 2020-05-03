@@ -38,7 +38,7 @@
 
 <script>
     import MenuDialog from "../base/MenuDialog.vue";
-    import Launcher from "../../../utils/Launcher";
+    import Launcher from "../../../js/utils/Launcher";
 
     export default {
         name: "InstallOptionsDialog",

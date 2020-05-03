@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import Logger from "../../utils/Logger";
+    import Logger from "../../js/utils/Logger";
     import DownloadedDownloadsSection from "./downloads/DownloadedDownloadsSection";
     import FeaturedModsSection from "./downloads/FeaturedModsSection";
     import DownloadsSection from "./downloads/DownloadsSection";
