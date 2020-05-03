@@ -20,8 +20,7 @@
                 </template>
                 <template v-else>
                     <p>{{_("renderer.tab_downloads.downloads.status_text_downloading", percentage(download.downloaded,
-                        download.total), downloadSpeed(download.downloaded, download.startTime),
-                        eta(download.downloaded,
+                        download.total), downloadSpeed(download.downloaded, download.startTime), eta(download.downloaded,
                         download.total, download.startTime))}}</p>
                     <br>
                     <div class="progress">
@@ -56,10 +55,16 @@
                 const speed = this.downloadSpeed(downloaded, startTime) * 1e6;
                 const remaining = total - downloaded;
                 const seconds = remaining / speed;
+
+                if (speed === 0) {
+                    return "∞";
+                }
+
                 let timeStr = new Date(seconds * 1000).toISOString().substr(11, 8);
                 if (seconds < 36e5) {
                     timeStr = timeStr.substr(3);
                 }
+                console.log(timeStr);
                 return timeStr;
             }
         },
