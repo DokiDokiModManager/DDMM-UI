@@ -5,7 +5,7 @@
                    :checkbox="_('renderer.modal_uninstall.confirmation')"
                    @input="uninstall"
     >
-        {{_("renderer.modal_uninstall.body", install.name)}}
+        {{_(install.globalSave ? "renderer.modal_uninstall.body_globalsave" : "renderer.modal_uninstall.body", install.name)}}
     </ConfirmDialog>
 </template>
 
