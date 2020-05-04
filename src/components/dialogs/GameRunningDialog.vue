@@ -8,7 +8,19 @@
             <br>
             <p>{{_("renderer.modal_running.description")}}</p>
             <br>
-            <button class="primary" @click="openFolder"><i class="fas fa-folder-open"></i> {{_("renderer.modal_running.button_browse")}}</button>
+            <p>
+                <button class="primary" @click="openFolder"><i class="fas fa-folder-open"></i>
+                    {{_("renderer.modal_running.button_browse")}}
+                </button>
+            </p>
+            <br>
+            <p v-if="!more" @click="more = true"><a href="javascript:;">{{_("renderer.modal_running.link_more")}}</a></p>
+            <p v-else>
+                <button class="danger" @click="killGame">
+                    <i class="fas fa-power-off fa-fw"></i>
+                    {{_("renderer.modal_running.button_kill")}}
+                </button>
+            </p>
         </div>
     </Dialog>
 </template>
@@ -24,6 +36,14 @@
             _: ddmm.translate,
             openFolder() {
                 ddmm.app.showFile(joinPath(this.$store.state.running_install_path, "install", "game"));
+            },
+            killGame() {
+                ddmm.mods.killGame();
+            }
+        },
+        data() {
+            return {
+                more: false
             }
         }
     }
