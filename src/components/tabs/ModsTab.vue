@@ -5,7 +5,7 @@
                 <!-- Search box -->
                 <div><input type="text" class="small"
                             :placeholder="_('renderer.tab_mods.list.placeholder_search')" autofocus
-                            @keydown="searchEscapeHandler" @focus="search = ''" v-model="search"></div>
+                            v-model="search" @keyup="searchEscapeHandler" @click="search = ''"></div>
                 <br>
                 <!-- Game install options -->
                 <div class="mod-view-mod-list-title">{{_("renderer.tab_mods.list.header_new")}}</div>
@@ -17,7 +17,7 @@
 
                 <!-- Installed games -->
                 <template v-for="cat in categories">
-                    <div class="mod-view-mod-list-title" v-if="searchResultsInstalls.length > 0">
+                    <div class="mod-view-mod-list-title" v-if="searchResultsInstalls.filter(i => i.category === cat).length > 0">
                         {{cat ? cat : _("renderer.tab_mods.list.header_installed")}}
                     </div>
                     <div
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+    import Fuse from "fuse.js";
 
     import InstallView from "./mods/InstallView.vue";
     import ModView from "./mods/ModView.vue";
@@ -91,7 +92,6 @@
             // search box interaction handlers
             searchEscapeHandler(e) {
                 if (e.key === "Escape") {
-                    Logger.info("Mod List", "Cleared search");
                     this.search = "";
                 }
             }
@@ -99,9 +99,7 @@
         data() {
             return {
                 search: "",
-                search_objs: {
-                    installs: null,
-                }
+                fuse: null
             };
         },
         computed: {
@@ -129,8 +127,9 @@
             },
 
             searchResultsInstalls() {
-                return this.$store.state.game_data.installs || [];
-                // return this.search.length > 0 ? this.installs_search.search(this.search) : this.installs;
+                console.log(this);
+                if (!this.search) return this.installs;
+                return this.fuse.search(this.search).map(r => r.item);
             },
 
             selectedInstall() {
@@ -140,6 +139,12 @@
                     return null;
                 }
             }
+        },
+
+        beforeMount() {
+            this.fuse = new Fuse(this.installs, {
+                keys: ["name", "folderName", "mod.name", "mod.author"]
+            });
         }
     }
 </script>

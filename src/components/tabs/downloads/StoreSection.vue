@@ -17,7 +17,9 @@
 
             <br>
 
-            <p><input type="text" v-model="search" :placeholder="_('renderer.tab_downloads.store.placeholder_search')"></p>
+            <p><input type="text" v-model="search" :placeholder="_('renderer.tab_downloads.store.placeholder_search')"
+                      @keyup="searchEscapeHandler" @click="search = ''">
+            </p>
 
             <br>
 
@@ -57,12 +59,17 @@
             _: ddmm.translate,
             viewMod(mod) {
                 this.$store.commit("preview_mod", mod);
+            },
+            searchEscapeHandler(e) {
+                if (e.key === "Escape") {
+                    this.search = "";
+                }
             }
         },
         computed: {
             modList() {
-              if (!this.search) return this.mods;
-              return this.fuse.search(this.search).map(r => r.item);
+                if (!this.search) return this.mods;
+                return this.fuse.search(this.search).map(r => r.item);
             }
         },
         mounted() {

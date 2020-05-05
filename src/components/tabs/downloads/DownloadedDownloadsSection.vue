@@ -4,7 +4,8 @@
 
         <br>
 
-        <p><input type="text" v-model="search" :placeholder="_('renderer.tab_downloads.downloaded.placeholder_search')"></p>
+        <p><input type="text" v-model="search" :placeholder="_('renderer.tab_downloads.downloaded.placeholder_search')"
+                  @keyup="searchEscapeHandler" @click="search = ''"></p>
 
         <div v-for="mod in modList" class="mod">
             <div>
@@ -49,6 +50,11 @@
                     mod: this.getPathToMod(mod),
                     custom: false
                 });
+            },
+            searchEscapeHandler(e) {
+                if (e.key === "Escape") {
+                    this.search = "";
+                }
             }
         },
         data() {
