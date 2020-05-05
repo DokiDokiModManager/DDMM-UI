@@ -4,7 +4,7 @@
 
         <br>
 
-        <p><input type="text" v-model="search" :placeholder="_('renderer.tab_downloads.store.placeholder_search')"></p>
+        <p><input type="text" v-model="search" :placeholder="_('renderer.tab_downloads.downloaded.placeholder_search')"></p>
 
         <div v-for="mod in modList" class="mod">
             <div>
