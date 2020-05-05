@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@sentry/browser": "^5.15.4",
+    "@sentry/browser": "^5.15.5",
     "@sentry/integrations": "^5.15.4",
     "fuse": "^0.4.0",
     "fuse.js": "^5.2.3",
