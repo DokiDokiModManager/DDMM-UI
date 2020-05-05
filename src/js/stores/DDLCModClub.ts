@@ -5,7 +5,7 @@ import DDLStatus from "./types/DDLStatus";
 
 export default class DDLCModClub implements ModStore {
 
-    private url: string = "http://localhost:8069/";
+    private url: string = "https://ddmm-mods.shinomiya.group/";
 
     name: string = "DDLC Mod Club";
 
