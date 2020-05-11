@@ -50,12 +50,14 @@
   transform: translateY(-68px);
 }
 
-.download-steps {
+.input-row {
   display: flex;
 }
 
-.download-steps > div {
-  flex-basis: 0;
+.input-row > :first-child {
+  margin-right: 0.25em;
+}
+
+.input-row input {
   flex-grow: 1;
-  //text-align: center;
 }
