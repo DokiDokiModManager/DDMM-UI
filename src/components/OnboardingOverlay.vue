@@ -12,6 +12,13 @@
                                 <i class="fas fa-arrow-right fa-fw"></i> Get Started
                             </button>
                         </p>
+
+                        <template v-if="developer && !developer_local_ui">
+                            <br>
+                            <p>
+                                <a href="javascript:;" @click="developerLocalUI">Enable local UI for onboarding flow</a>
+                            </p>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -185,6 +192,8 @@
         components: {DropZone, Link},
         data() {
             return {
+                developer: !!ddmm.env.DDMM_DEVELOPER,
+                developer_local_ui: ddmm.config.readConfigValue("localUI"),
                 step: 1,
                 warnings: {
                     // mac_safari: ddmm.platform === "darwin"
@@ -250,6 +259,10 @@
                 ddmm.config.saveConfigValue("installFolder", this.save_directory);
                 this.$emit("close");
                 ddmm.onboarding.finalise(this.selection.path);
+            },
+            developerLocalUI() {
+                ddmm.config.saveConfigValue("localUI", true);
+                ddmm.app.restart();
             }
         }
     }
