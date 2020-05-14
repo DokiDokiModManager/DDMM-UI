@@ -15,6 +15,8 @@
         <NewsDialog v-if="modalVisible('news')"></NewsDialog>
 
         <ModPreviewDialog v-if="modalVisible('mod_preview')"></ModPreviewDialog>
+
+        <IssueReportDialog v-if="modalVisible('issue_report')"></IssueReportDialog>
     </div>
 </template>
 
@@ -31,10 +33,12 @@
     import InstallCategoryDialog from "./dialogs/installs/InstallCategoryDialog";
     import NewsDialog from "./dialogs/NewsDialog";
     import ModPreviewDialog from "./dialogs/ModPreviewDialog";
+    import IssueReportDialog from "./dialogs/IssueReportDialog";
 
     export default {
         name: "Dialogs",
         components: {
+            IssueReportDialog,
             NewsDialog,
             InstallCategoryDialog,
             GameRunningDialog,

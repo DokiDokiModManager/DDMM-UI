@@ -6,6 +6,8 @@
   text-align: right;
   padding: 0.5em;
   display: flex;
+  align-items: flex-start;
+  justify-items: flex-start;
   justify-content: space-between;
   flex-shrink: 0;
 }
@@ -63,14 +65,16 @@
   visibility: hidden;
 }
 
+.titlebar .spacer {
+  margin: 0 0.5em;
+  height: 10px;
+}
+
 .window-buttons {
-  position: fixed;
-  right: 0;
-  top: 0;
   display: flex;
   color: $ui-text-colour;
   font-weight: bold;
-  padding: 0.5em;
+  padding: 0 0.5em;
   -webkit-app-region: no-drag;
 }
 

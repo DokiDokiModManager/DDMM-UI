@@ -48,7 +48,8 @@ const store = new Vuex.Store({
             error: false,
             install_category: false,
             news: false,
-            mod_preview: false
+            mod_preview: false,
+            issue_report: false
         },
 
         preloaded_install_folder: "",

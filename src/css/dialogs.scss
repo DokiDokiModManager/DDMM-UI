@@ -14,12 +14,15 @@
   width: 75%;
   max-width: 600px;
   min-width: 200px;
-  margin: 2em auto;
+  margin: 1em auto;
   background-color: darken($ui-dark-colour-bg, 5%);
   padding: 1em;
   border-radius: 3px;
   box-shadow: 1px 1px 15px #000;
   -webkit-app-region: no-drag;
+  min-height: 550px;
+  max-height: 75vh;
+  overflow-y: scroll;
 }
 
 .dialog-body.nopad {
@@ -30,8 +33,6 @@
   padding: 1em 2em;
   text-align: center;
 }
-
-
 
 .dialog-menu-item {
   font-size: 0.9em;

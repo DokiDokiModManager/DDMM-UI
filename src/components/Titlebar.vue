@@ -5,7 +5,12 @@
             <small>v{{app_version}} (<Link :to="'https://help.doki.space/changelog/v' + app_version.replace(/\./g, '_')">{{_("renderer.version.link_changelog")}}</Link>)
             </small>
         </div>
+
         <div class="window-buttons">
+            <div class="button" @click="issueReport" :title="_('renderer.window_controls.issue_report')">
+                <i class="fas fa-bug fa-fw"></i>
+            </div>
+            <div class="spacer"></div>
             <template v-if="!system_borders">
                 <div class="button" @click="windowMinimise" :title="_('renderer.window_controls.minimise')"><i
                         class="far fa-window-minimize fa-fw"></i></div>
@@ -30,16 +35,8 @@
             windowMinimise: ddmm.window.minimise,
             windowMaximise: ddmm.window.maximise,
             openURL: ddmm.app.openURL,
-            login() {
-                this.$store.commit("show_modal", {modal: "login"});
-            },
-            showSettings() {
-                this.$store.commit("show_modal", {modal: "account_settings"});
-            }
-        },
-        computed: {
-            user() {
-                return this.$store.state.user;
+            issueReport() {
+                this.$store.commit("show_modal", {modal: "issue_report"});
             }
         }
     }
