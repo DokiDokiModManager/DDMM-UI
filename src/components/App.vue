@@ -10,6 +10,8 @@
         <div class="app app-container-contents">
             <Titlebar :app_name="app_name" :app_version="app_version" :system_borders="system_borders"></Titlebar>
 
+            <NewsBanner v-if="bannerVisisble"></NewsBanner>
+
             <Dialogs></Dialogs>
 
             <OnboardingOverlay v-if="onboarding" @close="onboarding = false"></OnboardingOverlay>
@@ -34,10 +36,12 @@
     import Dialogs from "./Dialogs.vue";
     import OnboardingOverlay from "./OnboardingOverlay";
     import DownloadsTab from "./tabs/DownloadsTab";
+    import NewsBanner from "./NewsBanner";
 
     export default {
         name: "App",
         components: {
+            NewsBanner,
             OnboardingOverlay,
             Navbar,
             Titlebar,
@@ -122,6 +126,10 @@
 
             showBackground2() {
                 return this.$store.state.custom_background.display_2;
+            },
+
+            bannerVisisble() {
+                return this.$store.state.news_banner.display;
             }
         },
         mounted() {

@@ -72,6 +72,12 @@ const store = new Vuex.Store({
             body: ""
         },
 
+        news_banner: {
+            display: false,
+            body: "",
+            id: ""
+        },
+
         running_install_path: null,
 
         rerender_key: Math.random(),
@@ -155,8 +161,21 @@ const store = new Vuex.Store({
             state.error.stacktrace = payload.stacktrace;
         },
         show_news(state, payload) {
-            state.news_modal.title = payload.title;
-            state.news_modal.body = payload.body;
+            switch (payload.style) {
+                case "popup":
+                    state.news_modal.title = payload.title;
+                    state.news_modal.body = payload.body;
+                    state.modals.news = true;
+                    break;
+                case "banner":
+                    state.news_banner.body = payload.body;
+                    state.news_banner.id = payload.id;
+                    state.news_banner.display = true;
+                    break;
+            }
+        },
+        hide_banner(state) {
+            state.news_banner.display = false;
         },
         rerender(state) {
             state.rerender_key = Math.random();
@@ -243,14 +262,23 @@ ddmm.on("download started", () => {
 
 const NEWS_URL = "https://dokidokimodmanager.github.io/Meta/news.json";
 
-if (!localStorage.getItem("last_news_timestamp")) {
-    localStorage.setItem("last_news_timestamp", "0");
-}
+fetch(NEWS_URL).then(res => res.json()).then(news => {
+    let seenNews = [];
 
-fetch(NEWS_URL).then(res => res.json()).then(news => news.news.filter(news => news.timestamp > localStorage.getItem("last_news_timestamp"))).then(backwards => {
-    const news = backwards.reverse();
-    store.commit("show_news", news[0]);
-    store.commit("show_modal", {modal: "news"});
+    if (localStorage.getItem("seen_news")) {
+        seenNews = localStorage.getItem("seen_news").split(",");
+    }
+
+    news.news.forEach(article => {
+        if (seenNews.indexOf(article.id) === -1) {
+            console.log(article);
+            store.commit("show_news", article);
+            if (article.style === "popup") {
+                seenNews.push(article.id);
+                localStorage.setItem("seen_news", seenNews.join(","));
+            }
+        }
+    });
 });
 
 window.test = new DDLCModClub();
