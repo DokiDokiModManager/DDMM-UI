@@ -20,13 +20,15 @@
   border-radius: 3px;
   box-shadow: 1px 1px 15px #000;
   -webkit-app-region: no-drag;
-  min-height: 550px;
-  max-height: 75vh;
-  overflow-y: scroll;
+  //overflow-y: scroll;
 }
 
 .dialog-body.nopad {
   padding: 0;
+}
+
+.dialog-body:not(.nopad) {
+  //max-height: 75vh;
 }
 
 .dialog-menu-description {
