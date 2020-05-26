@@ -21,7 +21,7 @@
             _: ddmm.translate,
             archive(confirm) {
                 if (confirm) {
-                    // todo: archive
+                    ddmm.mods.archiveInstall(this.install.folderName);
                 }
                 this.$store.commit("hide_modal", {modal: "install_archive"});
             }

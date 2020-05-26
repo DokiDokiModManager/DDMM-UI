@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import Dialog from "./base/Dialog";
+    import Dialog from "../base/Dialog";
     import {join as joinPath} from "path";
 
     export default {

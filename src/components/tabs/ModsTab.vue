@@ -23,7 +23,7 @@
                     <div
                             :class="{'mod-view-mod-list-entry': true, 'active': selected_item.id === install.folderName && selected_item.type === 'install'}"
                             v-for="install in searchResultsInstalls.filter(i => i.category === cat)"
-                            @dblclick="launchInstall(install.folderName)"
+                            @dblclick="launchInstall(install)"
                             @click="handleInstallClick(install.folderName)"
                             :title="getPathToInstall(install.folderName)"
                     >
@@ -86,7 +86,7 @@
 
             // install launch logic
             launchInstall(install) {
-                Launcher.launch(install);
+                Launcher.launch(install, this.$store);
             },
 
             // search box interaction handlers

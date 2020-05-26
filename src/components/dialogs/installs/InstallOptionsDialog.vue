@@ -19,7 +19,7 @@
             <i class="fas fa-th-list fa-fw"></i> {{_("renderer.menu_install_options.category")}}
         </div>
         <div class="dialog-menu-separator"></div>
-        <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave}" @click="archive">
+        <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave || install.archived}" @click="archive">
             <i class="fas fa-archive fa-fw"></i> {{_("renderer.menu_install_options.archive")}}
         </div>
         <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave, 'danger': true}" @click="deleteSave">
@@ -56,7 +56,7 @@
                 this.$store.commit("hide_modal", {modal: "install_options"});
             },
             launch() {
-                Launcher.launch(this.install.folderName);
+                Launcher.launch(this.install, this.$store);
                 this.close();
             },
             createShortcut() {
@@ -69,7 +69,7 @@
                 this.$store.commit("show_modal", {modal: "install_rename"});
             },
             archive() {
-                if (this.install.globalSave) return;
+                if (this.install.globalSave || this.install.archived) return;
                 this.$store.commit("hide_modal", {modal: "install_options"});
                 this.$store.commit("show_modal", {modal: "install_archive"});
             },

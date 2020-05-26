@@ -44,6 +44,8 @@ const store = new Vuex.Store({
             uninstall: false,
             save_delete: false,
             install_archive: false,
+            install_unarchive: false,
+            unarchiving: false,
             installing: false,
             game_running: false,
             error: false,
@@ -91,7 +93,6 @@ const store = new Vuex.Store({
         install_creation_data: {
             install_name: "",
             folder_name: "",
-            mod_selection: "!none",
             mod: "",
             save_option: 0
         }
@@ -240,6 +241,7 @@ ddmm.on("mod list", mods => {
 
 ddmm.on("running cover", cover => {
     Logger.info("Game Running", cover.display ? "Install running from " + cover.folder_path : "Game ended");
+    store.commit("hide_modal", {modal: "unarchiving"});
     if (cover.display) {
         store.commit("set_running_install", cover.folder_path);
         store.commit("show_modal", {modal: "game_running"});

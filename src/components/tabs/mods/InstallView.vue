@@ -6,6 +6,7 @@
                           :title="_('renderer.tab_mods.install.description_external')"><i
                         class="fas fa-external-link-alt"></i></a>
                 </small>
+                <span class="tag" v-if="install.archived">{{_("renderer.tab_mods.install.tag_archived")}}</span>
                 <span class="tag" v-if="install.globalSave">{{_("renderer.tab_mods.install.tag_global_save")}}</span>
                 <span class="tag"
                       v-if="install.mod && install.mod.uses_sdk">{{_("renderer.tab_mods.install.tag_sdk")}}</span>
@@ -17,7 +18,9 @@
             <br>
 
             <p>
-                <button class="success" @click="launchInstall(install.folderName)" v-if="install.monikaExportStatus !== 2">
+                <button class="success"
+                        @click="launchInstall(install)"
+                        v-if="install.monikaExportStatus !== 2">
                     <i class="fas fa-play fa-fw"></i>
                     {{_("renderer.tab_mods.install.button_launch")}}
                 </button>
@@ -132,7 +135,7 @@
                 ddmm.app.showFile(ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName, "install", filename));
             },
             launchInstall(install) {
-                Launcher.launch(install);
+                Launcher.launch(install, this.$store);
             },
             showOptions(install) {
                 this.$store.commit("select_install", {install});

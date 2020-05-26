@@ -16,23 +16,7 @@
             </p>
 
             <div class="form-group">
-                <p><label>{{_("renderer.tab_mods.install_creation.label_mod")}}</label></p>
-                <p>
-                    <select v-model="install_creation.mod_selection">
-                        <option :value="'!none'">{{_("renderer.tab_mods.install_creation.modlist_none")}}</option>
-                        <option :value="'!custom'">{{_("renderer.tab_mods.install_creation.modlist_custom")}}</option>
-
-                        <optgroup :label="_('renderer.tab_mods.install_creation.modlist_library')">
-                            <option v-for="mod in mods" :value="getPathToMod(mod)">{{getDisplayName(mod)}}</option>
-                        </optgroup>
-                    </select>
-                </p>
-                <template v-if="install_creation.mod_selection === '!custom'">
-                    <br>
-                    <p><input type="text" :placeholder="_('renderer.tab_mods.install_creation.description_mod')"
-                              v-model="install_creation.mod" readonly @click="installCreationSelectMod"
-                              style="cursor: pointer;"></p>
-                </template>
+                <ModSelector @input="selectMod" :initial_mod="install_creation.mod"></ModSelector>
             </div>
 
             <div class="form-group">
@@ -67,10 +51,11 @@
 
 <script>
     import ChunkyRadioButtons from "../../elements/ChunkyRadioButtons.vue";
+    import ModSelector from "../../elements/ModSelector";
 
     export default {
         name: "CreationView",
-        components: {ChunkyRadioButtons},
+        components: {ModSelector, ChunkyRadioButtons},
         data() {
             return {
                 is_installing: false
@@ -96,12 +81,6 @@
                     });
                 }
             },
-            installCreationSelectMod() {
-                const mod = ddmm.mods.browseForMod();
-                if (mod) {
-                    this.$store.commit("set_install_creation", {mod});
-                }
-            },
             install() {
                 this.$store.commit("installation_status", {
                     installing: true,
@@ -111,22 +90,17 @@
                     folderName: this.install_creation.folder_name,
                     installName: this.install_creation.install_name,
                     globalSave: this.install_creation.save_option === 1,
-                    mod: this.selectedMod
+                    mod: this.install_creation.mod
                 });
                 this.is_installing = true;
                 this.$store.commit("set_install_creation", {
-                    mod: "!none",
+                    mod: "",
                     install_name: "",
                     folder_name: ""
-                })
+                });
             },
-            getPathToMod(filename) {
-                return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", filename);
-            },
-            getDisplayName(filename) {
-                const parts = filename.split(".");
-                parts.pop();
-                return parts.join(".");
+            selectMod(mod) {
+                this.$store.commit("set_install_creation", {mod});
             }
         },
         computed: {
@@ -134,18 +108,7 @@
                 return this.$store.state.install_creation_data;
             },
             shouldDisableCreation() {
-                return this.is_installing || !(this.selectedMod || this.install_creation.mod_selection === "!none")
-                    || this.install_creation.install_name.length < 2 || this.install_creation.folder_name.length < 2;
-            },
-            user() {
-                return this.$store.state.user;
-            },
-            mods() {
-                return this.$store.state.game_data.mods;
-            },
-            selectedMod() {
-                return this.install_creation.mod_selection !== "!none" ?
-                    (this.install_creation.mod_selection === "!custom" ? this.install_creation.mod : this.install_creation.mod_selection) : null;
+                return this.is_installing || this.install_creation.install_name.length < 2 || this.install_creation.folder_name.length < 2;
             }
         }
     }

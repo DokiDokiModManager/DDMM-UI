@@ -5,6 +5,8 @@
         <SaveDeleteDialog v-if="modalVisible('save_delete')"></SaveDeleteDialog>
         <UninstallDialog v-if="modalVisible('uninstall')"></UninstallDialog>
         <InstallArchiveDialog v-if="modalVisible('install_archive')"></InstallArchiveDialog>
+        <InstallUnarchiveDialog v-if="modalVisible('install_unarchive')"></InstallUnarchiveDialog>
+        <UnarchivingDialog v-if="modalVisible('unarchiving')"></UnarchivingDialog>
         <InstallDialog v-if="modalVisible('installing')"></InstallDialog>
         <ErrorDialog v-if="modalVisible('error')"></ErrorDialog>
         <InstallCategoryDialog v-if="modalVisible('install_category')"></InstallCategoryDialog>
@@ -25,7 +27,7 @@
     import SaveDeleteDialog from "./dialogs/installs/SaveDeleteDialog.vue";
     import AlertDialog from "./dialogs/base/AlertDialog.vue";
     import InstallDialog from "./dialogs/installs/InstallDialog";
-    import GameRunningDialog from "./dialogs/GameRunningDialog";
+    import GameRunningDialog from "./dialogs/installs/GameRunningDialog";
     import ErrorDialog from "./dialogs/ErrorDialog";
     import InstallCategoryDialog from "./dialogs/installs/InstallCategoryDialog";
     import NewsDialog from "./dialogs/NewsDialog";
@@ -33,10 +35,13 @@
     import IssueReportDialog from "./dialogs/IssueReportDialog";
     import LanguageSwitchDialog from "./dialogs/LanguageSwitchDialog";
     import InstallArchiveDialog from "./dialogs/installs/InstallArchiveDialog";
+    import InstallUnarchiveDialog from "./dialogs/installs/InstallUnarchiveDialog";
+    import UnarchivingDialog from "./dialogs/installs/UnarchivingDialog";
 
     export default {
         name: "Dialogs",
         components: {
+            InstallUnarchiveDialog,
             InstallArchiveDialog,
             LanguageSwitchDialog,
             IssueReportDialog,
@@ -51,7 +56,8 @@
             InstallOptionsDialog,
             AlertDialog,
             ErrorDialog,
-            ModPreviewDialog
+            ModPreviewDialog,
+            UnarchivingDialog
         },
         methods: {
             _: ddmm.translate,

@@ -2,9 +2,14 @@ import Logger from "./Logger";
 
 export default class Launcher {
 
-    static launch(install) {
+    static launch(install, store) {
         Logger.info("Game Launch", "Preparing to launch install " + install);
-        ddmm.mods.launchInstall(install);
-        Logger.info("Game Launch", "Launched " + install);
+        if (!install.archived) {
+            ddmm.mods.launchInstall(install);
+            Logger.info("Game Launch", "Launched " + install);
+        } else {
+            store.commit("select_install", {install});
+            store.commit("show_modal", {modal: "install_unarchive"});
+        }
     }
 }
