@@ -79,7 +79,10 @@
                     },
                     {
                         name: ddmm.translate.bind(null, "renderer.tabs.tab_options"),
-                        component: "OptionsTab"
+                        component: "OptionsTab",
+                        badge: () => {
+                            return this.$store.state.update === "available";
+                        }
                     },
                     {
                         name: ddmm.translate.bind(null, "renderer.tabs.tab_about"),

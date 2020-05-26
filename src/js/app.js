@@ -53,7 +53,7 @@ const store = new Vuex.Store({
             news: false,
             mod_preview: false,
             issue_report: false,
-            language_switch: false
+            language_switch: false,
         },
 
         preloaded_install_folder: "",
@@ -95,7 +95,9 @@ const store = new Vuex.Store({
             folder_name: "",
             mod: "",
             save_option: 0
-        }
+        },
+
+        update: "none"
     },
     mutations: {
         load_installs(state, payload) {
@@ -196,6 +198,9 @@ const store = new Vuex.Store({
         },
         set_install_creation(state, payload) {
             Object.assign(state.install_creation_data, payload);
+        },
+        set_update_status(state, payload) {
+            state.update = payload;
         }
     },
     actions: {
@@ -267,6 +272,10 @@ ddmm.on("download started", () => {
 ddmm.on("languages reloaded", () => {
     store.commit("hide_modal", {modal: "language_switch"});
     store.commit("rerender");
+});
+
+ddmm.on("update status", status => {
+    store.commit("set_update_status", status);
 });
 
 const NEWS_URL = "https://dokidokimodmanager.github.io/Meta/news.json";

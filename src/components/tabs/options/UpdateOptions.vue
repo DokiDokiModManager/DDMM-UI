@@ -4,52 +4,50 @@
         <p>{{_("renderer.tab_options.section_updates.subtitle")}}</p>
         <br>
         <p><strong>{{_("renderer.tab_options.section_updates.description_current_version", version)}}</strong></p>
-        <template v-if="!error">
-            <p><strong>{{_("renderer.tab_options.section_updates.description_latest_version", latest)}}</strong></p>
-            <br>
-            <p v-if="has_update">{{_("renderer.tab_options.section_updates.description_has_update")}}</p>
-            <p v-else>{{_("renderer.tab_options.section_updates.description_no_update")}}</p>
-        </template>
-        <p v-else>{{_("renderer.tab_options.section_updates.description_error")}}</p>
+        <p><strong>{{_("renderer.tab_options.section_updates.description_latest_version", latest)}}</strong></p>
+
         <br>
-        <p v-if="has_update && !error">
-            <button @click="doUpdate" class="primary" :disabled="checking">
-                <i class="fas fa-download fa-fw"></i> {{_("renderer.tab_options.section_updates.button_update")}}
-            </button>
-        </p>
-        <p v-else>
-            <button @click="checkUpdate" class="primary" :disabled="checking">
-                <i class="fas fa-sync-alt fa-fw"></i> {{_("renderer.tab_options.section_updates.button_check")}}
-            </button>
-        </p>
+
+        <template v-if="update_status === 'none'">
+            <p>{{_("renderer.tab_options.section_updates.description_no_update")}}</p>
+
+            <br>
+
+            <button class="primary" @click="checkUpdate"><i class="fas fa-sync fa-fw"></i> {{_("renderer.tab_options.section_updates.button_check")}}</button>
+        </template>
+        <template v-else-if="update_status === 'available'">
+            <p>{{_("renderer.tab_options.section_updates.description_has_update")}}</p>
+
+            <br>
+
+            <button class="primary" @click="doUpdate"><i class="fas fa-download fa-fw"></i> {{_("renderer.tab_options.section_updates.button_download")}}</button>
+        </template>
+        <template v-else-if="update_status === 'downloading'">
+            <p>{{_("renderer.tab_options.section_updates.description_downloading")}}</p>
+        </template>
+        <template v-else-if="update_status === 'downloaded'">
+            <p>{{_("renderer.tab_options.section_updates.description_downloaded")}}</p>
+        </template>
     </div>
 </template>
 
 <script>
-    import Logger from "../../../js/utils/Logger";
-    import * as semver from "semver";
+    import UpdateChecker from "../../../js/utils/UpdateChecker";
 
     export default {
         name: "UpdateOptions",
         methods: {
             _: ddmm.translate,
             doUpdate() {
-                Logger.info("Updates", "Forcing update check");
-                ddmm.app.update();
-                this.checking = true;
+                ddmm.app.downloadUpdate();
             },
             checkUpdate() {
                 this.checking = true;
-                fetch("https://api.github.com/repos/DokiDokiModManager/Mod-Manager/releases/latest")
-                    .then(res => res.json()).then(release => {
-                    this.error = false;
-                    this.latest = release.name;
-                }).catch(() => {
-                    this.error = true;
+
+                UpdateChecker.getLatest(this.$store).then(latest => {
+                    this.latest = latest;
                 }).finally(() => {
-                    setTimeout(() => {
-                        this.checking = false;
-                    }, 1000);
+                    this.checking = false;
                 });
             }
         },
@@ -57,13 +55,12 @@
             return {
                 version: ddmm.version,
                 latest: "",
-                error: false,
                 checking: true
             }
         },
         computed: {
-            has_update() {
-                return this.latest && semver.gt(this.latest, this.version);
+            update_status() {
+                return this.$store.state.update;
             }
         },
         mounted() {
