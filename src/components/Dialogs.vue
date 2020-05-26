@@ -7,16 +7,12 @@
         <InstallDialog v-if="modalVisible('installing')"></InstallDialog>
         <ErrorDialog v-if="modalVisible('error')"></ErrorDialog>
         <InstallCategoryDialog v-if="modalVisible('install_category')"></InstallCategoryDialog>
-
         <GameRunningDialog v-if="modalVisible('game_running')"></GameRunningDialog>
-
         <ModOptionsDialog v-if="modalVisible('mod_options')"></ModOptionsDialog>
-
         <NewsDialog v-if="modalVisible('news')"></NewsDialog>
-
         <ModPreviewDialog v-if="modalVisible('mod_preview')"></ModPreviewDialog>
-
         <IssueReportDialog v-if="modalVisible('issue_report')"></IssueReportDialog>
+        <LanguageSwitchDialog v-if="modalVisible('language_switch')"></LanguageSwitchDialog>
     </div>
 </template>
 
@@ -34,10 +30,12 @@
     import NewsDialog from "./dialogs/NewsDialog";
     import ModPreviewDialog from "./dialogs/ModPreviewDialog";
     import IssueReportDialog from "./dialogs/IssueReportDialog";
+    import LanguageSwitchDialog from "./dialogs/LanguageSwitchDialog";
 
     export default {
         name: "Dialogs",
         components: {
+            LanguageSwitchDialog,
             IssueReportDialog,
             NewsDialog,
             InstallCategoryDialog,

@@ -7,9 +7,9 @@
             <Link to="https://example.org">{{_("renderer.tab_options.section_language.link_contribute")}}</Link>
         </p>
         <br>
-        <p><label>{{_("renderer.tab_options.section_language.label_language")}}</label></p>
+        <p><label for="language-switch-select">{{_("renderer.tab_options.section_language.label_language")}}</label></p>
         <p>
-            <select v-model="language_interim" @change="setLanguage">
+            <select v-model="language_interim" @change="setLanguage" id="language-switch-select">
                 <option v-for="language in languages" :value="language.code">
                     {{language.name}}
                 </option>
@@ -29,8 +29,8 @@
             _: ddmm.translate,
             setLanguage() {
                 ddmm.config.saveConfigValue("language", this.language_interim);
+                this.$store.commit("show_modal", {modal: "language_switch"})
                 ddmm.reloadLanguages();
-                this.$store.commit("rerender");
             }
         },
         data() {
