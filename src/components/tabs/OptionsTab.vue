@@ -49,24 +49,24 @@
         },
         data() {
             return {
-                selected_option: sessionStorage.getItem("tab_options_last_selection") ? sessionStorage.getItem("tab_options_last_selection") : "LanguageOptions",
+                selected_option: sessionStorage.getItem("tab_options_last_selection") ? sessionStorage.getItem("tab_options_last_selection") : "UpdateOptions",
                 menu: [
                     {
                         header: ddmm.translate("renderer.tab_options.list.header_application"),
                         contents: [
                             {
+                                title: ddmm.translate("renderer.tab_options.list.link_updates"),
+                                component: "UpdateOptions",
+                                // hideIf() { return !!ddmm.env.SNAP }
+                            },
+                            {
                                 title: ddmm.translate("renderer.tab_options.list.link_language"),
                                 component: "LanguageOptions"
                             },
                             {
-                                title: ddmm.translate("renderer.tab_options.list.link_updates"),
-                                component: "UpdateOptions",
-                                hideIf() { return !!ddmm.env.SNAP }
-                            },
-                            {
                                 title: ddmm.translate("renderer.tab_options.list.link_storage"),
                                 component: "StorageOptions",
-                                hideIf() { return !!ddmm.env.SNAP }
+                                // hideIf() { return !!ddmm.env.SNAP }
                             }
                         ]
                     },
