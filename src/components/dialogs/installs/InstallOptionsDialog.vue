@@ -9,20 +9,19 @@
             <i class="fas fa-play fa-fw"></i> {{_("renderer.menu_install_options.launch")}}
         </div>
         <div class="dialog-menu-separator"></div>
-        <div class="dialog-menu-item">
-            <i class="fas fa-plus fa-fw"></i> {{_("renderer.menu_install_options.addons")}}
-        </div>
-        <div class="dialog-menu-separator"></div>
         <div class="dialog-menu-item" @click="rename">
             <i class="fas fa-pencil-alt fa-fw"></i> {{_("renderer.menu_install_options.rename")}}
         </div>
-        <div class="dialog-menu-item" v-if="this.isWindows" @click="createShortcut">
+        <div class="dialog-menu-item" v-if="isWindows" @click="createShortcut">
             <i class="fas fa-external-link-alt fa-fw"></i> {{_("renderer.menu_install_options.shortcut")}}
         </div>
         <div class="dialog-menu-item" @click="categories">
             <i class="fas fa-th-list fa-fw"></i> {{_("renderer.menu_install_options.category")}}
         </div>
         <div class="dialog-menu-separator"></div>
+        <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave}" @click="archive">
+            <i class="fas fa-archive fa-fw"></i> {{_("renderer.menu_install_options.archive")}}
+        </div>
         <div :class="{'dialog-menu-item': true, 'disabled': install.globalSave, 'danger': true}" @click="deleteSave">
             <i class="fas fa-undo fa-fw"></i> {{_("renderer.menu_install_options.delete_save")}}
         </div>
@@ -68,6 +67,11 @@
             rename() {
                 this.$store.commit("hide_modal", {modal: "install_options"});
                 this.$store.commit("show_modal", {modal: "install_rename"});
+            },
+            archive() {
+                if (this.install.globalSave) return;
+                this.$store.commit("hide_modal", {modal: "install_options"});
+                this.$store.commit("show_modal", {modal: "install_archive"});
             },
             deleteSave() {
                 if (this.install.globalSave) return;

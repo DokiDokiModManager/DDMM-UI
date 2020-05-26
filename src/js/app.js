@@ -43,6 +43,7 @@ const store = new Vuex.Store({
             install_rename: false,
             uninstall: false,
             save_delete: false,
+            install_archive: false,
             installing: false,
             game_running: false,
             error: false,

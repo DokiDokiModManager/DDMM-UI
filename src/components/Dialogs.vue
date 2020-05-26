@@ -4,6 +4,7 @@
         <InstallRenameDialog v-if="modalVisible('install_rename')"></InstallRenameDialog>
         <SaveDeleteDialog v-if="modalVisible('save_delete')"></SaveDeleteDialog>
         <UninstallDialog v-if="modalVisible('uninstall')"></UninstallDialog>
+        <InstallArchiveDialog v-if="modalVisible('install_archive')"></InstallArchiveDialog>
         <InstallDialog v-if="modalVisible('installing')"></InstallDialog>
         <ErrorDialog v-if="modalVisible('error')"></ErrorDialog>
         <InstallCategoryDialog v-if="modalVisible('install_category')"></InstallCategoryDialog>
@@ -31,10 +32,12 @@
     import ModPreviewDialog from "./dialogs/ModPreviewDialog";
     import IssueReportDialog from "./dialogs/IssueReportDialog";
     import LanguageSwitchDialog from "./dialogs/LanguageSwitchDialog";
+    import InstallArchiveDialog from "./dialogs/installs/InstallArchiveDialog";
 
     export default {
         name: "Dialogs",
         components: {
+            InstallArchiveDialog,
             LanguageSwitchDialog,
             IssueReportDialog,
             NewsDialog,
