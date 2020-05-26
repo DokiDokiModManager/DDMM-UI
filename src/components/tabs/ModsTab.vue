@@ -27,7 +27,10 @@
                             @click="handleInstallClick(install.folderName)"
                             :title="getPathToInstall(install.folderName)"
                     >
-                        <span>{{install.name}}</span>
+                        <span>
+                            {{install.name}}
+                            <span v-if="install.archived"><i class="fas fa-archive fa-fw"></i></span>
+                        </span>
                         <span class="mod-view-mod-list-entry-button"
                               @click="showInstallOptions(install)"><i
                                 class="fas fa-cog"></i></span>
