@@ -43,6 +43,17 @@
 
             <br>
 
+            <template v-if="v4_beta.length > 0">
+                <h2>{{_("renderer.tab_about.title_v4_beta")}}</h2>
+                <ul>
+                    <li v-for="tester in v4_beta">
+                        {{tester}}
+                    </li>
+                </ul>
+            </template>
+
+            <br>
+
             <h2>{{_("renderer.tab_about.title_disclaimer")}}</h2>
             <p>{{_("renderer.tab_about.disclaimer_1")}}</p>
             <br>
@@ -62,7 +73,8 @@
         data() {
             return {
                 supporters: [],
-                translators: []
+                translators: [],
+                v4_beta: []
             }
         },
         methods: {
@@ -72,6 +84,7 @@
             fetch(THANKS_URL).then(res => res.json()).then(thanks => {
                 this.supporters = thanks.patreon;
                 this.translators = thanks.translations;
+                this.v4_beta = thanks.v4_beta;
             });
         }
     }
