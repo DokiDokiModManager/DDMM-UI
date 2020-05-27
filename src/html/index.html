@@ -17,8 +17,9 @@
         window.location.replace("https://doki.space");
     }
 
-
-    ddmm.config.saveConfigValue("lastKnownGoodVersion", ddmm.version);
+    if (!ddmm.config.readConfigValue("localUI")) {
+        ddmm.config.saveConfigValue("lastKnownGoodVersion", ddmm.version);
+    }
 
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
