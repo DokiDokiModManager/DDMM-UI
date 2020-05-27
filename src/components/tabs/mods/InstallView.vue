@@ -131,7 +131,6 @@
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName);
             },
             getPathToScreenshot(folderName, filename) {
-                console.log(ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName, "install", filename));
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName, "install", filename);
             },
             openScreenshot(folderName, filename) {

@@ -130,7 +130,6 @@
             },
 
             searchResultsInstalls() {
-                console.log(this);
                 if (!this.search) return this.installs;
                 return this.fuse.search(this.search).map(r => r.item);
             },

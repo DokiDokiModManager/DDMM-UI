@@ -64,7 +64,6 @@
                 if (seconds < 36e5) {
                     timeStr = timeStr.substr(3);
                 }
-                console.log(timeStr);
                 return timeStr;
             }
         },

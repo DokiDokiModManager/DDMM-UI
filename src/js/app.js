@@ -151,7 +151,6 @@ const store = new Vuex.Store({
             }
         },
         installation_status(state, payload) {
-            console.log(payload);
             state.modals.installing = !!payload.installing;
             state.preloaded_install_folder = payload.preloaded_install_folder;
         },
@@ -189,7 +188,6 @@ const store = new Vuex.Store({
             state.tab = payload;
         },
         set_downloads(state, payload) {
-            console.log(payload);
             state.downloads = payload;
         },
         preview_mod(state, payload) {
@@ -289,7 +287,6 @@ fetch(NEWS_URL).then(res => res.json()).then(news => {
 
     news.news.forEach(article => {
         if (seenNews.indexOf(article.id) === -1) {
-            console.log(article);
             store.commit("show_news", article);
             if (article.style === "popup") {
                 seenNews.push(article.id);

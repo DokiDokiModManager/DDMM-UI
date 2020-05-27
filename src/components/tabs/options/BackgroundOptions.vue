@@ -56,7 +56,6 @@
                 el.type = "file";
                 el.accept = "image/*";
                 el.onchange = () => {
-                    console.log(el.files[0]);
                     this.$store.commit("set_background", "custom:" + el.files[0].path);
                 };
                 el.click();
