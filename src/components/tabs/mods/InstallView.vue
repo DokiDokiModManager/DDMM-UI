@@ -151,14 +151,16 @@
 
                 return hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0");
             },
-            formatSize(sizeBytes) {
-                if (sizeBytes > 1e9) {
-                    return (Math.floor(sizeBytes / 1e7)) / 100 + " GB";
-                } else if (sizeBytes > 1e6) {
-                    return (Math.floor(sizeBytes / 1e4)) / 100 + " MB";
-                } else {
-                    return Math.floor(sizeBytes) / 100 + " KB";
-                }
+            formatSize(bytes) {
+                if (bytes === 0) return "0 B";
+
+                const k = 1024;
+                const dm = 2;
+                const sizes = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
+
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
             },
             doBackground() {
                 this.$store.commit("override_background", ddmm.mods.getInstallBackground(this.install.folderName));
