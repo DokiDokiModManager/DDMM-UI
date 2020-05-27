@@ -34,7 +34,6 @@
                 this.$store.commit("hide_modal", {modal: "error"});
             },
             copy() {
-                console.log("beans");
                 ddmm.app.copyToClipboard(this.error.stacktrace);
             }
         },
