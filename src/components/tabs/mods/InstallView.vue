@@ -12,8 +12,11 @@
                       v-if="install.mod && install.mod.uses_sdk">{{_("renderer.tab_mods.install.tag_sdk")}}</span>
             </h1>
 
-
-            <p><i class="fas fa-clock"></i> <strong>{{formatTime(install.playTime)}}</strong></p>
+            <p>
+                <i class="fas fa-clock"></i> <strong>{{formatTime(install.playTime)}}</strong>
+                &nbsp;
+                <i class="fas fa-hdd"></i> <strong>{{formatSize(install.size)}}</strong>
+            </p>
 
             <br>
 
@@ -148,6 +151,15 @@
                 const minutes = Math.floor(seconds / 60);
 
                 return hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0");
+            },
+            formatSize(sizeBytes) {
+                if (sizeBytes > 1e9) {
+                    return (Math.floor(sizeBytes / 1e7))/100 + " GB";
+                } else if (sizeBytes > 1e6) {
+                    return (Math.floor(sizeBytes / 1e4))/100 + " MB";
+                } else {
+                    return Math.floor(sizeBytes)/100 + " KB";
+                }
             },
             doBackground() {
                 this.$store.commit("override_background", ddmm.mods.getInstallBackground(this.install.folderName));
