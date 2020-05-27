@@ -69,7 +69,7 @@
                 this.$store.commit("show_modal", {modal: "install_rename"});
             },
             archive() {
-                if (this.install.globalSave || this.install.archived || install.monikaExportStatus !== 0) return;
+                if (this.install.globalSave || this.install.archived || this.install.monikaExportStatus !== 0) return;
                 this.$store.commit("hide_modal", {modal: "install_options"});
                 this.$store.commit("show_modal", {modal: "install_archive"});
             },
