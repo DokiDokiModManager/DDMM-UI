@@ -65,7 +65,7 @@
         data() {
             return {
                 backgrounds: ddmm.app.getBackgrounds(),
-                modbg_interim: ddmm.config.readConfigValue("modbg_interim")
+                modbg_interim: ddmm.config.readConfigValue("modBackgrounds")
             }
         }
     }
