@@ -4,13 +4,22 @@
             <div class="wizard-step" v-if="step === 1">
                 <div class="wizard-step-content full-center">
                     <div>
-                        <p>Welcome to</p>
                         <h1><strong>Doki Doki Mod Manager</strong> 4</h1>
+                        <p>{{_("renderer.onboarding_v4.text_welcome")}}</p>
                         <br>
                         <p>
-                            <button class="primary" @click="next">
-                                <i class="fas fa-arrow-right fa-fw"></i> Get Started
+                            <button class="primary" @click="getStarted" :disabled="!selection.validated">
+                                <i class="fas fa-arrow-right fa-fw"></i> {{_("renderer.onboarding_v4.button_start")}}
                             </button>
+                        </p>
+                        <br>
+                        <p>
+                            <span v-if="!selection.validated">
+                                <i class="fas fa-spinner fa-spin"></i> {{_("renderer.onboarding_v4.text_scanning")}}
+                            </span>
+                            <span v-else>
+                                &nbsp;
+                            </span>
                         </p>
 
                         <template v-if="developer && !developer_local_ui">
@@ -25,66 +34,64 @@
 
             <div class="wizard-step" v-else-if="step === 2">
                 <div class="wizard-step-content">
-                    <h1>First time setup</h1>
-                    <p>Please read the following instructions carefully.</p>
+                    <h1>{{_("renderer.onboarding_v4.header_setup")}}</h1>
+                    <p>{{_("renderer.onboarding_v4.subtitle_careful")}}</p>
 
                     <br>
 
                     <div>
                         <div>
-                            <h2>Download DDLC</h2>
-                            <p>Visit the DDLC website, click Download Now and follow the instructions. When you
-                                are asked, choose the file named {{correct_version}} and save it somewhere easy to
-                                find.</p>
+                            <h2>{{_("renderer.onboarding_v4.header_download")}}</h2>
+                            <p>{{_("renderer.onboarding_v4.text_download", correct_version)}}</p>
                             <br>
                             <p>
-                                <button class="success">Open Browser</button>
+                                <button class="success"><i class="fas fa-external-link-alt fa-fw"></i>
+                                    {{_("renderer.onboarding_v4.button_ddlc_website")}}
+                                </button>
                             </p>
                             <br>
-                            <p>
-                                When your download is complete, please continue to the next step. <strong>Do not
-                                make any changes to the downloaded file.</strong>
-                            </p>
+                            <p>{{_("renderer.onboarding_v4.text_s2_next")}}</p>
+                            <p><strong>{{_("renderer.onboarding_v4.text_modification_warning")}}</strong></p>
                         </div>
 
                         <br>
 
                         <div v-if="warnings.mac_safari">
-                            <h2>Important information for Safari users</h2>
+                            <h2>{{_("renderer.onboarding_v4.header_safari_warning")}}</h2>
 
-                            <p>Safari may automatically extract the downloaded game. You should disable this feature
-                                as
-                                it interferes with the setup process. This can be done from Safari's preferences
-                                screen.
+                            <p>
+                                {{_("renderer.onboarding_v4.text_safari_warning")}}
                                 <Link to="https://help.doki.space/images/user_guide/macos_auto_extract.png">
-                                    (Click here for a visual guide)
+                                    ({{_("renderer.onboarding_v4.link_safari_warning")}})
                                 </Link>
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="wizard-step-controls">
-                    <button class="secondary" @click="previous"><i class="fas fa-arrow-left fa-fw"></i> Previous
+                    <button class="secondary" @click="previous"><i class="fas fa-arrow-left fa-fw"></i>
+                        {{_("renderer.onboarding_v4.button_previous")}}
                     </button>
-                    <button class="primary" @click="next"><i class="fas fa-arrow-right fa-fw"></i> Next</button>
+                    <button class="primary" @click="next"><i class="fas fa-arrow-right fa-fw"></i>
+                        {{_("renderer.onboarding_v4.button_next")}}
+                    </button>
                 </div>
             </div>
 
             <div class="wizard-step" v-else-if="step === 3">
                 <div class="wizard-step-content">
                     <div>
-                        <h1>First time setup</h1>
-                        <p>Please read the following instructions carefully.</p>
+                        <h1>{{_("renderer.onboarding_v4.header_setup")}}</h1>
+                        <p>{{_("renderer.onboarding_v4.subtitle_careful")}}</p>
                     </div>
 
                     <br>
 
-                    <p>Open the folder where you saved your downloaded copy of DDLC. Drag and drop the file into the
-                        space below.</p>
+                    <p>{{_("renderer.onboarding_v4.text_select")}}</p>
 
                     <br>
 
-                    <DropZone :text="'Drag your downloaded copy of DDLC here'"
+                    <DropZone :text="_('renderer.onboarding_v4.text_dropzone')"
                               @directory="folderCheck"
                               @file="fileCheck"
                               @click.native="browse"></DropZone>
@@ -92,41 +99,41 @@
                     <br>
 
                     <div v-if="selection.validating">
-                        <i class="fas fa-spinner fa-spin"></i> Please wait a moment...
+                        <i class="fas fa-spinner fa-spin"></i> {{_("renderer.onboarding_v4.text_validating")}}
                     </div>
 
                     <div v-if="selection.directory">
-                        <h2><i class="fas fa-exclamation-triangle"></i> You selected a folder instead of the DDLC
-                            zip file</h2>
-                        <p>Please make sure you aren't selecting an extracted copy of the game and try again.</p>
+                        <h2><i class="fas fa-exclamation-triangle"></i> {{_("renderer.onboarding_v4.header_directory_selected")}}</h2>
+                        <p>{{_("renderer.onboarding_v4.text_directory_selected")}}</p>
                     </div>
 
-                    <template v-if="selection.validated">
+                    <template v-if="selection.validated && show_selection_warning">
                         <div v-if="selection.valid">
                             <div v-if="!selection.version_match">
-                                <h2><i class="fas fa-exclamation-triangle"></i> That doesn't look like the right zip
-                                    file</h2>
-                                <p>Please go back and double-check you followed the instructions exactly as shown.</p>
+                                <h2><i class="fas fa-exclamation-triangle"></i> {{_("renderer.onboarding_v4.header_version_mismatch")}}</h2>
+                                <p>{{_("renderer.onboarding_v4.text_version_mismatch")}}</p>
                             </div>
                             <div v-else>
-                                <h2><i class="fas fa-check"></i> We found your copy of DDLC</h2>
-                                <p>You're now ready to move on to the next step!</p>
+                                <h2><i class="fas fa-check"></i> {{_("renderer.onboarding_v4.header_success")}}</h2>
+                                <p>{{_("renderer.onboarding_v4.text_success")}}</p>
                             </div>
                         </div>
                         <div v-else>
-                            <h2><i class="fas fa-exclamation-triangle"></i> That doesn't look like the right file</h2>
-                            <p>Please double-check you dragged the right file and try again.</p>
+                            <h2><i class="fas fa-exclamation-triangle"></i> {{_("renderer.onboarding_v4.header_hash_mismatch")}}</h2>
+                            <p>{{_("renderer.onboarding_v4.text_hash_mismatch")}}</p>
                         </div>
                     </template>
 
                 </div>
                 <div class="wizard-step-controls">
-                    <button class="secondary" @click="previous"><i class="fas fa-arrow-left fa-fw"></i> Previous
+                    <button class="secondary" @click="previous"><i class="fas fa-arrow-left fa-fw"></i>
+                        {{_("renderer.onboarding_v4.button_previous")}}
                     </button>
                     <button class="primary"
                             @click="next"
                             :disabled="!selection.valid || !selection.version_match">
-                        <i class="fas fa-arrow-right fa-fw"></i> Next
+                        <i class="fas fa-arrow-right fa-fw"></i>
+                        {{_("renderer.onboarding_v4.button_next")}}
                     </button>
                 </div>
             </div>
@@ -134,47 +141,50 @@
             <div class="wizard-step" v-else-if="step === 4">
                 <div class="wizard-step-content">
                     <div>
-                        <h1>First time setup</h1>
-                        <p>Just a couple more things...</p>
+                        <h1>{{_("renderer.onboarding_v4.header_setup")}}</h1>
+                        <p>{{_("renderer.onboarding_v4.subtitle_last")}}</p>
                     </div>
 
                     <br>
 
-                    <h2>Save Location</h2>
-                    <p>If you want to store your mods on a different drive, now's your chance to choose it.</p>
+                    <h2>{{_("renderer.onboarding_v4.header_save_location")}}</h2>
+                    <p>{{_("renderer.onboarding_v4.text_save_location")}}</p>
 
                     <br>
 
-                    <p><label for="ob_install_folder">Save Location</label></p>
+                    <p><label for="ob_install_folder">{{_("renderer.onboarding_v4.label_save_location")}}</label></p>
 
                     <div class="input-row">
                         <input type="text" v-model="save_directory" readonly id="ob_install_folder">
-                        <button class="primary">Change</button>
+                        <button class="primary">{{_("renderer.onboarding_v4.button_change_save_location")}}</button>
                     </div>
 
                     <br>
 
-                    <h2>Who's your favourite character?</h2>
-                    <p>Don't think, just answer.</p>
+                    <h2>{{_("renderer.onboarding_v4.header_waifu")}}</h2>
+                    <p>{{_("renderer.onboarding_v4.subtitle_waifu")}}</p>
 
                     <br>
 
-                    <p><label for="ob_waifu">Best Girl</label></p>
+                    <p><label for="ob_waifu">{{_("renderer.onboarding_v4.label_waifu")}}</label></p>
 
                     <p>
                         <select v-model="background" id="ob_waifu">
-                            <option value="default.png">All of them!</option>
-                            <option value="x-base-monika.png">Monika!</option>
-                            <option value="x-base-natsuki.png">Natsuki!</option>
-                            <option value="x-base-sayori.png">Sayori!</option>
-                            <option value="x-base-yuri.png">Yuri!</option>
+                            <option value="default.png">{{_("renderer.onboarding_v4.option_waifu_all")}}</option>
+                            <option value="x-base-monika.png">{{_("renderer.onboarding_v4.option_waifu_monika")}}</option>
+                            <option value="x-base-natsuki.png">{{_("renderer.onboarding_v4.option_waifu_natsuki")}}</option>
+                            <option value="x-base-sayori.png">{{_("renderer.onboarding_v4.option_waifu_sayori")}}</option>
+                            <option value="x-base-yuri.png">{{_("renderer.onboarding_v4.option_waifu_yuri")}}</option>
                         </select>
                     </p>
                 </div>
                 <div class="wizard-step-controls">
-                    <button class="secondary" @click="previous"><i class="fas fa-arrow-left fa-fw"></i> Previous
+                    <button class="secondary" @click="backFromLastStep"><i class="fas fa-arrow-left fa-fw"></i>
+                        {{_("renderer.onboarding_v4.button_previous")}}
                     </button>
-                    <button class="primary" @click="finalise"><i class="fas fa-check fa-fw"></i> Finish</button>
+                    <button class="primary" @click="finalise"><i class="fas fa-check fa-fw"></i>
+                        {{_("renderer.onboarding_v4.button_finish")}}
+                    </button>
                 </div>
             </div>
         </div>
@@ -195,6 +205,8 @@
                 developer: !!ddmm.env.DDMM_DEVELOPER,
                 developer_local_ui: ddmm.config.readConfigValue("localUI"),
                 step: 1,
+                skipped_selection: true,
+                show_selection_warning: false,
                 warnings: {
                     // mac_safari: ddmm.platform === "darwin"
                     mac_safari: true
@@ -214,12 +226,28 @@
         },
         mounted() {
             ddmm.on("onboarding validated", this._validateCallback);
+            ddmm.onboarding.scan();
         },
         beforeDestroy() {
             ddmm.off("onboarding validated", this._validateCallback);
         },
         methods: {
             _: ddmm.translate,
+            getStarted() {
+                if (this.selection.valid && !this.show_selection_warning) {
+                    this.skipped_selection = true;
+                    this.step = 4;
+                } else {
+                    this.step = 2;
+                }
+            },
+            backFromLastStep() {
+                if (this.skipped_selection) {
+                    this.step = 1;
+                } else {
+                    this.step = 3;
+                }
+            },
             next() {
                 this.step += 1;
             },
@@ -227,11 +255,13 @@
                 this.step -= 1;
             },
             folderCheck() {
+                this.show_selection_warning = true;
                 this.selection.valid = false;
                 this.selection.validated = false;
                 this.selection.directory = true;
             },
             validate(path) {
+                this.show_selection_warning = true;
                 this.selection.path = path;
                 this.selection.directory = false;
                 this.selection.valid = false;
@@ -246,12 +276,11 @@
                 ddmm.onboarding.browseForGame();
             },
             _validateCallback(result) {
-                if (result.path === this.selection.path) {
-                    this.selection.validating = false;
-                    this.selection.validated = true;
-                    this.selection.version_match = result.version_match;
-                    this.selection.valid = result.success;
-                }
+                this.selection.path = result.path;
+                this.selection.validating = false;
+                this.selection.validated = true;
+                this.selection.version_match = result.version_match;
+                this.selection.valid = result.success;
             },
             finalise() {
                 Logger.info("Onboarding", "Finalising setup!");
