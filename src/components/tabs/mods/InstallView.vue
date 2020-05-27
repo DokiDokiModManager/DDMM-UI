@@ -154,11 +154,11 @@
             },
             formatSize(sizeBytes) {
                 if (sizeBytes > 1e9) {
-                    return (Math.floor(sizeBytes / 1e7))/100 + " GB";
+                    return (Math.floor(sizeBytes / 1e7)) / 100 + " GB";
                 } else if (sizeBytes > 1e6) {
-                    return (Math.floor(sizeBytes / 1e4))/100 + " MB";
+                    return (Math.floor(sizeBytes / 1e4)) / 100 + " MB";
                 } else {
-                    return Math.floor(sizeBytes)/100 + " KB";
+                    return Math.floor(sizeBytes) / 100 + " KB";
                 }
             },
             doBackground() {
