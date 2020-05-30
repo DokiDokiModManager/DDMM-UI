@@ -10,7 +10,7 @@
         <div v-for="mod in modList" class="mod">
             <div>
                 <h3>{{getDisplayName(mod)}}</h3>
-                <p>{{getPathToMod(mod)}}</p>
+                <p>{{_("renderer.tab_downloads.downloaded.description_type", getFileExtension(mod))}}</p>
                 <br>
                 <p>
                     <button class="primary" @click="installMod(mod)"><i class="fas fa-bolt fa-fw"></i>
@@ -39,6 +39,10 @@
             },
             getPathToMod(filename) {
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", filename);
+            },
+            getFileExtension(filename) {
+                const parts = filename.split(".");
+                return parts.pop();
             },
             getDisplayName(filename) {
                 const parts = filename.split(".");
