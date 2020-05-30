@@ -128,9 +128,10 @@
             }
         },
         watch: {
-            interim_install_creation(newIC, oldIC) {
-                console.log(newIC, oldIC);
-                this.$store.commit("set_install_creation", this.interim_install_creation);
+            "interim_install_creation.save_option"() {
+                this.$store.commit("set_install_creation", {
+                    save_option: this.interim_install_creation.save_option
+                });
             }
         }
     }
