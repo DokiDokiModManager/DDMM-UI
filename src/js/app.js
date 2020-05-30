@@ -62,8 +62,8 @@ const store = new Vuex.Store({
         selected_mod: "",
 
         install_list_selection: {
-            type: "",
-            id: ""
+            type: "install",
+            id: ddmm.config.readConfigValue("lastLaunchedInstall")
         },
 
         error: {
@@ -233,6 +233,14 @@ ddmm.on("install list", installs => {
             type: "install",
             id: store.state.preloaded_install_folder
         });
+    } else {
+        if (store.state.install_list_selection.type === "install") {
+            if (!installs.find(install => install.folderName === store.state.install_list_selection.id)) {
+                store.commit("install_list_selection", {
+                    type: "create"
+                });
+            }
+        }
     }
     store.commit("installation_status", {installing: false, preloaded_install_folder: ""});
 });

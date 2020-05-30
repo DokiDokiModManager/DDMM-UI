@@ -7,7 +7,7 @@
             <div class="form-group">
                 <p><label>{{_("renderer.tab_mods.install_creation.label_install_name")}}</label></p>
                 <p><input type="text" :placeholder="_('renderer.tab_mods.install_creation.placeholder_install_name')"
-                          v-model="install_creation.install_name" @keyup="generateInstallFolderName"></p>
+                          v-model="interim_install_creation.install_name" @keyup="installNameKeyUp"></p>
             </div>
 
 
@@ -22,7 +22,7 @@
             <div class="form-group">
                 <ChunkyRadioButtons
                         :options="[_('renderer.tab_mods.install_creation.option_local_save'), _('renderer.tab_mods.install_creation.option_global_save')]"
-                        v-model="install_creation.save_option"></ChunkyRadioButtons>
+                        v-model="interim_install_creation.save_option"></ChunkyRadioButtons>
             </div>
 
             <p v-if="install_creation.save_option === 1">
@@ -58,7 +58,13 @@
         components: {ModSelector, ChunkyRadioButtons},
         data() {
             return {
-                is_installing: false
+                is_installing: false,
+                interim_install_creation: {
+                    install_name: this.$store.state.install_creation_data.install_name,
+                    folder_name: this.$store.state.install_creation_data.folder_name,
+                    mod: this.$store.state.install_creation_data.mod,
+                    save_option: this.$store.state.install_creation_data.save_option
+                }
             }
         },
         methods: {
@@ -67,17 +73,27 @@
             hasFreeSpace() {
                 return ddmm.app.getDiskSpace() > 2147483648; // 2 GiB
             },
-            generateInstallFolderName() {
-                this.install_creation.folder_name = this.install_creation.install_name
+            installNameKeyUp() {
+                this.$store.commit("set_install_creation", {
+                    install_name: this.interim_install_creation.install_name
+                });
+
+                const folderName = this.interim_install_creation.install_name
                     .trim()
                     .toLowerCase()
                     .replace(/\W/g, "-")
                     .replace(/-+/g, "-")
                     .substring(0, 32);
 
-                if (ddmm.mods.installExists(this.install_creation.folder_name)) {
+                this.interim_install_creation.folder_name = folderName;
+
+                if (ddmm.mods.installExists(folderName)) {
                     this.$store.commit("set_install_creation", {
-                        folder_name: this.install_creation.folder_name + "-" + Math.floor(Math.random() * 100)
+                        folder_name: folderName + "-" + Math.floor(Math.random() * 100)
+                    });
+                } else {
+                    this.$store.commit("set_install_creation", {
+                        folder_name: folderName
                     });
                 }
             },
@@ -109,6 +125,12 @@
             },
             shouldDisableCreation() {
                 return this.is_installing || this.install_creation.install_name.length < 2 || this.install_creation.folder_name.length < 2;
+            }
+        },
+        watch: {
+            interim_install_creation(newIC, oldIC) {
+                console.log(newIC, oldIC);
+                this.$store.commit("set_install_creation", this.interim_install_creation);
             }
         }
     }
