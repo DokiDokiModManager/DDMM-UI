@@ -16,13 +16,18 @@
                 <button @click="langReload" class="primary">Reload Languages</button>
             </p>
 
-            <br>
+            <hr>
 
             <p>
-                <label><input type="checkbox" v-model="local_ui_interim" @change="setLocalUI(local_ui_interim)"> Local UI</label>
+                <label for="experiments-local-ui">UI override</label>
+                <input type="url" v-model="local_ui_interim" id="experiments-local-ui">
             </p>
 
             <br>
+
+            <p><button class="primary" @click="setLocalUI(local_ui_interim)">Set URL</button> <button class="secondary" @click="setLocalUI(null)">Unset</button></p>
+
+            <hr>
 
             <p>
                 <button class="secondary"
@@ -52,8 +57,8 @@
             devtools() {
                 ddmm.window.openDevtools();
             },
-            setLocalUI(enabled) {
-                ddmm.config.saveConfigValue("localUI", !!enabled);
+            setLocalUI(url) {
+                ddmm.config.saveConfigValue("localUI", url);
             },
             langReload() {
                 ddmm.reloadLanguages();
