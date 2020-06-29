@@ -25,6 +25,6 @@
 
 <style scoped>
     .rating {
-        display: flex;
+        display: inline-flex;
     }
 </style>

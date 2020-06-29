@@ -49,6 +49,8 @@ export default class DDLCModClub implements ModStore {
                 rating: mod.modRating,
                 downloadURL: replacedURL,
                 directDownload: canDDL,
+                lengthString: new Date(0, 0, 0, mod.modPlayTimeHours, mod.modPlayTimeMinutes).toTimeString().substring(0, 5),
+                status: mod.modStatus,
                 store: this
             }
         })));

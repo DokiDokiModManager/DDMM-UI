@@ -12,11 +12,11 @@
                       v-if="install.mod && install.mod.uses_sdk">{{_("renderer.tab_mods.install.tag_sdk")}}</span>
             </h1>
 
-            <p>
+            <div>
                 <i class="fas fa-clock"></i> <strong>{{formatTime(install.playTime)}}</strong>
                 &nbsp;
                 <i class="fas fa-hdd"></i> <strong>{{formatSize(install.size)}}</strong>
-            </p>
+            </div>
 
             <br>
 

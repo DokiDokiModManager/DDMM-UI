@@ -13,5 +13,7 @@ export default class Mod {
     nsfw?: boolean;
     directDownload: DDLStatus;
     rating?: number;
+    lengthString?: string;
+    status?: string;
     store: ModStore;
 }
