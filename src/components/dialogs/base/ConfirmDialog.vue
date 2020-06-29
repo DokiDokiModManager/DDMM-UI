@@ -10,10 +10,10 @@
             <label>
                 <input v-model="checkbox_state" type="checkbox"> {{checkbox}}
             </label>
+            <br><br>
         </p>
-        <br>
         <p>
-            <button class="primary" @click="submit(true)" :disabled="!checkbox || !checkbox_state">
+            <button class="primary" @click="submit(true)" :disabled="!checkbox_state">
                 <i class="fas fa-check fa-fw"></i> {{yes_text}}
             </button>
             <button class="secondary" @click="submit(false)"><i class="fas fa-times fa-fw"></i> {{no_text}}</button>
@@ -30,7 +30,7 @@
         props: ["title", "yes_text", "no_text", "checkbox"],
         data() {
             return {
-                checkbox_state: false
+                checkbox_state: !this.checkbox
             }
         },
         methods: {

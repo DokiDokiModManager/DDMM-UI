@@ -71,8 +71,7 @@
             handleCreateClick(advanced) {
                 Logger.info("Mod List", "Selected creation (advanced = " + advanced + ")");
                 this.$store.commit("install_list_selection", {
-                    type: "create",
-                    id: advanced ? "advanced" : "normal"
+                    type: "create"
                 });
             },
             handleInstallClick(folderName) {

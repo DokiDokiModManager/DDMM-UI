@@ -12,6 +12,7 @@
         <InstallCategoryDialog v-if="modalVisible('install_category')"></InstallCategoryDialog>
         <GameRunningDialog v-if="modalVisible('game_running')"></GameRunningDialog>
         <ModOptionsDialog v-if="modalVisible('mod_options')"></ModOptionsDialog>
+        <ModDeleteDialog v-if="modalVisible('mod_delete')"></ModDeleteDialog>
         <NewsDialog v-if="modalVisible('news')"></NewsDialog>
         <ModPreviewDialog v-if="modalVisible('mod_preview')"></ModPreviewDialog>
         <IssueReportDialog v-if="modalVisible('issue_report')"></IssueReportDialog>
@@ -37,10 +38,12 @@
     import InstallArchiveDialog from "./dialogs/installs/InstallArchiveDialog";
     import InstallUnarchiveDialog from "./dialogs/installs/InstallUnarchiveDialog";
     import UnarchivingDialog from "./dialogs/installs/UnarchivingDialog";
+    import ModDeleteDialog from "./dialogs/mods/ModDeleteDialog";
 
     export default {
         name: "Dialogs",
         components: {
+            ModDeleteDialog,
             InstallUnarchiveDialog,
             InstallArchiveDialog,
             LanguageSwitchDialog,

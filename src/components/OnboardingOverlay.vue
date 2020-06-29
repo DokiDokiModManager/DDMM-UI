@@ -45,7 +45,7 @@
                             <p>{{_("renderer.onboarding_v4.text_download", correct_version)}}</p>
                             <br>
                             <p>
-                                <button class="success"><i class="fas fa-external-link-alt fa-fw"></i>
+                                <button class="success" @click="openURL('https://ddlc.moe')"><i class="fas fa-external-link-alt fa-fw"></i>
                                     {{_("renderer.onboarding_v4.button_ddlc_website")}}
                                 </button>
                             </p>
@@ -233,6 +233,7 @@
         },
         methods: {
             _: ddmm.translate,
+            openURL: ddmm.app.openURL,
             getStarted() {
                 if (this.selection.valid && !this.show_selection_warning) {
                     this.skipped_selection = true;
@@ -290,7 +291,7 @@
                 ddmm.onboarding.finalise(this.selection.path);
             },
             developerLocalUI() {
-                ddmm.config.saveConfigValue("localUI", true);
+                ddmm.config.saveConfigValue("localUI", "http://localhost:1234/");
                 ddmm.app.restart();
             }
         }

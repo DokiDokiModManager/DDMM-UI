@@ -49,7 +49,7 @@
                 return (Math.floor(speedRaw * 10) / 10) || 0;
             },
             bytesToMB(bytes) {
-                return Math.floor(bytes / 1e7) / 10;
+                return Math.floor(bytes / 1e5) / 10;
             },
             eta(downloaded, total, startTime) {
                 const speed = this.downloadSpeed(downloaded, startTime) * 1e6;

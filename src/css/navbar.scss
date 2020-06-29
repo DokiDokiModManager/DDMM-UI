@@ -40,6 +40,10 @@
   display: flex;
   height: 100%;
   font-size: 1.25em;
+
+}
+
+.nav-links.long {
   flex-grow: 1;
 }
 
@@ -66,7 +70,7 @@
 }
 
 .titlebar .spacer {
-  margin: 0 0.5em;
+  margin: 0 1em;
   height: 10px;
 }
 

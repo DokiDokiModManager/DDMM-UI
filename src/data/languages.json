@@ -1,6 +1,14 @@
 {
   "languages": [
     {
+      "code": "be",
+      "name": "Беларуская"
+    },
+    {
+      "code": "de",
+      "name": "Deutsch"
+    },
+    {
       "code": "en-GB",
       "name": "English (United Kingdom)"
     },
@@ -9,16 +17,40 @@
       "name": "Español (Latinoamérica)"
     },
     {
+      "code": "fa",
+      "name": "فارسی"
+    },
+    {
+      "code": "fr",
+      "name": "Français"
+    },
+    {
       "code": "ja",
       "name": "日本語"
     },
     {
-      "code": "ru",
-      "name": "русский"
+      "code": "nb_NO",
+      "name": "Norsk Bokmål"
     },
     {
-      "code": "be",
-      "name": "беларуская мова"
+      "code": "pl",
+      "name": "Polski"
+    },
+    {
+      "code": "ru",
+      "name": "Русский"
+    },
+    {
+      "code": "tr",
+      "name": "Türkçe"
+    },
+    {
+      "code": "uk",
+      "name": "Українська"
+    },
+    {
+      "code": "zh_Hans",
+      "name": "简体中文"
     }
   ]
 }

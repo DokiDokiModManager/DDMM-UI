@@ -7,10 +7,6 @@
         </div>
 
         <div class="window-buttons">
-            <div class="button" @click="issueReport" :title="_('renderer.window_controls.issue_report')">
-                <i class="fas fa-bug fa-fw"></i>
-            </div>
-            <div class="spacer"></div>
             <template v-if="!system_borders">
                 <div class="button" @click="windowMinimise" :title="_('renderer.window_controls.minimise')"><i
                         class="far fa-window-minimize fa-fw"></i></div>
@@ -34,10 +30,6 @@
             windowClose: ddmm.window.close,
             windowMinimise: ddmm.window.minimise,
             windowMaximise: ddmm.window.maximise,
-            openURL: ddmm.app.openURL,
-            issueReport() {
-                this.$store.commit("show_modal", {modal: "issue_report"});
-            }
         }
     }
 </script>

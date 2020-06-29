@@ -17,7 +17,7 @@
         window.location.replace("https://doki.space");
     }
 
-    if (!ddmm.config.readConfigValue("localUI")) {
+    if (!ddmm.config.readConfigValue("localUI") && window.location.hash !== "#fallback") {
         ddmm.config.saveConfigValue("lastKnownGoodVersion", ddmm.version);
     }
 

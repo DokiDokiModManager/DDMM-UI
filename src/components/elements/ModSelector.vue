@@ -34,6 +34,7 @@
             _: ddmm.translate,
             selectMod() {
                 this.actual_mod = ddmm.mods.browseForMod();
+                this.$emit("input", this.actual_mod);
             },
             getPathToMod(filename) {
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "mods", filename);

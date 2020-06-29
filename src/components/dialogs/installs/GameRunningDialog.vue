@@ -13,9 +13,9 @@
                     {{_("renderer.modal_running.button_browse")}}
                 </button>
             </p>
-            <br>
-            <p v-if="!more" @click="more = true"><a href="javascript:;">{{_("renderer.modal_running.link_more")}}</a></p>
-            <p v-else>
+            <br v-if="canKill">
+            <p v-if="!more && canKill" @click="more = true"><a href="javascript:;">{{_("renderer.modal_running.link_more")}}</a></p>
+            <p v-if="more">
                 <button class="danger" @click="killGame">
                     <i class="fas fa-power-off fa-fw"></i>
                     {{_("renderer.modal_running.button_kill")}}
@@ -27,7 +27,6 @@
 
 <script>
     import Dialog from "../base/Dialog";
-    import {join as joinPath} from "path";
 
     export default {
         components: {Dialog},
@@ -35,7 +34,7 @@
         methods: {
             _: ddmm.translate,
             openFolder() {
-                ddmm.app.showFile(joinPath(this.$store.state.running_install_path, "install", "game"));
+                ddmm.app.showFile(this.$store.state.running_install_path);
             },
             killGame() {
                 ddmm.mods.killGame();
@@ -43,6 +42,7 @@
         },
         data() {
             return {
+                canKill: ddmm.platform !== "win32",
                 more: false
             }
         }

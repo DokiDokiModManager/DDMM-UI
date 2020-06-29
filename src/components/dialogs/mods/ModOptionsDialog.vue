@@ -7,7 +7,7 @@
         <div class="dialog-menu-item" @click="install">
             <i class="fas fa-bolt fa-fw"></i> {{_("renderer.menu_mod_options.install")}}
         </div>
-        <div class="dialog-menu-item">
+        <div class="dialog-menu-item" @click="deleteMod">
             <i class="fas fa-trash fa-fw"></i> {{_("renderer.menu_mod_options.delete")}}
         </div>
         <div class="dialog-menu-separator"></div>
@@ -35,6 +35,10 @@
             _: ddmm.translate,
             close() {
                 this.$store.commit("hide_modal", {modal: "mod_options"});
+            },
+            deleteMod() {
+                this.close();
+                this.$store.commit("show_modal", {modal: "mod_delete"});
             },
             install() {
                 this.$store.dispatch("install_mod", {
