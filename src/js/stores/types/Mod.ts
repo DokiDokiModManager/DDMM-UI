@@ -10,6 +10,8 @@ export default class Mod {
     shortDescription?: string;
     website?: string;
     downloadURL: string;
+    nsfw?: boolean;
     directDownload: DDLStatus;
+    rating?: number;
     store: ModStore;
 }

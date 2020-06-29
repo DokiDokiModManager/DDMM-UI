@@ -29,7 +29,8 @@
                     <img alt="" src="../../../images/logo.png" width="75" v-else>
                 </div>
                 <div>
-                    <h3><strong>{{mod.name}}</strong></h3>
+                    <h3><strong>{{mod.name}} <span v-if="mod.nsfw" class="tag">18+</span></strong></h3>
+                    <StarRating :rating="mod.rating"></StarRating>
                     <p>{{mod.shortDescription}}</p>
                 </div>
             </div>
@@ -42,9 +43,11 @@
     import Logger from "../../../js/utils/Logger";
 
     import Fuse from "fuse.js";
+    import StarRating from "../../elements/StarRating";
 
     export default {
         name: "StoreSection",
+        components: {StarRating},
         data() {
             return {
                 modStore: new DDLCModClub(),

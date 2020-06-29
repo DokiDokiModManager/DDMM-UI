@@ -24,6 +24,7 @@
 <script>
     import AlertDialog from "./base/AlertDialog";
     import DDLStatus from "../../js/stores/types/DDLStatus";
+    import Logger from "../../js/utils/Logger";
 
     export default {
         name: "ModPreviewDialog",
@@ -48,11 +49,17 @@
             }
         },
         mounted() {
+            Logger.info("Download Filename", "Preloading filename: " + this.mod.name);
+            ddmm.downloads.preloadFilename(this.mod.name);
             if (this.ddl === "unknown") {
                 this.mod.store.testDDL(this.mod.id).then(res => {
                     this.ddl = res.downloadable ? DDLStatus.AVAILABLE : DDLStatus.UNAVAILABLE;
                 });
             }
+        },
+        beforeDestroy() {
+            Logger.info("Download Filename", "Removing filename preload");
+            ddmm.downloads.preloadFilename(null);
         }
     }
 </script>

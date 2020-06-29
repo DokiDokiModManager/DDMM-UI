@@ -127,6 +127,7 @@
         methods: {
             _: ddmm.translate,
             openFolder: ddmm.app.showFile,
+            openURL: ddmm.app.openURL,
             getPathToInstall(folderName) {
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName);
             },
