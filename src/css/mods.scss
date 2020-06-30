@@ -1,6 +1,14 @@
+@import "variables";
+
 .mod {
-  padding: 0.75em 0;
+  padding: 0.65em;
+  margin: 0.2em;
   display: flex;
+}
+
+.mod.highlighted-mod {
+  background-image: $ui-highlight-gradient;
+  border-radius: 5px;
 }
 
 .mod > div:not(.image) {

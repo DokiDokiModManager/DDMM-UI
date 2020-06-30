@@ -27,13 +27,12 @@
 <script>
     import Logger from "../../js/utils/Logger";
     import DownloadedDownloadsSection from "./downloads/DownloadedDownloadsSection";
-    import FeaturedModsSection from "./downloads/FeaturedModsSection";
     import DownloadsSection from "./downloads/DownloadsSection";
     import StoreSection from "./downloads/StoreSection";
 
     export default {
         name: "DownloadsTab",
-        components: {DownloadedDownloadsSection, DownloadsSection,FeaturedModsSection, StoreSection},
+        components: {DownloadedDownloadsSection, DownloadsSection, StoreSection},
         methods: {
             _: ddmm.translate,
             selectOption(component) {
@@ -65,10 +64,6 @@
                     {
                         header: ddmm.translate("renderer.tab_downloads.list.header_browse"),
                         contents: [
-                            {
-                                title: ddmm.translate("renderer.tab_downloads.list.link_featured"),
-                                component: "FeaturedModsSection"
-                            },
                             {
                                 title: ddmm.translate("renderer.tab_downloads.list.link_ddmc"),
                                 component: "StoreSection"

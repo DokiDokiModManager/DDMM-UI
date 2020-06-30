@@ -12,6 +12,7 @@ export default class DDLCModClub implements ModStore {
 
     async getListing(page: number): Promise<ModListing> {
         const mods = await (await fetch(this.url + "listing")).json();
+        const featured: number[] = (await (await fetch("https://raw.githubusercontent.com/DokiDokiModManager/Meta/master/featured.json")).json()).mods;
         let modList: Mod[] = (await Promise.all(mods.map(async mod => {
             let canDDL: DDLStatus = DDLStatus.UNKNOWN;
             let replacedURL: string = mod.modUploadURL;
@@ -51,11 +52,20 @@ export default class DDLCModClub implements ModStore {
                 directDownload: canDDL,
                 lengthString: new Date(0, 0, 0, mod.modPlayTimeHours, mod.modPlayTimeMinutes).toTimeString().substring(0, 5),
                 status: mod.modStatus,
-                store: this
+                store: this,
+                highlighted: featured.indexOf(mod.modID) !== -1
             }
         })));
 
-        modList = modList.sort(((a, b) => b.rating - a.rating));
+        modList = modList.sort(((a, b) => {
+            if (a.highlighted && !b.highlighted) {
+                return -1;
+            } else if (b.highlighted && !a.highlighted) {
+                return 1
+            } else {
+                return b.rating - a.rating;
+            }
+        }));
 
         return {
             mods: modList,

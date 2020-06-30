@@ -1,7 +1,9 @@
 <template>
     <div>
         <h1>{{_("renderer.tab_downloads.store.title_ddmc")}}</h1>
-        <p>{{_("renderer.tab_downloads.store.description")}}</p>
+        <p>{{_("renderer.tab_downloads.store.description_ddmc")}} <Link to="https://www.dokidokimodclub.com/">{{_("renderer.tab_downloads.store.link_ddmc")}}</Link></p>
+        <br>
+        <p>{{_("renderer.tab_downloads.store.description_featured")}}</p>
 
         <template v-if="!loaded">
             <br>
@@ -23,7 +25,7 @@
 
             <br>
 
-            <div v-for="mod in modList" class="mod" @click="viewMod(mod)" style="cursor: pointer;">
+            <div v-for="mod in modList" :class="{'mod': true, 'highlighted-mod': mod.highlighted}" @click="viewMod(mod)" style="cursor: pointer;">
                 <div class="image">
                     <img alt="" :src="mod.icon" width="75" v-if="mod.icon">
                     <img alt="" src="../../../images/logo.png" width="75" v-else>
@@ -44,10 +46,11 @@
 
     import Fuse from "fuse.js";
     import StarRating from "../../elements/StarRating";
+    import Link from "../../elements/Link";
 
     export default {
         name: "StoreSection",
-        components: {StarRating},
+        components: {StarRating, Link},
         data() {
             return {
                 modStore: new DDLCModClub(),

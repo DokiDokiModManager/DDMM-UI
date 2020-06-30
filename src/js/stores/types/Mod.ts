@@ -16,4 +16,5 @@ export default class Mod {
     lengthString?: string;
     status?: string;
     store: ModStore;
+    highlighted: boolean;
 }
