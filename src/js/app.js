@@ -55,6 +55,7 @@ const store = new Vuex.Store({
             mod_delete: false,
             issue_report: false,
             language_switch: false,
+            install_fail: false
         },
 
         preloaded_install_folder: "",
@@ -283,6 +284,10 @@ ddmm.on("languages reloaded", () => {
 
 ddmm.on("update status", status => {
     store.commit("set_update_status", status);
+});
+
+ddmm.on("show install fail warning", folderName => {
+    store.commit("show_modal", {modal: "install_fail"});
 });
 
 const NEWS_URL = "https://dokidokimodmanager.github.io/Meta/news.json";

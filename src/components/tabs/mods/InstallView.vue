@@ -39,11 +39,33 @@
         </div>
 
         <div class="main-content">
-
             <br>
 
             <template v-if="install.monikaExportStatus === 1">
-                <MASExportControl :install="install.folderName"></MASExportControl>
+                <div class="mas-export-control">
+                    <h3>{{_("renderer.tab_mods.install.title_mas_export")}}</h3>
+                    <p>{{_("renderer.tab_mods.install.description_mas_export")}}</p>
+
+                    <button class="primary" @click="exportMonika"><i class="fas fa-heart fa-fw"></i>
+                        {{_("renderer.tab_mods.install.button_mas_export")}}
+                    </button>
+                </div>
+                <br>
+            </template>
+
+            <template v-if="install.installFailed">
+                <div class="install-failed-control">
+                    <h3>{{_("renderer.tab_mods.install.title_install_failed")}}</h3>
+                    <p>{{_("renderer.tab_mods.install.description_install_failed")}}</p>
+                    <br>
+                    <p>
+                        <Link :to="'https://help.doki.space/user-guide/reference/mod-install-troubleshooting.html'">
+                            <i class="fas fa-book fa-fw"></i> {{_("renderer.tab_mods.install.link_troubleshooting")}}
+                        </Link>
+                    </p>
+                    <br>
+                    <p>{{_("renderer.tab_mods.install.description_install_failed_launch_again")}}</p>
+                </div>
                 <br>
             </template>
 
@@ -118,11 +140,11 @@
 <script>
     import Launcher from "../../../js/utils/Launcher";
     import LazyLoadedImage from "../../elements/LazyLoadedImage";
-    import MASExportControl from "./MASExportControl";
+    import Link from "../../elements/Link";
 
     export default {
         name: "InstallView",
-        components: {MASExportControl, LazyLoadedImage},
+        components: {LazyLoadedImage, Link},
         props: ["install"],
         methods: {
             _: ddmm.translate,
@@ -139,6 +161,9 @@
             },
             launchInstall(install) {
                 Launcher.launch(install, this.$store);
+            },
+            exportMonika() {
+                ddmm.mods.exportMAS(this.installFolder);
             },
             showOptions(install) {
                 this.$store.commit("select_install", {install});
