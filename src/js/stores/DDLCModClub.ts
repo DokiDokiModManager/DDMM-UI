@@ -82,7 +82,7 @@ export default class DDLCModClub implements ModStore {
         if (cache.hasOwnProperty(id)) {
             return cache[id];
         } else {
-            const response = await (await fetch(this.url + "testddl?id=" + encodeURIComponent(id))).json();
+            const response = await (await fetch(this.url + "mod?id=" + encodeURIComponent(id))).json();
             cache[id] = response;
             sessionStorage.setItem("ddmcCache", JSON.stringify(cache));
             return response;
