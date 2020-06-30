@@ -25,31 +25,48 @@
 
             <br>
 
+            <template v-if="supporters.length > 0">
+                <h2>{{_("renderer.tab_about.title_patreon")}}</h2>
+                <p>
+                    <Link to="https://patreon.com/zudo">
+                        <i class="fas fa-heart"></i>
+                        {{_("renderer.tab_about.link_patreon")}}
+                    </Link>
+                </p>
+                <div class="contributors">
+                    <div class="contributor" v-for="supporter in supporters">
+                        <p>{{supporter}}</p>
+                    </div>
+                </div>
+            </template>
+
+            <br>
+
             <template v-if="translators.length > 0">
                 <h2>{{_("renderer.tab_about.title_translators")}}</h2>
-                <ul>
-                    <li v-for="translator in translators">
-                        <strong>{{translator.name}}</strong> - {{translator.language}}
-                    </li>
-                </ul>
-                <br>
                 <p>
                     <Link to="https://hosted.weblate.org/engage/doki-doki-mod-manager/">
                         <i class="fas fa-globe"></i>
                         {{_("renderer.tab_about.link_weblate")}}
                     </Link>
                 </p>
+                <div class="contributors">
+                    <div class="contributor" v-for="translator in translators">
+                        <p>{{translator.name}}</p>
+                        <p class="contributor-subtext">{{translator.language}}</p>
+                    </div>
+                </div>
             </template>
 
             <br>
 
             <template v-if="v4_beta.length > 0">
                 <h2>{{_("renderer.tab_about.title_v4_beta")}}</h2>
-                <ul>
-                    <li v-for="tester in v4_beta">
-                        {{tester}}
-                    </li>
-                </ul>
+                <div class="contributors">
+                    <div class="contributor" v-for="tester in v4_beta">
+                        <p>{{tester}}</p>
+                    </div>
+                </div>
             </template>
 
             <br>

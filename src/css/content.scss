@@ -50,3 +50,20 @@ a .fab {
   color: #000;
   border-radius: 3px;
 }
+
+.contributors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.contributor {
+  padding: 0.5em 1.5em;
+  flex-shrink: 1;
+  text-align: center;
+  font-size: 1.25em;
+}
+
+.contributor-subtext {
+  font-size: 0.75em;
+}
