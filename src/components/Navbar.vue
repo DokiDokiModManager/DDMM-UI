@@ -25,6 +25,12 @@
                  :title="_('renderer.window_controls.discord')">
                 <i class="fab fa-discord fa-fw"></i>
             </div>
+
+            <div class="nav-link"
+                 @click="openURL('https://patreon.com/zudo')"
+                 :title="_('renderer.window_controls.patreon')">
+                <i class="fas fa-heart fa-fw"></i>
+            </div>
         </div>
     </div>
 </template>
