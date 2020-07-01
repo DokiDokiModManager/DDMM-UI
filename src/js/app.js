@@ -55,7 +55,8 @@ const store = new Vuex.Store({
             mod_delete: false,
             issue_report: false,
             language_switch: false,
-            install_fail: false
+            install_fail: false,
+            download_starting: false
         },
 
         preloaded_install_folder: "",
@@ -274,7 +275,7 @@ ddmm.on("got downloads", downloads => {
 });
 
 ddmm.on("download started", () => {
-    store.commit("hide_modal", {modal: "download_initiation"});
+    store.commit("hide_modal", {modal: "download_starting"});
 });
 
 ddmm.on("languages reloaded", () => {

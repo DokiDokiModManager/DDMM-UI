@@ -59,6 +59,8 @@
                 ddmm.app.openURL(this.mod.downloadURL);
             },
             download() {
+                this.$store.commit("hide_modal", {modal: "mod_preview"});
+                this.$store.commit("show_modal", {modal: "download_starting"});
                 ddmm.downloads.downloadWithInteraction(this.ddl);
             }
         },
@@ -74,10 +76,6 @@
                 this.ddlChecked = true;
                 this.ddl = res.directDownload;
             });
-        },
-        beforeDestroy() {
-            Logger.info("Download Filename", "Removing filename preload");
-            ddmm.downloads.preloadFilename(null);
         }
     }
 </script>

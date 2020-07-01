@@ -17,6 +17,7 @@
         <ModPreviewDialog v-if="modalVisible('mod_preview')"></ModPreviewDialog>
         <IssueReportDialog v-if="modalVisible('issue_report')"></IssueReportDialog>
         <LanguageSwitchDialog v-if="modalVisible('language_switch')"></LanguageSwitchDialog>
+        <DownloadStartingDialog v-if="modalVisible('download_starting')"></DownloadStartingDialog>
     </div>
 </template>
 
@@ -39,10 +40,12 @@
     import InstallUnarchiveDialog from "./dialogs/installs/InstallUnarchiveDialog";
     import UnarchivingDialog from "./dialogs/installs/UnarchivingDialog";
     import ModDeleteDialog from "./dialogs/mods/ModDeleteDialog";
+    import DownloadStartingDialog from "./dialogs/DownloadStartingDialog";
 
     export default {
         name: "Dialogs",
         components: {
+            DownloadStartingDialog,
             ModDeleteDialog,
             InstallUnarchiveDialog,
             InstallArchiveDialog,
