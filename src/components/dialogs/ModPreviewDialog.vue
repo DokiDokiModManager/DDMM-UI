@@ -16,16 +16,24 @@
 
         </div>
         <br>
-        <p v-if="ddl === 'available'">
-            <button class="success" @click="download"><i class="fas fa-download fa-fw"></i> {{_("renderer.modal_mod_preview.button_download_direct")}}</button>
-            <button class="secondary" @click="downloadExternal"><i class="fas fa-external-link-alt fa-fw"></i> {{_("renderer.modal_mod_preview.button_download_external")}}</button>
-        </p>
-        <p v-else-if="ddl === 'unavailable'">
-            <button class="success" @click="downloadExternal"><i class="fas fa-external-link-alt fa-fw"></i> {{_("renderer.modal_mod_preview.button_download_external")}}</button>
+        <template v-if="ddlChecked">
+        <p v-if="ddl">
+            <button class="success" @click="download"><i class="fas fa-download fa-fw"></i>
+                {{_("renderer.modal_mod_preview.button_download_direct")}}
+            </button>
+            <button class="secondary" @click="downloadExternal"><i class="fas fa-external-link-alt fa-fw"></i>
+                {{_("renderer.modal_mod_preview.button_download_external")}}
+            </button>
         </p>
         <p v-else>
-            <i class="fas fa-spinner fa-spin"></i> {{_("renderer.modal_mod_preview.text_loading")}}
+            <button class="success" @click="downloadExternal"><i class="fas fa-external-link-alt fa-fw"></i>
+                {{_("renderer.modal_mod_preview.button_download_external")}}
+            </button>
         </p>
+        </template>
+        <template v-else>
+            <p><i class="fas fa-spinner fa-spin"></i> {{_("renderer.modal_mod_preview.text_loading")}}</p>
+        </template>
         <br>
         <div style="white-space: pre-line; overflow: auto; max-height: 200px;">{{mod.description}}</div>
     </AlertDialog>
@@ -33,7 +41,6 @@
 
 <script>
     import AlertDialog from "./base/AlertDialog";
-    import DDLStatus from "../../js/stores/types/DDLStatus";
     import Logger from "../../js/utils/Logger";
     import StarRating from "../elements/StarRating";
 
@@ -42,7 +49,8 @@
         components: {StarRating, AlertDialog},
         data() {
             return {
-                ddl: this.$store.state.mod_preview.directDownload,
+                ddlChecked: false,
+                ddl: null
             }
         },
         methods: {
@@ -51,7 +59,7 @@
                 ddmm.app.openURL(this.mod.downloadURL);
             },
             download() {
-                ddmm.downloads.downloadWithInteraction(this.mod.downloadURL);
+                ddmm.downloads.downloadWithInteraction(this.ddl);
             }
         },
         computed: {
@@ -62,11 +70,10 @@
         mounted() {
             Logger.info("Download Filename", "Preloading filename: " + this.mod.name);
             ddmm.downloads.preloadFilename(this.mod.name);
-            if (this.ddl === "unknown") {
-                this.mod.store.testDDL(this.mod.id).then(res => {
-                    this.ddl = res.downloadable ? DDLStatus.AVAILABLE : DDLStatus.UNAVAILABLE;
-                });
-            }
+            this.mod.store.testDDL(this.mod.id).then(res => {
+                this.ddlChecked = true;
+                this.ddl = res.directDownload;
+            });
         },
         beforeDestroy() {
             Logger.info("Download Filename", "Removing filename preload");

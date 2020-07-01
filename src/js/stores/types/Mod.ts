@@ -1,5 +1,4 @@
 import ModStore from "./ModStore";
-import DDLStatus from "./DDLStatus";
 
 export default class Mod {
     id: string;
@@ -11,7 +10,6 @@ export default class Mod {
     website?: string;
     downloadURL: string;
     nsfw?: boolean;
-    directDownload: DDLStatus;
     rating?: number;
     lengthString?: string;
     status?: string;
