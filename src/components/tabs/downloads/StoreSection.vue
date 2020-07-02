@@ -34,6 +34,7 @@
                     <h3><strong>{{mod.name}} <span v-if="mod.nsfw" class="tag">18+</span></strong></h3>
                     <StarRating :rating="mod.rating"></StarRating>
                     <p>{{mod.shortDescription}}</p>
+                    <p v-if="debug">{{mod.downloadURL}}</p>
                 </div>
             </div>
         </template>
@@ -58,7 +59,8 @@
                 error: false,
                 fuse: null,
                 search: "",
-                mods: []
+                mods: [],
+                debug: !!ddmm.env.DDMM_DEVELOPER
             }
         },
         methods: {

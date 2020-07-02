@@ -18,7 +18,7 @@
         <br>
         <template v-if="ddlChecked">
         <p v-if="ddl">
-            <button class="success" @click="download"><i class="fas fa-download fa-fw"></i>
+            <button class="success" @click="download(ddl)"><i class="fas fa-download fa-fw"></i>
                 {{_("renderer.modal_mod_preview.button_download_direct")}}
             </button>
             <button class="secondary" @click="downloadExternal"><i class="fas fa-external-link-alt fa-fw"></i>
@@ -33,6 +33,10 @@
         </template>
         <template v-else>
             <p><i class="fas fa-spinner fa-spin"></i> {{_("renderer.modal_mod_preview.text_loading")}}</p>
+        </template>
+        <template v-if="debug">
+            <br>
+            <p><button class="danger" @click="download(mod.downloadURL)"><i class="fas fa-download fa-fw"></i> Download (URL provided)</button></p>
         </template>
         <br>
         <div style="white-space: pre-line; overflow: auto; max-height: 200px;">{{mod.description}}</div>
@@ -50,7 +54,8 @@
         data() {
             return {
                 ddlChecked: false,
-                ddl: null
+                ddl: null,
+                debug: !!ddmm.env.DDMM_DEVELOPER
             }
         },
         methods: {
@@ -58,10 +63,10 @@
             downloadExternal() {
                 ddmm.app.openURL(this.mod.downloadURL);
             },
-            download() {
+            download(url) {
                 this.$store.commit("hide_modal", {modal: "mod_preview"});
                 this.$store.commit("show_modal", {modal: "download_starting"});
-                ddmm.downloads.downloadWithInteraction(this.ddl);
+                ddmm.downloads.downloadWithInteraction(url);
             }
         },
         computed: {

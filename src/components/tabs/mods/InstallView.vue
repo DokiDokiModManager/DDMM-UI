@@ -69,6 +69,22 @@
                 <br>
             </template>
 
+            <template v-if="install.singletonError">
+                <div class="install-failed-control">
+                    <h3>{{_("renderer.tab_mods.install.title_singleton_error")}}</h3>
+                    <p>{{_("renderer.tab_mods.install.description_singleton_error")}}</p>
+                    <br>
+                    <p>
+                        <Link :to="'https://help.doki.space/user-guide/reference/mod-install-troubleshooting.html'">
+                            <i class="fas fa-book fa-fw"></i> {{_("renderer.tab_mods.install.link_troubleshooting")}}
+                        </Link>
+                    </p>
+                    <br>
+                    <p>{{_("renderer.tab_mods.install.description_install_failed_launch_again")}}</p>
+                </div>
+                <br>
+            </template>
+
             <template v-if="install.mod">
                 <h2>{{install.mod.name}}</h2>
                 <p><strong>{{_("renderer.tab_mods.install.description_author", install.mod.author)}}</strong></p>
