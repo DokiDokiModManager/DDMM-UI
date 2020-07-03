@@ -152,7 +152,7 @@
 
                     <br>
 
-                    <InstallFolderSelector></InstallFolderSelector>
+                    <InstallFolderSelector @folder="selectInstallFolder"></InstallFolderSelector>
 
                     <br>
 
@@ -200,8 +200,9 @@
             return {
                 developer: !!ddmm.env.DDMM_DEVELOPER,
                 developer_local_ui: ddmm.config.readConfigValue("localUI"),
+                save_directory: ddmm.config.readConfigValue("installFolder"),
                 step: 1,
-                skipped_selection: true,
+                skipped_selection: false,
                 show_selection_warning: false,
                 warnings: {
                     // mac_safari: ddmm.platform === "darwin"
@@ -277,6 +278,9 @@
                 this.selection.validated = true;
                 this.selection.version_match = result.version_match;
                 this.selection.valid = result.success;
+            },
+            selectInstallFolder(folder) {
+                this.save_directory = folder;
             },
             finalise() {
                 Logger.info("Onboarding", "Finalising setup!");

@@ -17,8 +17,8 @@
             _: ddmm.translate,
             change() {
                 const data = ddmm.app.selectFolder();
-                if (data.path) {
-                    this.save_directory = data.path;
+                this.save_directory = data.path;
+                if (!data.error) {
                     this.error = null;
                     this.$emit("folder", data.path);
                 } else {
