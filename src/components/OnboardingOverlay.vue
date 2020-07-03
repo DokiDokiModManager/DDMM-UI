@@ -152,12 +152,7 @@
 
                     <br>
 
-                    <p><label for="ob_install_folder">{{_("renderer.onboarding_v4.label_save_location")}}</label></p>
-
-                    <div class="input-row">
-                        <input type="text" v-model="save_directory" readonly id="ob_install_folder">
-                        <button class="primary">{{_("renderer.onboarding_v4.button_change_save_location")}}</button>
-                    </div>
+                    <InstallFolderSelector></InstallFolderSelector>
 
                     <br>
 
@@ -196,10 +191,11 @@
     import Link from "./elements/Link";
     import DropZone from "./elements/DropZone";
     import Logger from "../js/utils/Logger";
+    import InstallFolderSelector from "./elements/InstallFolderSelector";
 
     export default {
         name: "OnboardingOverlay",
-        components: {DropZone, Link},
+        components: {InstallFolderSelector, DropZone, Link},
         data() {
             return {
                 developer: !!ddmm.env.DDMM_DEVELOPER,
@@ -220,7 +216,6 @@
                     valid: false,
                     version_match: false
                 },
-                save_directory: ddmm.config.readConfigValue("installFolder"),
                 background: "default.png"
             }
         },

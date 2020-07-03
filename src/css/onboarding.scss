@@ -43,5 +43,7 @@
 }
 
 .input-row input {
+  width: auto;
   flex-grow: 1;
+  flex-basis: 75%;
 }
