@@ -10,7 +10,7 @@
         <div class="app app-container-contents">
             <Titlebar :app_name="app_name" :app_version="app_version" :system_borders="system_borders"></Titlebar>
 
-            <NewsBanner v-if="bannerVisisble"></NewsBanner>
+            <NewsBanner v-if="bannerVisisble && !onboarding"></NewsBanner>
 
             <Dialogs></Dialogs>
 
