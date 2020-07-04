@@ -8,19 +8,14 @@
                         <p>{{_("renderer.onboarding_v4.text_welcome")}}</p>
                         <br>
                         <p>
-                            <button class="primary" @click="getStarted" :disabled="!selection.validated">
+                            <button class="primary" @click="getStarted" :disabled="game_selection.is_testing">
                                 <i class="fas fa-arrow-right fa-fw"></i> {{_("renderer.onboarding_v4.button_start")}}
                             </button>
                         </p>
+
                         <br>
-                        <p>
-                            <span v-if="!selection.validated">
-                                <i class="fas fa-spinner fa-spin"></i> {{_("renderer.onboarding_v4.text_scanning")}}
-                            </span>
-                            <span v-else>
-                                &nbsp;
-                            </span>
-                        </p>
+                        <p v-if="game_selection.is_testing"><i class="fas fa-spinner fa-spin fa-fw"></i>
+                            {{_("renderer.onboarding_v4.text_scanning")}}</p>
 
                         <template v-if="developer && !developer_local_ui">
                             <br>
@@ -45,7 +40,8 @@
                             <p>{{_("renderer.onboarding_v4.text_download", correct_version)}}</p>
                             <br>
                             <p>
-                                <button class="success" @click="openURL('https://ddlc.moe')"><i class="fas fa-external-link-alt fa-fw"></i>
+                                <button class="success" @click="openURL('https://ddlc.moe')">
+                                    <i class="fas fa-external-link-alt fa-fw"></i>
                                     {{_("renderer.onboarding_v4.button_ddlc_website")}}
                                 </button>
                             </p>
@@ -98,40 +94,22 @@
 
                     <br>
 
-                    <div v-if="selection.validating">
-                        <i class="fas fa-spinner fa-spin"></i> {{_("renderer.onboarding_v4.text_validating")}}
-                    </div>
-
-                    <div v-if="selection.directory">
-                        <h2><i class="fas fa-exclamation-triangle"></i> {{_("renderer.onboarding_v4.header_directory_selected")}}</h2>
-                        <p>{{_("renderer.onboarding_v4.text_directory_selected")}}</p>
-                    </div>
-
-                    <template v-if="selection.validated && show_selection_warning">
-                        <div v-if="selection.valid">
-                            <div v-if="!selection.version_match">
-                                <h2><i class="fas fa-exclamation-triangle"></i> {{_("renderer.onboarding_v4.header_version_mismatch")}}</h2>
-                                <p>{{_("renderer.onboarding_v4.text_version_mismatch")}}</p>
-                            </div>
-                            <div v-else>
-                                <h2><i class="fas fa-check"></i> {{_("renderer.onboarding_v4.header_success")}}</h2>
-                                <p>{{_("renderer.onboarding_v4.text_success")}}</p>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <h2><i class="fas fa-exclamation-triangle"></i> {{_("renderer.onboarding_v4.header_hash_mismatch")}}</h2>
-                            <p>{{_("renderer.onboarding_v4.text_hash_mismatch")}}</p>
-                        </div>
+                    <template v-if="game_selection.has_tried_once">
+                        <template v-if="!game_selection.is_testing">
+                            <h3>{{game_selection.message.title}}</h3>
+                            <p>{{game_selection.message.text}}</p>
+                        </template>
+                        <template v-else>
+                            <i class="fas fa-spinner fa-spin fa-fw"></i> {{_("renderer.onboarding_v4.text_validating")}}
+                        </template>
                     </template>
-
                 </div>
                 <div class="wizard-step-controls">
                     <button class="secondary" @click="previous"><i class="fas fa-arrow-left fa-fw"></i>
                         {{_("renderer.onboarding_v4.button_previous")}}
                     </button>
                     <button class="primary"
-                            @click="next"
-                            :disabled="!selection.valid || !selection.version_match">
+                            @click="next" :disabled="!game_selection.is_valid">
                         <i class="fas fa-arrow-right fa-fw"></i>
                         {{_("renderer.onboarding_v4.button_next")}}
                     </button>
@@ -166,9 +144,12 @@
                     <p>
                         <select v-model="background" id="ob_waifu">
                             <option value="default.png">{{_("renderer.onboarding_v4.option_waifu_all")}}</option>
-                            <option value="x-base-monika.png">{{_("renderer.onboarding_v4.option_waifu_monika")}}</option>
-                            <option value="x-base-natsuki.png">{{_("renderer.onboarding_v4.option_waifu_natsuki")}}</option>
-                            <option value="x-base-sayori.png">{{_("renderer.onboarding_v4.option_waifu_sayori")}}</option>
+                            <option value="x-base-monika.png">{{_("renderer.onboarding_v4.option_waifu_monika")}}
+                            </option>
+                            <option value="x-base-natsuki.png">{{_("renderer.onboarding_v4.option_waifu_natsuki")}}
+                            </option>
+                            <option value="x-base-sayori.png">{{_("renderer.onboarding_v4.option_waifu_sayori")}}
+                            </option>
                             <option value="x-base-yuri.png">{{_("renderer.onboarding_v4.option_waifu_yuri")}}</option>
                         </select>
                     </p>
@@ -177,7 +158,7 @@
                     <button class="secondary" @click="backFromLastStep"><i class="fas fa-arrow-left fa-fw"></i>
                         {{_("renderer.onboarding_v4.button_previous")}}
                     </button>
-                    <button class="primary" @click="finalise"><i class="fas fa-check fa-fw"></i>
+                    <button class="primary" @click="finalise" :disabled="!save_directory"><i class="fas fa-check fa-fw"></i>
                         {{_("renderer.onboarding_v4.button_finish")}}
                     </button>
                 </div>
@@ -203,19 +184,20 @@
                 save_directory: ddmm.config.readConfigValue("installFolder"),
                 step: 1,
                 skipped_selection: false,
-                show_selection_warning: false,
                 warnings: {
                     // mac_safari: ddmm.platform === "darwin"
                     mac_safari: true
                 },
                 correct_version: ddmm.platform === "darwin" ? "DDLC (Mac)" : "DDLC (Windows)",
-                selection: {
-                    path: null,
-                    directory: false,
-                    validating: false,
-                    validated: false,
-                    valid: false,
-                    version_match: false
+                game_selection: {
+                    has_tried_once: false,
+                    is_testing: true,
+                    is_valid: false,
+                    path: "",
+                    message: {
+                        title: "",
+                        text: ""
+                    }
                 },
                 background: "default.png"
             }
@@ -230,10 +212,27 @@
         methods: {
             _: ddmm.translate,
             openURL: ddmm.app.openURL,
+            _validateCallback(result) {
+                this.game_selection.is_testing = false;
+                if (result.success && result.version_match) {
+                    this.game_selection.is_valid = true;
+                    this.game_selection.path = result.path;
+                    this.game_selection.message.title = ddmm.translate("renderer.onboarding_v4.header_success");
+                    this.game_selection.message.text = ddmm.translate("renderer.onboarding_v4.text_success");
+                } else if (result.success) {
+                    this.game_selection.is_valid = false;
+                    this.game_selection.message.title = ddmm.translate("renderer.onboarding_v4.header_version_mismatch");
+                    this.game_selection.message.text = ddmm.translate("renderer.onboarding_v4.text_version_mismatch", this.correct_version);
+                } else {
+                    this.game_selection.is_valid = false;
+                    this.game_selection.message.title = ddmm.translate("renderer.onboarding_v4.header_hash_mismatch");
+                    this.game_selection.message.text = ddmm.translate("renderer.onboarding_v4.text_hash_mismatch");
+                }
+            },
             getStarted() {
-                if (this.selection.valid && !this.show_selection_warning) {
-                    this.skipped_selection = true;
+                if (this.game_selection.is_valid) {
                     this.step = 4;
+                    this.skipped_selection = true;
                 } else {
                     this.step = 2;
                 }
@@ -251,33 +250,26 @@
             previous() {
                 this.step -= 1;
             },
-            folderCheck() {
-                this.show_selection_warning = true;
-                this.selection.valid = false;
-                this.selection.validated = false;
-                this.selection.directory = true;
+            browse() {
+                const path = ddmm.onboarding.browse();
+                if (path) {
+                    this.validate(path);
+                }
             },
-            validate(path) {
-                this.show_selection_warning = true;
-                this.selection.path = path;
-                this.selection.directory = false;
-                this.selection.valid = false;
-                this.selection.validating = true;
-                this.selection.validated = false;
-                ddmm.onboarding.validateGame(this.selection.path);
+            folderCheck() {
+                this.game_selection.has_tried_once = true;
+                this.game_selection.is_valid = false;
+                this.game_selection.message.title = ddmm.translate("renderer.onboarding_v4.header_directory_selected");
+                this.game_selection.message.text = ddmm.translate("renderer.onboarding_v4.text_directory_selected");
             },
             fileCheck(item) {
                 this.validate(item.path);
             },
-            browse() {
-                ddmm.onboarding.browseForGame();
-            },
-            _validateCallback(result) {
-                this.selection.path = result.path;
-                this.selection.validating = false;
-                this.selection.validated = true;
-                this.selection.version_match = result.version_match;
-                this.selection.valid = result.success;
+            validate(path) {
+                this.game_selection.is_testing = true;
+                this.game_selection.is_valid = false;
+                this.game_selection.has_tried_once = true;
+                ddmm.onboarding.validateGame(path);
             },
             selectInstallFolder(folder) {
                 this.save_directory = folder;
@@ -287,7 +279,7 @@
                 this.$store.commit("set_background", this.background);
                 ddmm.config.saveConfigValue("installFolder", this.save_directory);
                 this.$emit("close");
-                ddmm.onboarding.finalise(this.selection.path);
+                ddmm.onboarding.finalise(this.game_selection.path);
             },
             developerLocalUI() {
                 ddmm.config.saveConfigValue("localUI", "http://localhost:1234/");

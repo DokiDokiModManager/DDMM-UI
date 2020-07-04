@@ -19,8 +19,13 @@
                 const data = ddmm.app.selectFolder();
                 this.save_directory = data.path;
                 if (!data.error) {
-                    this.error = null;
-                    this.$emit("folder", data.path);
+                    if (ddmm.app.getDiskSpace(data.path) > 2147483648) {
+                        this.error = null;
+                        this.$emit("folder", data.path);
+                    } else {
+                        this.error = ddmm.translate("renderer.component_install_folder_selector.error_disk_space");
+                        this.$emit("folder", null);
+                    }
                 } else {
                     this.error = data.error;
                     this.$emit("folder", null);

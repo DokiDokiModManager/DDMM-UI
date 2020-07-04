@@ -2,7 +2,7 @@
     <div class="main-content">
         <h1>{{_("renderer.tab_mods.install_creation.title")}}</h1>
 
-        <template v-if="hasFreeSpace">
+        <template v-if="has_free_space">
 
             <div class="form-group">
                 <p><label>{{_("renderer.tab_mods.install_creation.label_install_name")}}</label></p>
@@ -58,6 +58,7 @@
         components: {ModSelector, ChunkyRadioButtons},
         data() {
             return {
+                has_free_space: ddmm.app.getDiskSpace(ddmm.config.readConfigValue("installFolder")) > 2147483648, // 2 GiB,
                 is_installing: false,
                 interim_install_creation: {
                     install_name: this.$store.state.install_creation_data.install_name,
@@ -70,9 +71,6 @@
         methods: {
             _: ddmm.translate,
             installExists: ddmm.mods.installExists,
-            hasFreeSpace() {
-                return ddmm.app.getDiskSpace() > 2147483648; // 2 GiB
-            },
             installNameKeyUp() {
                 this.$store.commit("set_install_creation", {
                     install_name: this.interim_install_creation.install_name
