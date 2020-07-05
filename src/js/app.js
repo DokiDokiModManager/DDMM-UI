@@ -7,6 +7,7 @@ import App from "../components/App.vue";
 import * as Sentry from "@sentry/browser";
 // import * as Integrations from "@sentry/integrations";
 import DDLCModClub from "./stores/DDLCModClub";
+import UpdateChecker from "./utils/UpdateChecker";
 
 // Sentry.init({
 //     dsn: "https://bf0edf3f287344d4969e3171c33af4ea@sentry.io/1297252",
@@ -310,5 +311,7 @@ fetch(NEWS_URL).then(res => res.json()).then(news => {
         }
     });
 });
+
+UpdateChecker.getLatest(store);
 
 window.test = new DDLCModClub();

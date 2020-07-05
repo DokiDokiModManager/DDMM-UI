@@ -39,7 +39,8 @@
         methods: {
             _: ddmm.translate,
             doUpdate() {
-                ddmm.app.downloadUpdate();
+                this.$store.commit("set_update_status", "downloading");
+                // ddmm.app.downloadUpdate();
             },
             checkUpdate() {
                 this.checking = true;
