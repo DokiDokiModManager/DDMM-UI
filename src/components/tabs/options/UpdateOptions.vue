@@ -40,7 +40,7 @@
             _: ddmm.translate,
             doUpdate() {
                 this.$store.commit("set_update_status", "downloading");
-                // ddmm.app.downloadUpdate();
+                ddmm.app.downloadUpdate();
             },
             checkUpdate() {
                 this.checking = true;
