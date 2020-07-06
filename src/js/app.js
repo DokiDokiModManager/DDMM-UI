@@ -292,7 +292,7 @@ ddmm.on("show install fail warning", folderName => {
     store.commit("show_modal", {modal: "install_fail"});
 });
 
-const NEWS_URL = "https://dokidokimodmanager.github.io/Meta/news.json";
+const NEWS_URL = "https://raw.githubusercontent.com/DokiDokiModManager/Meta/master/news.json";
 
 fetch(NEWS_URL).then(res => res.json()).then(news => {
     let seenNews = [];

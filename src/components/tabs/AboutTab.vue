@@ -82,7 +82,7 @@
 <script>
     import Link from "../elements/Link.vue";
 
-    const THANKS_URL = "https://dokidokimodmanager.github.io/Meta/thanks.json";
+    const THANKS_URL = "https://raw.githubusercontent.com/DokiDokiModManager/Meta/master/thanks.json";
 
     export default {
         name: "AboutTab",
