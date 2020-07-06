@@ -9,7 +9,11 @@
                              @click="selectOption(item.component)"
                              v-if="!item.hideIf || !item.hideIf()"
                         >
-                            <span>{{item.title}}</span></div>
+                            <span>{{item.title}}</span>
+                            <span class="mod-view-mod-list-tag" v-if="item.tag && item.tag()">
+                                <span>{{item.tag()}}</span>
+                            </span>
+                        </div>
                     </template>
                     <br>
                 </template>
@@ -49,24 +53,28 @@
         },
         data() {
             return {
-                selected_option: sessionStorage.getItem("tab_options_last_selection") ? sessionStorage.getItem("tab_options_last_selection") : "UpdateOptions",
+                selected_option: sessionStorage.getItem("tab_options_last_selection") ? sessionStorage.getItem("tab_options_last_selection") : "LanguageOptions",
                 menu: [
                     {
                         header: ddmm.translate("renderer.tab_options.list.header_application"),
                         contents: [
                             {
-                                title: ddmm.translate("renderer.tab_options.list.link_updates"),
-                                component: "UpdateOptions",
-                                // hideIf() { return !!ddmm.env.SNAP }
-                            },
-                            {
                                 title: ddmm.translate("renderer.tab_options.list.link_language"),
                                 component: "LanguageOptions"
                             },
                             {
+                                title: ddmm.translate("renderer.tab_options.list.link_updates"),
+                                component: "UpdateOptions",
+                                hideIf() {
+                                    return ddmm.platform === "linux" && !ddmm.env.APPIMAGE
+                                },
+                                tag: () => {
+                                    return this.$store.state.update === "available" ? "1" : null;
+                                }
+                            },
+                            {
                                 title: ddmm.translate("renderer.tab_options.list.link_storage"),
                                 component: "StorageOptions",
-                                // hideIf() { return !!ddmm.env.SNAP }
                             }
                         ]
                     },
