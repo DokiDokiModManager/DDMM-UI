@@ -51,6 +51,7 @@
             openURL: ddmm.app.openURL,
             setTab: function (t) {
                 Logger.info("Navbar", "Navigated to tab " + t.component);
+                if (t.component === "ExperimentsTab" && !ddmm.env.DDMM_DEVELOPER) return;
                 this.$store.commit("set_tab", t.component);
             },
             issueReport() {
