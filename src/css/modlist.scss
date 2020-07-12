@@ -7,7 +7,7 @@
 }
 
 .mod-viewer-mod-list {
-  flex-basis: 25%;
+  width: 25%;
   max-height: 100%;
   padding-left: 1em;
   padding-right: 1em;
@@ -15,7 +15,7 @@
 }
 
 .mod-viewer-mod-display {
-  flex-basis: 75%;
+  width: 75%;
 }
 
 .mod-viewer-mod-display > div {

@@ -10,13 +10,8 @@
                 <!-- Game install options -->
                 <div class="mod-view-mod-list-title">{{_("renderer.tab_mods.list.header_new")}}</div>
                 <div
-                        v-if="getFlag('homeTab')"
-                        :class="{'mod-view-mod-list-entry': true, 'active': selected_item.type === 'home'}"
-                        @click="handleHomeClick()">{{_("renderer.tab_mods.list.link_home")}}
-                </div>
-                <div
                         :class="{'mod-view-mod-list-entry': true, 'active': selected_item.type === 'create'}"
-                        @click="handleCreateClick()">{{_("renderer.tab_mods.list.link_install")}}
+                        @click="handleCreateClick(false)">{{_("renderer.tab_mods.list.link_install")}}
                 </div>
                 <br>
 
@@ -47,7 +42,6 @@
             <div class="mod-viewer-mod-display">
                 <InstallView v-if="selectedInstall" :install="selectedInstall"></InstallView>
                 <CreationView v-else-if="selected_item.type === 'create'"></CreationView>
-                <HomeView v-else-if="selected_item.type === 'home'"></HomeView>
             </div>
         </div>
     </div>
@@ -62,11 +56,10 @@
 
     import Logger from "../../js/utils/Logger";
     import Launcher from "../../js/utils/Launcher";
-    import HomeView from "./mods/HomeView";
 
     export default {
         name: "ModsTab",
-        components: {CreationView, ModView, InstallView, HomeView},
+        components: {CreationView, ModView, InstallView},
         methods: {
             // helper methods
             _: ddmm.translate,
@@ -74,20 +67,9 @@
                 return ddmm.joinPath(ddmm.config.readConfigValue("installFolder"), "installs", folderName);
             },
 
-            getFlag(flag) {
-                return ddmm.app.getFeatureFlag(flag)
-            },
-
-            handleHomeClick() {
-                Logger.info("Mod List", "Selected home view");
-                this.$store.commit("install_list_selection", {
-                    type: "home"
-                });
-            },
-
             // install list interaction handlers
-            handleCreateClick() {
-                Logger.info("Mod List", "Selected creation view");
+            handleCreateClick(advanced) {
+                Logger.info("Mod List", "Selected creation (advanced = " + advanced + ")");
                 this.$store.commit("install_list_selection", {
                     type: "create"
                 });
@@ -124,7 +106,18 @@
         },
         computed: {
             categories() {
-                return this.$store.getters.install_categories;
+                // noinspection JSCheckFunctionSignatures
+                return Array.from(new Set(this.$store.state.game_data.installs.map(install => install.category))).sort((a, b) => {
+                    if (!a || a === "") return 1; // sort uncategorised to the bottom
+                    if (!b || b === "") return -1;
+
+                    const uA = a.toUpperCase();
+                    const uB = b.toUpperCase();
+
+                    if (uA < uB) return -1;
+                    if (uA > uB) return 1;
+                    return 0;
+                });
             },
 
             selected_item() {
