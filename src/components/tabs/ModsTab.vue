@@ -45,7 +45,6 @@
                 </template>
             </div>
             <div class="mod-viewer-mod-display">
-
                 <InstallView v-if="selectedInstall" :install="selectedInstall"></InstallView>
                 <CreationView v-else-if="selected_item.type === 'create'"></CreationView>
                 <HomeView v-else-if="selected_item.type === 'home'"></HomeView>
@@ -150,12 +149,10 @@
             }
         },
 
-        watch: {
-            "installs"() {
-                this.fuse = new Fuse(this.installs, {
-                    keys: ["name", "folderName", "mod.name", "mod.author"]
-                });
-            }
+        beforeMount() {
+            this.fuse = new Fuse(this.installs, {
+                keys: ["name", "folderName", "mod.name", "mod.author"]
+            });
         }
     }
 </script>
