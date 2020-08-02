@@ -66,7 +66,7 @@
                                 title: ddmm.translate("renderer.tab_options.list.link_updates"),
                                 component: "UpdateOptions",
                                 hideIf() {
-                                    return ddmm.platform === "linux" && !ddmm.env.APPIMAGE
+                                    return !ddmm.app.getFeatureFlag("autoUpdate") || ddmm.platform === "linux" && !ddmm.env.APPIMAGE
                                 },
                                 tag: () => {
                                     return this.$store.state.update === "available" ? "1" : null;

@@ -4,6 +4,10 @@ export default class UpdateChecker {
 
     static getLatest(store) {
         return new Promise((ff, rj) => {
+            if (!ddmm.app.getFeatureFlag("autoUpdate")) {
+                store.commit("set_update_status", "none");
+                ff(ddmm.version);
+            }
             if (ddmm.env.DDMM_FAKE_UPDATE) {
                 store.commit("set_update_status", "available");
                 ff(ddmm.env.DDMM_FAKE_UPDATE);
