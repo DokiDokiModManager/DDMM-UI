@@ -15,4 +15,5 @@ export default class Mod {
     status?: string;
     store: ModStore;
     highlighted: boolean;
+    highlighted_patreon: boolean;
 }
