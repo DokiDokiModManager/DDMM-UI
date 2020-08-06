@@ -294,24 +294,28 @@ ddmm.on("show install fail warning", folderName => {
 
 const NEWS_URL = "https://raw.githubusercontent.com/DokiDokiModManager/Meta/master/news.json";
 
-fetch(NEWS_URL).then(res => res.json()).then(news => {
-    let seenNews = [];
+if (!ddmm.constants.news_disabled) {
+    fetch(NEWS_URL).then(res => res.json()).then(news => {
+        let seenNews = [];
 
-    if (localStorage.getItem("seen_news")) {
-        seenNews = localStorage.getItem("seen_news").split(",");
-    }
-
-    news.news.forEach(article => {
-        if (seenNews.indexOf(article.id) === -1) {
-            store.commit("show_news", article);
-            if (article.style === "popup") {
-                seenNews.push(article.id);
-                localStorage.setItem("seen_news", seenNews.join(","));
-            }
+        if (localStorage.getItem("seen_news")) {
+            seenNews = localStorage.getItem("seen_news").split(",");
         }
-    });
-});
 
-UpdateChecker.getLatest(store);
+        news.news.forEach(article => {
+            if (seenNews.indexOf(article.id) === -1) {
+                store.commit("show_news", article);
+                if (article.style === "popup") {
+                    seenNews.push(article.id);
+                    localStorage.setItem("seen_news", seenNews.join(","));
+                }
+            }
+        });
+    });
+}
+
+if (!ddmm.constants.auto_update_disabled) {
+    UpdateChecker.getLatest(store);
+}
 
 window.test = new DDLCModClub();
