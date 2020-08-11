@@ -205,6 +205,9 @@
         mounted() {
             ddmm.on("onboarding validated", this._validateCallback);
             ddmm.onboarding.scan();
+            setTimeout(() => {
+                this.game_selection.is_testing = false;
+            }, 10000);
         },
         beforeDestroy() {
             ddmm.off("onboarding validated", this._validateCallback);
