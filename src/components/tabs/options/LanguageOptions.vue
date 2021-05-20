@@ -4,7 +4,7 @@
         <p>{{_("renderer.tab_options.section_language.subtitle")}}</p>
         <br>
         <p>
-            <Link to="https://example.org">{{_("renderer.tab_options.section_language.link_contribute")}}</Link>
+            <Link to="https://hosted.weblate.org/projects/doki-doki-mod-manager/doki-doki-mod-manager/">{{_("renderer.tab_options.section_language.link_contribute")}}</Link>
         </p>
         <br>
         <p><label for="language-switch-select">{{_("renderer.tab_options.section_language.label_language")}}</label></p>
