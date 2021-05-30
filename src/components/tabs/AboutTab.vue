@@ -11,12 +11,6 @@
 
                 <template v-if="supporters.length > 0">
                     <h2>{{ _("renderer.tab_about.title_patreon") }}</h2>
-                    <p>
-                        <Link to="https://patreon.com/zudo">
-                            <i class="fas fa-heart"></i>
-                            {{ _("renderer.tab_about.link_patreon") }}
-                        </Link>
-                    </p>
                     <div class="contributors">
                         <div class="contributor" v-for="supporter in supporters">
                             <p>{{ supporter }}</p>
