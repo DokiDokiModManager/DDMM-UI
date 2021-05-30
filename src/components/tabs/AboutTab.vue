@@ -6,24 +6,6 @@
 
             <br>
 
-            <h2>{{ _("renderer.tab_about.title_socials") }}</h2>
-            <p>
-                <Link to="https://doki.space/discord"><i class="fab fa-discord fa-fw"></i>
-                    {{ _("renderer.tab_about.social_discord") }}
-                </Link>
-            </p>
-            <p>
-                <Link to="https://www.reddit.com/message/compose?to=zuudo&subject=Doki+Doki+Mod+Manager">
-                    <i class="fab fa-reddit fa-fw"></i>
-                    {{ _("renderer.tab_about.social_reddit") }}
-                </Link>
-            </p>
-            <p>
-                <Link to="mailto:zudo@doki.space"><i class="fas fa-envelope fa-fw"></i>
-                    {{ _("renderer.tab_about.social_email") }}
-                </Link>
-            </p>
-
             <template v-if="!hide_dynamics">
                 <br>
 
