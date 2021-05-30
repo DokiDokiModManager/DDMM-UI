@@ -10,26 +10,10 @@
         </div>
 
         <div class="nav-links">
-            <div class="nav-link" @click="issueReport" :title="_('renderer.window_controls.issue_report')">
-                <i class="fas fa-bug fa-fw"></i>
-            </div>
-
             <div class="nav-link"
                  @click="openURL('https://help.doki.space/user-guide/')"
                  :title="_('renderer.window_controls.guide')">
-                <i class="fas fa-book fa-fw"></i>
-            </div>
-
-            <div class="nav-link"
-                 @click="openURL('https://doki.space/discord')"
-                 :title="_('renderer.window_controls.discord')">
-                <i class="fab fa-discord fa-fw"></i>
-            </div>
-
-            <div class="nav-link"
-                 @click="openURL('https://patreon.com/zudo')"
-                 :title="_('renderer.window_controls.patreon')">
-                <i class="fas fa-heart fa-fw"></i>
+                <i class="fas fa-question fa-fw"></i>
             </div>
         </div>
     </div>
