@@ -6,33 +6,8 @@
 
             <br>
 
-            <h2>{{_("renderer.tab_about.title_socials")}}</h2>
-            <p>
-                <Link to="https://doki.space/discord"><i class="fab fa-discord fa-fw"></i>
-                    {{_("renderer.tab_about.social_discord")}}
-                </Link>
-            </p>
-            <p>
-                <Link to="https://www.reddit.com/message/compose?to=zuudo&subject=Doki+Doki+Mod+Manager"><i class="fab fa-reddit fa-fw"></i>
-                    {{_("renderer.tab_about.social_reddit")}}
-                </Link>
-            </p>
-            <p>
-                <Link to="mailto:zudo@doki.space"><i class="fas fa-envelope fa-fw"></i>
-                    {{_("renderer.tab_about.social_email")}}
-                </Link>
-            </p>
-
-            <br>
-
             <template v-if="supporters.length > 0">
                 <h2>{{_("renderer.tab_about.title_patreon")}}</h2>
-                <p>
-                    <Link to="https://patreon.com/zudo">
-                        <i class="fas fa-heart"></i>
-                        {{_("renderer.tab_about.link_patreon")}}
-                    </Link>
-                </p>
                 <div class="contributors">
                     <div class="contributor" v-for="supporter in supporters">
                         <p>{{supporter}}</p>
