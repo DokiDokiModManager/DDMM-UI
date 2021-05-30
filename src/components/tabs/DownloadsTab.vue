@@ -51,22 +51,6 @@
                             {
                                 title: ddmm.translate("renderer.tab_downloads.list.link_downloaded"),
                                 component: "DownloadedDownloadsSection"
-                            },
-                            {
-                                title: ddmm.translate("renderer.tab_downloads.list.link_downloads"),
-                                component: "DownloadsSection",
-                                tag: () => {
-                                    return (this.$store.state.downloads.length > 0 ? this.$store.state.downloads.length : "");
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        header: ddmm.translate("renderer.tab_downloads.list.header_browse"),
-                        contents: [
-                            {
-                                title: ddmm.translate("renderer.tab_downloads.list.link_ddmc"),
-                                component: "StoreSection"
                             }
                         ]
                     }
